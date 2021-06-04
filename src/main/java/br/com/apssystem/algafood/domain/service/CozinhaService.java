@@ -3,6 +3,7 @@ package br.com.apssystem.algafood.domain.service;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
@@ -28,8 +29,13 @@ public class CozinhaService {
 	}
 
 	public void excluir(Long id) {
-		buscarPorId(id);
-		cozinhaRepository.deleteById(id);
+		try {
+			buscarPorId(id);
+			cozinhaRepository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new NegocioException(
+					String.format("A cozinha de código %d não pode ser excluir pois está em uso", id));
+		}
 	}
 
 	public List<Cozinha> listarTodos() {

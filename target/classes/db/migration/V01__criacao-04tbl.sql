@@ -25,5 +25,7 @@ CREATE TABLE restaurante (
 	aberto bool NULL,
 	data_cadastro date NULL,
 	data_atualizacao date NULL,
-	CONSTRAINT restaurante_pk PRIMARY KEY (id)
+	cozinha_id INT8 NOT NULL, 
+	CONSTRAINT restaurante_pk PRIMARY KEY (id),
+	CONSTRAINT restaurante_x_cozinha_fk FOREIGN KEY (cozinha_id) REFERENCES cozinha(id)
 );
