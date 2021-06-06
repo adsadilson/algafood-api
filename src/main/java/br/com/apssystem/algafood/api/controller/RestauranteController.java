@@ -103,4 +103,9 @@ public class RestauranteController {
 		Restaurante restaurante = restauranteService.buscarPorId(id);
 		return ResponseEntity.ok(restaurante);
 	}
+
+	@GetMapping("/por-nome")
+	public List<Restaurante> consultarPorNome(String nome, Long cozinhaId) {
+		return restauranteService.consultarPorNome(nome, cozinhaId);
+	}
 }

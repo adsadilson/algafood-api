@@ -48,7 +48,7 @@ public class CozinhaService {
 
 	public Cozinha buscarPorId(Long id) {
 		Cozinha cozinha = cozinhaRepository.findById(id).orElseThrow(
-				() -> new NegocioException(String.format("Não existe um cadastro de cozinha com código %d", id)));
+				() -> new NegocioException(String.format("Não existe nenhum cadastro de cozinha com código %d", id)));
 		return cozinha;
 	}
 

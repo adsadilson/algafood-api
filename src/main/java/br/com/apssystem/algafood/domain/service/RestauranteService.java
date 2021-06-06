@@ -40,9 +40,13 @@ public class RestauranteService {
 		return restauranteRepository.findAll();
 	}
 
+	public List<Restaurante> consultarPorNome(String nome, Long id) {
+		return restauranteRepository.consultarPorNome(nome, id);
+	}
+
 	public Restaurante buscarPorId(Long id) {
-		Restaurante restaurante = restauranteRepository.findById(id).orElseThrow(
-				() -> new NegocioException(String.format("Não existe um cadastro de restaurante com código %d", id)));
+		Restaurante restaurante = restauranteRepository.findById(id).orElseThrow(() -> new NegocioException(
+				String.format("Não existe nenhum cadastro de restaurante com código %d", id)));
 		return restaurante;
 	}
 
