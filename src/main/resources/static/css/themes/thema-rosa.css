@@ -1,0 +1,35 @@
+.navbar {
+	background-color: #FE2E9A;
+	z-index: 1000;
+}
+
+.btn-link {
+	padding: 3px !important;
+	color: #FE2E9A;
+}
+
+.btn-link:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+.linha-radape {
+	background-color: #FE2E9A;
+	padding: 0px;
+	margin: 0px;
+}
+
+.navbar-nav .dropdown-menu {
+	background-color: #FE2E9A;
+	border: none;
+}
+
+.dropdown-item {
+	color: white !important;
+}
+
+.dropdown-item:hover {
+	color: white;
+	text-decoration: none;
+	background-color: #fe81c2;
+}

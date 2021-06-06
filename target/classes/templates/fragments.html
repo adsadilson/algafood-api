@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="html_head">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="/css/themes/thema-azul.css" />
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+	<!-- javascript CSS -->
+	<script src="/js/jquery-3.6.0.min.js"></script>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/bootstrap-datepicker.min.js"></script>
+	<script src="/js/bootstrap-datepicker.pt-BR.min.js"></script>
+	<script src="/js/jquery.maskMoney.min.js"></script>
+</head>
+
+<body>
+	<div th:fragment="menu">
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"> <img alt="AlgaWorks" src="/images/apss.png" />
+				</a>
+			</div>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll"
+				aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarScroll">
+				<ul class="navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" style="max-height: 100px;">
+					<li class="nav-item active"><a class="nav-link" href="#">Home
+							<span class="sr-only">(current)</span>
+						</a></li>
+					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+							id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+							Titulos </a>
+						<ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+							<li><a class="dropdown-item" href="/titulos/novo">Cadastro</a></li>
+							<li><a class="dropdown-item" href="/titulos">Pesquisar</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Relatório</a></li>
+						</ul>
+					</li>
+					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+							id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+							Comercial </a>
+						<ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+							<li><a class="dropdown-item" href="#">Conferência de
+									caixa</a></li>
+							<li><a class="dropdown-item" href="#">Cartões de Credito</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Relatórios</a></li>
+						</ul>
+					</li>
+				</ul>
+				<form class="d-flex">
+					<a href="#"> <img style="height: 42px" title="Sair" alt="Sair" src="/images/s2.png" />
+					</a>
+				</form>
+			</div>
+		</nav>
+
+	</div>
+	
+
+	<div th:fragment="rodape">
+		<hr class="linha-radape">
+		<div id="info-rodape-1">Apssystem</div>
+		<div id="info-rodape-2">Versão #@?</div>
+	</div>
+
+
+	<div th:fragment="dialgConfExclusao" class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<form action="/titulos" th:attr="data-url-base='/titulos'" method="POST" th:method="DELETE">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Confirmação</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<div class="modal-body">
+						<p>Tem certeza que deseja excluir o registro:</p>
+						<p class="text-secondary">
+							<span>If you don't save, your changes will be lost.</span>
+						</p>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">Confirmar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:fragment="msn-sucesso" id="msn-success" th:if="${!#strings.isEmpty(mensagem)}">
+		<label th:text="${mensagem}" id="msg-sucesso" style="visibility: hidden;">Parabéns!</label> <label
+			th:text="${tipo}" id="msg-tipo" style="visibility: hidden;">Tipo!</label>
+	</div>
+	
+</body>
+</html>

@@ -21,8 +21,8 @@ public class CidadeService {
 
 	public Cidade salvar(Cidade cidade) {
 		Estado estado = estadoService.buscarPorId(cidade.getEstado().getId());
-		cidadeExiste(cidade.getNome(), estado.getSigla());
 		cidade.setEstado(estado);
+		cidadeExiste(cidade.getNome(), estado.getSigla());
 		return cidadeRepository.save(cidade);
 	}
 
@@ -48,9 +48,10 @@ public class CidadeService {
 	}
 
 	public boolean cidadeExiste(String cid, String uf) {
-		Cidade cidade = cidadeRepository.findByNomeAndEstado(cid, uf);
-		if (null == cidade) {
-			throw new NegocioException("Já existe um cadastr de cidade com nome " + cid);
+		Cidade cidade = cidadeRepository.consultarCidadeEstado(cid, uf);
+		if (null != cidade) {
+			throw new NegocioException(
+					String.format("Já existe um cadastro de cidade com nome %s para o estado %s ", cid, uf));
 		}
 		return false;
 	}

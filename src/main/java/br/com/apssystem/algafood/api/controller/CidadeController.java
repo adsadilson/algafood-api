@@ -40,9 +40,10 @@ public class CidadeController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluir(@PathVariable Long id) {
+	public ResponseEntity<String> excluir(@PathVariable Long id) {
 		cidadeService.excluir(id);
-		return ResponseEntity.noContent().build();
+		return new ResponseEntity<String>("Cidade de código " + id + " foi excluído com sucesso!",
+				HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping("/{id}")

@@ -1,0 +1,78 @@
+#cabecalho {
+	height: 68px;
+	position: fixed;
+	z-index: 1001 !important;
+	box-shadow: 0px 2px 2px #ccc;
+}
+
+#barra-menu{
+	margin-top: 80px;
+	padding: 0px 40px 0px 15px;
+}
+
+#conteudo {
+	overflow: auto;
+	top: 150px;
+	position: absolute;
+	height: calc(100% - 200px);
+	width: 100%;
+}
+
+#rodape {
+	position: fixed !important;
+	width: 100% !important;
+	bottom: 0px !important;
+	background-color: white;
+	height: 30px;
+}
+
+#info-rodape-1 {
+	margin-left: 10px !important;
+	position: absolute;
+}
+
+#info-rodape-2 {
+	position: relative;
+	float: right;
+	padding-right: 20px
+}
+
+.navbar-brand {
+	padding-top: 12px;
+}
+
+.panel-default {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.alert {
+	margin: 10px;
+}
+
+.aw-link-panel {
+	float: right;
+	padding: 0px;
+}
+
+.aw-titulo-panel {
+	float: left;
+	padding-top: 2px;
+}
+
+.corpo {
+	padding: 20px;
+}
+
+.row {
+	padding: 5px 0px;
+}
+
+.table td, .table th {
+	padding: 2px !important;
+	vertical-align: center !important;
+}
+
+.table td {
+	vertical-align: inherit;
+}

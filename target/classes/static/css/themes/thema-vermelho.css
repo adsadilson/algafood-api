@@ -1,0 +1,35 @@
+.navbar {
+	background-color: red;
+	z-index: 1000;
+}
+
+.btn-link {
+	padding: 3px !important;
+	color: red;
+}
+
+.btn-link:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+.linha-radape {
+	background-color: red;
+	padding: 0px;
+	margin: 0px;
+}
+
+.navbar-nav .dropdown-menu {
+	background-color: red;
+	border: none;
+}
+
+.dropdown-item {
+	color: white !important;
+}
+
+.dropdown-item:hover {
+	color: white;
+	text-decoration: none;
+	background-color: #ff8888;
+}

@@ -12,5 +12,13 @@
 		and cozinha.id = :id
 		</query>
 	</named-query>
+	
+	<named-query name="Cidade.consultarCidadeEstado">
+		<query>
+		from Cidade
+		where nome like concat('%', :nome, '%')
+		and estado.sigla = :sigla
+		</query>
+	</named-query>
 
 </entity-mappings>
