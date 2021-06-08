@@ -1,10 +1,16 @@
 package br.com.apssystem.algafood.domain.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -27,4 +33,10 @@ public class GrupoUsuario {
 	@NotBlank
 	@Column(nullable = false, unique = true)
 	private String nome;
+
+	@ManyToMany
+	@JoinTable(name = "grupo_usuario_permissao", 
+	joinColumns = @JoinColumn(name = "grupo_usuario_id"), 
+	inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+	private List<Permissao> permissoes = new ArrayList<>();
 }

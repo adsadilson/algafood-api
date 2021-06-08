@@ -1,6 +1,5 @@
 package br.com.apssystem.algafood.domain.service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -20,14 +19,14 @@ public class RestauranteService {
 	public Restaurante salvar(Restaurante restaurante) {
 		if (restaurante.getId() == null) {
 			restaurante.setAtivo(true);
-			restaurante.setDataCadastro(LocalDate.now());
 		}
 		return restauranteRepository.save(restaurante);
 	}
 
 	public Restaurante autalizar(Restaurante restaurante, Long id) {
 		Restaurante restauranteSalvo = buscarPorId(id);
-		BeanUtils.copyProperties(restaurante, restauranteSalvo, "id");
+		BeanUtils.copyProperties(restaurante, restauranteSalvo, "id", "formasPagtos", "endereco", "dataCadastro",
+				"produtos");
 		return restauranteRepository.save(restauranteSalvo);
 	}
 

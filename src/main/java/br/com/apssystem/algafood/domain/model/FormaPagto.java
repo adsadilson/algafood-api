@@ -7,25 +7,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "permissao")
-@SequenceGenerator(name = "PERMISSAO_ID", sequenceName = "PERMISSAO_ID_SEQ")
+@Table(name = "forma_pagto")
+@SequenceGenerator(name = "FORMA_PAGTO_SEQ", sequenceName = "FORMA_PAGTO_SEQ")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Permissao {
+public class FormaPagto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PERMISSAO_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "FORMA_PAGTO_SEQ")
 	@EqualsAndHashCode.Include
 	private Long id;
 
-	@NotBlank
 	@Column(nullable = false)
 	private String descricao;
-	
+
 }
