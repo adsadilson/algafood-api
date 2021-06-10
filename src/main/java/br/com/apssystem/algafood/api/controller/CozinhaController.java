@@ -45,9 +45,8 @@ public class CozinhaController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Cozinha> buscarPorId(@PathVariable Long id) {
-		Cozinha cozinha = cozinhaService.buscarPorId(id);
-		return ResponseEntity.ok(cozinha);
+	public Cozinha buscarPorId(@PathVariable Long id) {
+		return cozinhaService.buscarPorId(id);
 	}
 
 	@GetMapping("/porNome/{nome}")

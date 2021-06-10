@@ -42,7 +42,7 @@ public class FormaPagtoService {
 	}
 
 	public void formaPagtoExistente(FormaPagto formaPagto) {
-		boolean result = formaPagtoRespository.findByNome(formaPagto.getDescricao()).stream()
+		boolean result = formaPagtoRespository.findByDescricao(formaPagto.getDescricao()).stream()
 				.anyMatch(fPagtoExistente -> !fPagtoExistente.equals(formaPagto));
 		if (result) {
 			throw new NegocioException(

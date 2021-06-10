@@ -11,7 +11,12 @@ import br.com.apssystem.algafood.domain.model.Restaurante;
 @Repository
 public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
 
-	//@Query("from Restaurante where nome like %:nome% and cozinha.id = :id")
+	// @Query("from Restaurante where nome like %:nome% and cozinha.id = :id")
 	List<Restaurante> consultarPorNome(@Param("nome") String nome, @Param("id") Long id);
-	
+
+	/*
+	 * @Query("from distinct r Restaurante r join fetch r.cozinha join fetch r.formasPagtos"
+	 * ) List<Restaurante> findAll();
+	 */
+
 }

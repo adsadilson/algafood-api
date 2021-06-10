@@ -10,5 +10,5 @@ import br.com.apssystem.algafood.domain.model.FormaPagto;
 @Repository
 public interface FormaPagtoRespository extends JpaRepository<FormaPagto, Long> {
 
-	Optional<FormaPagto> findByNome(String nome);
+	Optional<FormaPagto> findByDescricao(String nome);
 }
