@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 public class Permissao {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PERMISSAO_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PERMISSAO_ID_EQ")
 	@EqualsAndHashCode.Include
 	private Long id;
 

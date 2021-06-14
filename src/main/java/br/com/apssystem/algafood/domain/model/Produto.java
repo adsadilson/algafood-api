@@ -16,13 +16,13 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "produto")
-@SequenceGenerator(name = "PRODUTO_SEQ", sequenceName = "PRODUTO_SEQ")
+@SequenceGenerator(name = "PRODUTO_ID", sequenceName = "PRODUTO_ID_SEQ")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Produto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PRODUTO_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PRODUTO_ID_SEQ")
 	@EqualsAndHashCode.Include
 	private Long id;
 

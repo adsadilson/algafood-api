@@ -3,9 +3,13 @@ package br.com.apssystem.algafood.domain.service;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
+import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
+import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
 import br.com.apssystem.algafood.domain.model.Produto;
 import br.com.apssystem.algafood.domain.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
@@ -28,13 +32,18 @@ public class ProdutoService {
 	}
 
 	public void excluir(Long id) {
-		buscarPorId(id);
-		produtoRepository.deleteById(id);
+		try {
+			produtoRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new RegistroNaoEncontradoException("Produto", id);
+		} catch (DataIntegrityViolationException e) {
+			throw new RegistroEmUsoException("Produto", id);
+		}
 	}
 
 	public Produto buscarPorId(Long id) {
-		Produto produto = produtoRepository.findById(id).orElseThrow(() -> new NegocioException(
-				String.format("Não existe nenhum cadastro de Produto com esse nome %d", id)));
+		Produto produto = produtoRepository.findById(id)
+				.orElseThrow(() -> new RegistroNaoEncontradoException("Produto", id));
 		return produto;
 	}
 

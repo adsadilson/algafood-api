@@ -13,13 +13,13 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "forma_pagto")
-@SequenceGenerator(name = "FORMA_PAGTO_SEQ", sequenceName = "FORMA_PAGTO_SEQ")
+@SequenceGenerator(name = "FORMA_PAGTO_ID", sequenceName = "FORMA_PAGTO_ID_SEQ")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class FormaPagto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "FORMA_PAGTO_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "FORMA_PAGTO_ID_SEQ")
 	@EqualsAndHashCode.Include
 	private Long id;
 

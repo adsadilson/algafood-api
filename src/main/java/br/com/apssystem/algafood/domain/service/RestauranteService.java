@@ -3,9 +3,12 @@ package br.com.apssystem.algafood.domain.service;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import br.com.apssystem.algafood.api.exception.NegocioException;
+import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
+import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
 import br.com.apssystem.algafood.domain.model.Restaurante;
 import br.com.apssystem.algafood.domain.repository.RestauranteRepository;
 import lombok.AllArgsConstructor;
@@ -31,8 +34,13 @@ public class RestauranteService {
 	}
 
 	public void excluir(Long id) {
-		buscarPorId(id);
-		restauranteRepository.deleteById(id);
+		try {
+			restauranteRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new RegistroNaoEncontradoException("Restaurante", id);
+		} catch (DataIntegrityViolationException e) {
+			throw new RegistroEmUsoException("Restaurante", id);
+		}
 	}
 
 	public List<Restaurante> listarTodos() {
@@ -44,8 +52,8 @@ public class RestauranteService {
 	}
 
 	public Restaurante buscarPorId(Long id) {
-		Restaurante restaurante = restauranteRepository.findById(id).orElseThrow(() -> new NegocioException(
-				String.format("Não existe nenhum cadastro de restaurante com código %d", id)));
+		Restaurante restaurante = restauranteRepository.findById(id)
+				.orElseThrow(() -> new RegistroNaoEncontradoException("Restaurante", id));
 		return restaurante;
 	}
 

@@ -27,12 +27,12 @@ import lombok.EqualsAndHashCode;
 @Table(name = "pedido")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@SequenceGenerator(name = "PEDIDO_SEQ", sequenceName = "PEDIDO_SEQ")
+@SequenceGenerator(name = "PEDIDO_ID", sequenceName = "PEDIDO__ID_SEQ")
 public class Pedido {
 
 	@EqualsAndHashCode.Include
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PEDIDO_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PEDIDO__ID_SEQ")
 	private Long id;
 
 	private BigDecimal subtotal;

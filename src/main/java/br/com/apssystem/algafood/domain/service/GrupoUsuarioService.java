@@ -3,9 +3,13 @@ package br.com.apssystem.algafood.domain.service;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
+import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
+import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
 import br.com.apssystem.algafood.domain.model.GrupoUsuario;
 import br.com.apssystem.algafood.domain.repository.GrupoUsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -28,8 +32,13 @@ public class GrupoUsuarioService {
 	}
 
 	public void excluir(Long id) {
-		buscarPorId(id);
-		grupoUsuarioRepository.deleteById(id);
+		try {
+			grupoUsuarioRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new RegistroNaoEncontradoException("Grupo de Usuário", id);
+		} catch (DataIntegrityViolationException e) {
+			throw new RegistroEmUsoException("Grupo de Usuário", id);
+		}
 	}
 
 	public List<GrupoUsuario> listarTodos() {

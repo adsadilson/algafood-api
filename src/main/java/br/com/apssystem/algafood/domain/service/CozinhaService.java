@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
+import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.repository.CozinhaRepository;
@@ -30,11 +33,11 @@ public class CozinhaService {
 
 	public void excluir(Long id) {
 		try {
-			buscarPorId(id);
 			cozinhaRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new RegistroNaoEncontradoException("Cozinha", id);
 		} catch (DataIntegrityViolationException e) {
-			throw new NegocioException(
-					String.format("A cozinha de código %d não pode ser excluir pois está em uso", id));
+			throw new RegistroEmUsoException("Cozinha", id);
 		}
 	}
 
@@ -47,8 +50,8 @@ public class CozinhaService {
 	}
 
 	public Cozinha buscarPorId(Long id) {
-		Cozinha cozinha = cozinhaRepository.findById(id).orElseThrow(
-				() -> new NegocioException(String.format("Não existe nenhum cadastro de cozinha com código %d", id)));
+		Cozinha cozinha = cozinhaRepository.findById(id)
+				.orElseThrow(() -> new RegistroNaoEncontradoException("Cozinha", id));
 		return cozinha;
 	}
 

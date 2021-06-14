@@ -21,13 +21,13 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "usuario")
-@SequenceGenerator(name = "USUARIO_SEQ", sequenceName = "USUARIO_SEQ")
+@SequenceGenerator(name = "USUARIO_ID", sequenceName = "USUARIO_ID_SEQ")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "USUARIO_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "USUARIO_ID_SEQ")
 	@EqualsAndHashCode.Include
 	private Long id;
 

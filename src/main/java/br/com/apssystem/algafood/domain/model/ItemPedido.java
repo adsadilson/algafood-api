@@ -19,12 +19,12 @@ import lombok.EqualsAndHashCode;
 @Table(name = "item_pedido")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@SequenceGenerator(name = "ITEM_PEDIDO_SEQ", sequenceName = "ITEM_PEDIDO_SEQ")
+@SequenceGenerator(name = "ITEM_PEDIDO_ID", sequenceName = "ITEM_PEDIDO_ID_SEQ")
 public class ItemPedido {
 
 	@EqualsAndHashCode.Include
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "ITEM_PEDIDO_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "ITEM_PEDIDO_ID_SEQ")
 	private Long id;
 
 	@Column(name = "preco_unitario")
