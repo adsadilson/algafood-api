@@ -18,14 +18,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.apssystem.algafood.core.Groups;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -45,6 +50,7 @@ public class Restaurante {
 	@Column(nullable = false, unique = true)
 	private String nome;
 
+	@DecimalMin("0")
 	@Column(precision = 12, scale = 2)
 	private BigDecimal frete;
 
@@ -62,8 +68,9 @@ public class Restaurante {
 	@Column(name = "data_atualizacao")
 	private LocalDate dataAtualizacao;
 
+	@Valid
+	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@NotNull
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;

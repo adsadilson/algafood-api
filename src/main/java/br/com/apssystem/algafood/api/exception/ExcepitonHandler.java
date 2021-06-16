@@ -68,34 +68,34 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 				.type(problemType.getUri())
 				.detail("Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.")
 				.timestamp(LocalDateTime.now()).fields(listFields).build();
-		
+
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
 
 	@ExceptionHandler(NegocioException.class)
 	public ResponseEntity<Object> NegocioExcepitonHandler(NegocioException ex, WebRequest request) {
-		
+
 		HttpStatus status = HttpStatus.BAD_REQUEST;
-		
+
 		ProblemType problemType = ProblemType.ERRO_NEGOCIO;
-		
+
 		Problem problem = Problem.builder().title(problemType.getTitle()).type(problemType.getUri())
 				.status(status.value()).detail(ex.getMessage()).timestamp(LocalDateTime.now()).build();
-		
+
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 
 	@ExceptionHandler(RegistroNaoEncontradoException.class)
 	public ResponseEntity<Object> handlerNegocioExcepitonHandler(RegistroNaoEncontradoException ex,
 			WebRequest request) {
-		
+
 		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-		
+
 		ProblemType problemType = ProblemType.ERRO_NEGOCIO;
-		
+
 		Problem problem = Problem.builder().title(problemType.getTitle()).type(problemType.getUri())
 				.status(status.value()).detail(ex.getMessage()).timestamp(LocalDateTime.now()).build();
-		
+
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 
@@ -125,9 +125,9 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 		}
 
 		String msn = "O corpo da requisição está inválido. Verifique erro de sintaxe.";
-		
+
 		ProblemType problemType = ProblemType.DADOS_INVALIDOS;
-		
+
 		Problem problem = Problem.builder().title(problemType.getTitle()).type(problemType.getUri())
 				.status(status.value()).detail(msn).timestamp(LocalDateTime.now()).build();
 
@@ -204,7 +204,7 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 		String msn = String.format("O recurso %s, que você tentou acessar, é inexistente.", ex.getRequestURL());
 
 		Problem problem = Problem.builder().status(status.value()).title(problemType.getTitle())
-				.type(problemType.getUri()).detail(msn).build();
+				.type(problemType.getUri()).detail(msn).timestamp(LocalDateTime.now()).build();
 
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
@@ -223,12 +223,12 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 		// importantes
 		// para você durante, especialmente na fase de desenvolvimento
 		ex.printStackTrace();
-		
+
 		ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
-		
+
 		Problem problem = Problem.builder().status(status.value()).title(problemType.getTitle())
-				.type(problemType.getUri()).detail(msn).build();
-		
+				.type(problemType.getUri()).detail(msn).timestamp(LocalDateTime.now()).build();
+
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 

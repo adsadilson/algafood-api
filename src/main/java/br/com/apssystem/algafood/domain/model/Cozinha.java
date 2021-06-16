@@ -12,19 +12,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.apssystem.algafood.core.Groups;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "cozinha")
 @SequenceGenerator(name = "COZINHA_ID", sequenceName = "COZINHA_ID_SEQ")
-@Data	
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cozinha {
 
+	@NotNull(groups = Groups.CozinhaId.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "COZINHA_ID_SEQ")
 	@EqualsAndHashCode.Include
@@ -33,7 +36,7 @@ public class Cozinha {
 	@NotBlank
 	@Column(length = 65, nullable = false, unique = true)
 	private String nome;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "cozinha")
 	private List<Restaurante> restaurantes = new ArrayList<>();
