@@ -28,8 +28,6 @@ import javax.validation.groups.Default;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import br.com.apssystem.algafood.core.Groups;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -59,12 +57,10 @@ public class Restaurante {
 	private boolean aberto;
 
 	@CreationTimestamp
-	@JsonIgnore
 	@Column(name = "data_cadastro")
 	private LocalDate dataCadastro;
 
 	@UpdateTimestamp
-	@JsonIgnore
 	@Column(name = "data_atualizacao")
 	private LocalDate dataAtualizacao;
 
@@ -75,16 +71,13 @@ public class Restaurante {
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
 
-	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagto", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagto_id"))
 	private List<FormaPagto> formasPagtos = new ArrayList<>();
 
-	@JsonIgnore
 	@Embedded
 	private Endereco endereco;
 
-	@JsonIgnore
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<Produto>();
 
