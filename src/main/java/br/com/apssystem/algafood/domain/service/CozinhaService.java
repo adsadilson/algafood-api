@@ -2,14 +2,15 @@ package br.com.apssystem.algafood.domain.service;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
 import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
-import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.repository.CozinhaRepository;
 import lombok.AllArgsConstructor;
@@ -20,20 +21,22 @@ public class CozinhaService {
 
 	private CozinhaRepository cozinhaRepository;
 
+	@Transactional
 	public Cozinha salvar(Cozinha cozinha) {
 		cozinhaExistente(cozinha);
 		return cozinhaRepository.save(cozinha);
 	}
 
-	public Cozinha atualizar(Cozinha cozinha, Long id) {
-		Cozinha cozinhaSalva = buscarPorId(id);
-		BeanUtils.copyProperties(cozinha, cozinhaSalva, "id");
-		return salvar(cozinhaSalva);
+	@Transactional
+	public Cozinha atualizar(Cozinha cozinha) {
+		return salvar(cozinha);
 	}
 
+	@Transactional
 	public void excluir(Long id) {
 		try {
 			cozinhaRepository.deleteById(id);
+			cozinhaRepository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new RegistroNaoEncontradoException("Cozinha", id);
 		} catch (DataIntegrityViolationException e) {

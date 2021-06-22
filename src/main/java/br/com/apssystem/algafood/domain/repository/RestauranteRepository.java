@@ -7,16 +7,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.apssystem.algafood.domain.model.Restaurante;
+import br.com.apssystem.algafood.domain.repository.impl.RestauranteRepositoryQueries;
 
 @Repository
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
+public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries {
 
 	// @Query("from Restaurante where nome like %:nome% and cozinha.id = :id")
 	List<Restaurante> consultarPorNome(@Param("nome") String nome, @Param("id") Long id);
-
-	/*
-	 * @Query("from distinct r Restaurante r join fetch r.cozinha join fetch r.formasPagtos"
-	 * ) List<Restaurante> findAll();
-	 */
 
 }

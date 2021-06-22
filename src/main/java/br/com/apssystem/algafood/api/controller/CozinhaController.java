@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.apssystem.algafood.api.converter.CozinhaConverter;
+import br.com.apssystem.algafood.api.model.CozinhaModel;
+import br.com.apssystem.algafood.api.model.input.CozinhaInput;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.service.CozinhaService;
 import lombok.AllArgsConstructor;
@@ -25,38 +28,41 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CozinhaController {
 
-	private CozinhaService cozinhaService;
+	private CozinhaService serivce;
+	private CozinhaConverter cozinhaConverter;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cozinha salvar(@Valid @RequestBody Cozinha cozinha) {
-		return cozinhaService.salvar(cozinha);
+	public CozinhaModel salvar(@Valid @RequestBody CozinhaInput cozinhaInput) {
+		Cozinha cozinha = cozinhaConverter.toDomainObject(cozinhaInput);
+		return cozinhaConverter.toModel(serivce.salvar(cozinha));
 	}
 
 	@PutMapping("/{id}")
-	public Cozinha atualizar(@Valid @RequestBody Cozinha cozinha, @PathVariable Long id) {
-		return cozinhaService.atualizar(cozinha, id);
+	public CozinhaModel atualizar(@Valid @RequestBody CozinhaInput cozinhaInput, @PathVariable Long id) {
+		Cozinha cozinha = serivce.buscarPorId(id);
+		return cozinhaConverter.toModel(serivce.atualizar(cozinha));
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
-		cozinhaService.excluir(id);
+		serivce.excluir(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping("/{id}")
-	public Cozinha buscarPorId(@PathVariable Long id) {
-		return cozinhaService.buscarPorId(id);
+	public CozinhaModel buscarPorId(@PathVariable Long id) {
+		return cozinhaConverter.toModel(serivce.buscarPorId(id));
 	}
 
 	@GetMapping("/porNome/{nome}")
-	public List<Cozinha> buscarPorNome(@PathVariable String nome) {
-		return cozinhaService.buscarPorNome(nome);
+	public List<CozinhaModel> buscarPorNome(@PathVariable String nome) {
+		return cozinhaConverter.toCollectionModel(serivce.buscarPorNome(nome));
 	}
 
 	@GetMapping
-	public List<Cozinha> listarTodos() {
-		return cozinhaService.listarTodos();
+	public List<CozinhaModel> listarTodos() {
+		return cozinhaConverter.toCollectionModel(serivce.listarTodos());
 	}
 
 }

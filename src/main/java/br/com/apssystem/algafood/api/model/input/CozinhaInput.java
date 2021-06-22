@@ -1,15 +1,14 @@
 package br.com.apssystem.algafood.api.model.input;
 
-
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CozinhaIdInput {
+public class CozinhaInput {
 
-	@NotNull
-	private Long id;
+	@NotBlank
+	private String nome;
 }

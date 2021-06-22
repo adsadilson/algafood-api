@@ -7,9 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
-import br.com.apssystem.algafood.core.Groups;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,7 +18,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Estado {
 
-	@NotNull(groups = Groups.EstadoId.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "ESTADO_ID_SEQ")
 	@EqualsAndHashCode.Include

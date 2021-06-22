@@ -2,14 +2,14 @@ package br.com.apssystem.algafood.domain.service;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
+import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
 import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.model.Estado;
 import br.com.apssystem.algafood.domain.repository.CidadeRepository;
@@ -23,6 +23,7 @@ public class CidadeService {
 
 	private EstadoService estadoService;
 
+	@Transactional
 	public Cidade salvar(Cidade cidade) {
 		Estado estado = estadoService.buscarPorId(cidade.getEstado().getId());
 		cidade.setEstado(estado);
@@ -30,12 +31,12 @@ public class CidadeService {
 		return cidadeRepository.save(cidade);
 	}
 
-	public Cidade atualizar(Cidade cidade, Long id) {
-		Cidade cidadeSalva = buscarPorId(id);
-		BeanUtils.copyProperties(cidade, cidadeSalva, "id");
-		return salvar(cidadeSalva);
+	@Transactional
+	public Cidade atualizar(Cidade cidade) {
+		return salvar(cidade);
 	}
 
+	@Transactional
 	public void excluir(Long id) {
 		try {
 			cidadeRepository.deleteById(id);

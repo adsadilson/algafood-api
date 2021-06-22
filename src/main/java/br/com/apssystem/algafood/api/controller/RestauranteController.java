@@ -24,11 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.apssystem.algafood.api.assembler.RestauranteAssembler;
+import br.com.apssystem.algafood.api.converter.RestauranteConverter;
 import br.com.apssystem.algafood.api.exception.ValidacaoException;
 import br.com.apssystem.algafood.api.model.RestauranteModel;
 import br.com.apssystem.algafood.api.model.input.RestauranteInput;
-import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.model.Restaurante;
 import br.com.apssystem.algafood.domain.service.CozinhaService;
 import br.com.apssystem.algafood.domain.service.RestauranteService;
@@ -40,30 +39,57 @@ import lombok.AllArgsConstructor;
 public class RestauranteController {
 
 	private RestauranteService restauranteService;
-
 	private CozinhaService cozinhaService;
-
+	private RestauranteConverter restuaranteConverter;
 	private SmartValidator validator;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public RestauranteModel salvar(@Valid @RequestBody RestauranteInput restauranteInput) {
-		Cozinha cozinha = cozinhaService.buscarPorId(restauranteInput.getCozinha().getId());
-		Restaurante restaurante = new Restaurante();
-		restaurante.setCozinha(cozinha);
+
+		Restaurante restaurante = restuaranteConverter.toDomainObject(restauranteInput);
+
 		restaurante = restauranteService.salvar(restaurante);
 
-		RestauranteModel restauranteModel = RestauranteAssembler.toModel(restaurante);
-
-		return restauranteModel;
+		return restuaranteConverter.toModel(restaurante);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<RestauranteModel> atualizar(@Valid @RequestBody Restaurante restaurante,
+	public ResponseEntity<RestauranteModel> atualizar(@Valid @RequestBody RestauranteInput restauranteInput,
 			@PathVariable Long id) {
-		cozinhaService.buscarPorId(restaurante.getCozinha().getId());
-		Restaurante restauranteSalvo = restauranteService.autalizar(restaurante, id);
-		return ResponseEntity.ok(RestauranteAssembler.toModel(restauranteSalvo));
+
+		Restaurante restauranteAtual = restauranteService.buscarPorId(id);
+
+		restuaranteConverter.copyToDomainObject(restauranteInput, restauranteAtual);
+
+		restauranteAtual = restauranteService.autalizar(restauranteAtual);
+
+		return ResponseEntity.ok(restuaranteConverter.toModel(restauranteAtual));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
+		restauranteService.buscarPorId(id);
+		restauranteService.excluir(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping()
+	public List<RestauranteModel> listarTodos() {
+		return restuaranteConverter.toCollectionModel(restauranteService.listarTodos());
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<RestauranteModel> buscarPorId(@PathVariable Long id) {
+
+		Restaurante restaurante = restauranteService.buscarPorId(id);
+
+		return ResponseEntity.ok(restuaranteConverter.toModel(restaurante));
+	}
+
+	@GetMapping("/por-nome")
+	public List<RestauranteModel> consultarPorNome(String nome, Long cozinhaId) {
+		return restuaranteConverter.toCollectionModel(restauranteService.consultarPorNome(nome, cozinhaId));
 	}
 
 	@PatchMapping("/{id}")
@@ -72,7 +98,7 @@ public class RestauranteController {
 		Restaurante restaurante = restauranteService.buscarPorId(id);
 		merge(campos, restaurante);
 		validate(restaurante, "restaurante");
-		restauranteService.autalizar(restaurante, id);
+		restauranteService.autalizar(restaurante);
 		return ResponseEntity.ok(restaurante);
 	}
 
@@ -108,28 +134,5 @@ public class RestauranteController {
 			// System.out.println(nomePropriedade + " - " + vlrPropriedade);
 			ReflectionUtils.setField(field, restauranteDestino, novoValor);
 		});
-	}
-
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluir(@PathVariable Long id) {
-		restauranteService.buscarPorId(id);
-		restauranteService.excluir(id);
-		return ResponseEntity.noContent().build();
-	}
-
-	@GetMapping()
-	public List<RestauranteModel> listarTodos() {
-		return RestauranteAssembler.toCollectionModel(restauranteService.listarTodos());
-	}
-
-	@GetMapping("/{id}")
-	public ResponseEntity<RestauranteModel> buscarPorId(@PathVariable Long id) {
-		Restaurante restaurante = restauranteService.buscarPorId(id);
-		return ResponseEntity.ok(RestauranteAssembler.toModel(restaurante));
-	}
-
-	@GetMapping("/por-nome")
-	public List<Restaurante> consultarPorNome(String nome, Long cozinhaId) {
-		return restauranteService.consultarPorNome(nome, cozinhaId);
 	}
 }

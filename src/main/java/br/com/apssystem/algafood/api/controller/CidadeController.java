@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.apssystem.algafood.api.converter.CidadeConverter;
+import br.com.apssystem.algafood.api.model.CidadeModel;
+import br.com.apssystem.algafood.api.model.input.CidadeInput;
 import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.service.CidadeService;
 import lombok.AllArgsConstructor;
@@ -26,17 +29,20 @@ import lombok.AllArgsConstructor;
 public class CidadeController {
 
 	private CidadeService cidadeService;
+	private CidadeConverter converter;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cidade salvar(@Valid @RequestBody Cidade cidade) {
-		return cidadeService.salvar(cidade);
+	public CidadeModel salvar(@Valid @RequestBody CidadeInput cidadeInput) {
+		Cidade cidade = converter.toDomainObject(cidadeInput);
+		return converter.toModel(cidadeService.salvar(cidade));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Cidade> atualizar(@Valid @RequestBody Cidade cidade, @PathVariable Long id) {
-		cidade = cidadeService.atualizar(cidade, id);
-		return ResponseEntity.ok(cidade);
+	public ResponseEntity<CidadeModel> atualizar(@Valid @RequestBody CidadeInput cidadeInput, @PathVariable Long id) {
+		Cidade cidade = cidadeService.buscarPorId(id);
+		converter.copyToDomainObject(cidadeInput, cidade);
+		return ResponseEntity.ok(converter.toModel(cidadeService.atualizar(cidade)));
 	}
 
 	@DeleteMapping("/{id}")
@@ -47,13 +53,13 @@ public class CidadeController {
 	}
 
 	@GetMapping("/{id}")
-	public Cidade buscarPorId(@PathVariable Long id) {
-		return cidadeService.buscarPorId(id);
+	public CidadeModel buscarPorId(@PathVariable Long id) {
+		return converter.toModel(cidadeService.buscarPorId(id));
 	}
 
 	@GetMapping
-	public List<Cidade> listarTodos() {
-		return cidadeService.listarTodos();
+	public List<CidadeModel> listarTodos() {
+		return converter.toCollectionModel(cidadeService.listarTodos());
 	}
 
 }
