@@ -55,9 +55,8 @@ public class CozinhaController {
 	}
 
 	@GetMapping
-	public ResponseEntity<?> listarTodos() {
-		List<Cozinha> list = cozinhaService.listarTodos();
-		return ResponseEntity.ok(list);
+	public List<Cozinha> listarTodos() {
+		return cozinhaService.listarTodos();
 	}
 
 }

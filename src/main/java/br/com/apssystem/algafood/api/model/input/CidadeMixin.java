@@ -1,4 +1,4 @@
-package br.com.apssystem.algafood.api.model.mixin;
+package br.com.apssystem.algafood.api.model.input;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

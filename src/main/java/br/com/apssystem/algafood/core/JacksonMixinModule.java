@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import br.com.apssystem.algafood.api.model.mixin.CidadeMixin;
-import br.com.apssystem.algafood.api.model.mixin.CozinhaModel;
-import br.com.apssystem.algafood.api.model.mixin.RestauranteModel;
+import br.com.apssystem.algafood.api.model.CozinhaModel;
+import br.com.apssystem.algafood.api.model.RestauranteModel;
+import br.com.apssystem.algafood.api.model.input.CidadeMixin;
 import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.model.Restaurante;

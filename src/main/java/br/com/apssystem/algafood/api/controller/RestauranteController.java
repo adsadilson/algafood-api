@@ -3,7 +3,6 @@ package br.com.apssystem.algafood.api.controller;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -25,9 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.apssystem.algafood.api.assembler.RestauranteAssembler;
 import br.com.apssystem.algafood.api.exception.ValidacaoException;
-import br.com.apssystem.algafood.api.model.mixin.CozinhaModel;
-import br.com.apssystem.algafood.api.model.mixin.RestauranteModel;
+import br.com.apssystem.algafood.api.model.RestauranteModel;
+import br.com.apssystem.algafood.api.model.input.RestauranteInput;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.model.Restaurante;
 import br.com.apssystem.algafood.domain.service.CozinhaService;
@@ -47,13 +47,13 @@ public class RestauranteController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public RestauranteModel salvar(@Valid @RequestBody Restaurante restaurante) {
-		Cozinha cozinha = cozinhaService.buscarPorId(restaurante.getCozinha().getId());
-
+	public RestauranteModel salvar(@Valid @RequestBody RestauranteInput restauranteInput) {
+		Cozinha cozinha = cozinhaService.buscarPorId(restauranteInput.getCozinha().getId());
+		Restaurante restaurante = new Restaurante();
 		restaurante.setCozinha(cozinha);
 		restaurante = restauranteService.salvar(restaurante);
 
-		RestauranteModel restauranteModel = toModel(restaurante);
+		RestauranteModel restauranteModel = RestauranteAssembler.toModel(restaurante);
 
 		return restauranteModel;
 	}
@@ -63,7 +63,7 @@ public class RestauranteController {
 			@PathVariable Long id) {
 		cozinhaService.buscarPorId(restaurante.getCozinha().getId());
 		Restaurante restauranteSalvo = restauranteService.autalizar(restaurante, id);
-		return ResponseEntity.ok(toModel(restauranteSalvo));
+		return ResponseEntity.ok(RestauranteAssembler.toModel(restauranteSalvo));
 	}
 
 	@PatchMapping("/{id}")
@@ -119,38 +119,17 @@ public class RestauranteController {
 
 	@GetMapping()
 	public List<RestauranteModel> listarTodos() {
-		return toCollectionModel(restauranteService.listarTodos());
+		return RestauranteAssembler.toCollectionModel(restauranteService.listarTodos());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<RestauranteModel> buscarPorId(@PathVariable Long id) {
 		Restaurante restaurante = restauranteService.buscarPorId(id);
-		return ResponseEntity.ok(toModel(restaurante));
+		return ResponseEntity.ok(RestauranteAssembler.toModel(restaurante));
 	}
 
 	@GetMapping("/por-nome")
 	public List<Restaurante> consultarPorNome(String nome, Long cozinhaId) {
 		return restauranteService.consultarPorNome(nome, cozinhaId);
-	}
-
-	private RestauranteModel toModel(Restaurante restaurante) {
-		CozinhaModel cozinhaModel = new CozinhaModel();
-		cozinhaModel.setId(restaurante.getCozinha().getId());
-		cozinhaModel.setNome(restaurante.getCozinha().getNome());
-
-		RestauranteModel restauranteModel = new RestauranteModel();
-		restauranteModel.setId(restaurante.getId());
-		restauranteModel.setAberto(restaurante.isAberto());
-		restauranteModel.setAtivo(restaurante.isAtivo());
-		restauranteModel.setDataAtualizacao(restaurante.getDataAtualizacao());
-		restauranteModel.setDataCadastro(restaurante.getDataCadastro());
-		restauranteModel.setFrete(restaurante.getFrete());
-		restauranteModel.setNome(restaurante.getNome());
-		restauranteModel.setCozinha(cozinhaModel);
-		return restauranteModel;
-	}
-
-	private List<RestauranteModel> toCollectionModel(List<Restaurante> restaurantes) {
-		return restaurantes.stream().map(restaurante -> toModel(restaurante)).collect(Collectors.toList());
 	}
 }

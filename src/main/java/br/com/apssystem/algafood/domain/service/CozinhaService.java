@@ -63,4 +63,8 @@ public class CozinhaService {
 					String.format("Já existe um cadastro de cozinha com nome %s!", cozinha.getNome()));
 		}
 	}
+	
+	public long count() {
+		return cozinhaRepository.count();
+	}
 }

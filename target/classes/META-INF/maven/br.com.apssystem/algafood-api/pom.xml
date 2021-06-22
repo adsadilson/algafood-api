@@ -22,6 +22,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<model.mapper>2.4.2</model.mapper>
 	</properties>
 
 	<dependencies>
@@ -65,11 +66,17 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-		<!--  Para teste de api -->
+		<!-- Funcionalidade de fazer teste de api -->
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- Funcionalidade de fazer conversão de entidades -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${model.mapper}</version>
 		</dependency>
 	</dependencies>
 

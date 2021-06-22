@@ -1,4 +1,4 @@
-package br.com.apssystem.algafood.api.model.mixin;
+package br.com.apssystem.algafood.api.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
