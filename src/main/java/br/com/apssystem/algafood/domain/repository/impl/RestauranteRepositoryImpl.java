@@ -18,7 +18,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 	@Override
 	public List<Restaurante> teste() {
 		
-		var jpql = "from Restaurante";
+		var jpql = "from Restaurante r join fetch r.cozinha";
 		
 		return manager.createQuery(jpql, Restaurante.class)
 				.getResultList();

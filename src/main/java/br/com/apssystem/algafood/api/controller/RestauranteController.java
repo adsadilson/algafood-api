@@ -45,25 +45,18 @@ public class RestauranteController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public RestauranteModel salvar(@Valid @RequestBody RestauranteInput restauranteInput) {
-
+	public RestauranteModel adicionar(@Valid @RequestBody RestauranteInput restauranteInput) {
 		Restaurante restaurante = mapper.toDomainObject(restauranteInput);
-
-		restaurante = service.salvar(restaurante);
-
+		restaurante = service.adicionar(restaurante);
 		return mapper.toModel(restaurante);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<RestauranteModel> atualizar(@Valid @RequestBody RestauranteInput restauranteInput,
 			@PathVariable Long id) {
-
 		Restaurante restauranteAtual = service.buscarPorId(id);
-
 		mapper.copyToDomainObject(restauranteInput, restauranteAtual);
-
 		restauranteAtual = service.autalizar(restauranteAtual);
-
 		return ResponseEntity.ok(mapper.toModel(restauranteAtual));
 	}
 

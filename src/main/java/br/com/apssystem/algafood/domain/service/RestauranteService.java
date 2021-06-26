@@ -24,7 +24,7 @@ public class RestauranteService {
 	private CidadeService cidadeService;
 
 	@Transactional
-	public Restaurante salvar(Restaurante restaurante) {
+	public Restaurante adicionar(Restaurante restaurante) {
 		if (restaurante.getId() == null) {
 			restaurante.setAtivo(true);
 		}
@@ -42,7 +42,7 @@ public class RestauranteService {
 
 	@Transactional
 	public Restaurante autalizar(Restaurante restaurante) {
-		return salvar(restaurante);
+		return adicionar(restaurante);
 	}
 
 	@Transactional
