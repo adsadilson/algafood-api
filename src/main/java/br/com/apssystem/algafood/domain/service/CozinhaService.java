@@ -19,12 +19,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CozinhaService {
 
-	private CozinhaRepository cozinhaRepository;
+	private CozinhaRepository repository;
 
 	@Transactional
 	public Cozinha salvar(Cozinha cozinha) {
 		cozinhaExistente(cozinha);
-		return cozinhaRepository.save(cozinha);
+		return repository.save(cozinha);
 	}
 
 	@Transactional
@@ -35,8 +35,8 @@ public class CozinhaService {
 	@Transactional
 	public void excluir(Long id) {
 		try {
-			cozinhaRepository.deleteById(id);
-			cozinhaRepository.flush();
+			repository.deleteById(id);
+			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new RegistroNaoEncontradoException("Cozinha", id);
 		} catch (DataIntegrityViolationException e) {
@@ -45,21 +45,21 @@ public class CozinhaService {
 	}
 
 	public List<Cozinha> listarTodos() {
-		return cozinhaRepository.findAll();
+		return repository.findAll();
 	}
 
 	public List<Cozinha> buscarPorNome(String nome) {
-		return cozinhaRepository.findByNomeContaining(nome);
+		return repository.findByNomeContaining(nome);
 	}
 
 	public Cozinha buscarPorId(Long id) {
-		Cozinha cozinha = cozinhaRepository.findById(id)
+		Cozinha cozinha = repository.findById(id)
 				.orElseThrow(() -> new RegistroNaoEncontradoException("Cozinha", id));
 		return cozinha;
 	}
 
 	public void cozinhaExistente(Cozinha cozinha) {
-		boolean cozinhaPorNomeEmUso = cozinhaRepository.findByNome(cozinha.getNome()).stream()
+		boolean cozinhaPorNomeEmUso = repository.findByNome(cozinha.getNome()).stream()
 				.anyMatch(cozinhaExistente -> !cozinhaExistente.equals(cozinha));
 		if (cozinhaPorNomeEmUso) {
 			throw new NegocioException(
@@ -68,6 +68,6 @@ public class CozinhaService {
 	}
 	
 	public long count() {
-		return cozinhaRepository.count();
+		return repository.count();
 	}
 }

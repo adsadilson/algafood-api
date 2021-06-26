@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CidadeService {
 
-	private CidadeRepository cidadeRepository;
+	private CidadeRepository repository;
 
 	private EstadoService estadoService;
 
@@ -28,7 +28,7 @@ public class CidadeService {
 		Estado estado = estadoService.buscarPorId(cidade.getEstado().getId());
 		cidade.setEstado(estado);
 		cidadeExistente(cidade.getNome(), estado.getSigla());
-		return cidadeRepository.save(cidade);
+		return repository.save(cidade);
 	}
 
 	@Transactional
@@ -39,7 +39,7 @@ public class CidadeService {
 	@Transactional
 	public void excluir(Long id) {
 		try {
-			cidadeRepository.deleteById(id);
+			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new RegistroNaoEncontradoException("Cidade", id);
 		} catch (DataIntegrityViolationException e) {
@@ -48,17 +48,17 @@ public class CidadeService {
 	}
 
 	public Cidade buscarPorId(Long id) {
-		Cidade cidade = cidadeRepository.findById(id)
+		Cidade cidade = repository.findById(id)
 				.orElseThrow(() -> new RegistroNaoEncontradoException("Cidade", id));
 		return cidade;
 	}
 
 	public List<Cidade> listarTodos() {
-		return cidadeRepository.findAll();
+		return repository.findAll();
 	}
 
 	public boolean cidadeExistente(String cid, String uf) {
-		Cidade cidade = cidadeRepository.consultarCidadeEstado(cid, uf);
+		Cidade cidade = repository.consultarCidadeEstado(cid, uf);
 		if (null != cidade) {
 			throw new NegocioException(
 					String.format("Já existe um cadastro de cidade com nome %s para o estado %s ", cid, uf));

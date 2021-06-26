@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.apssystem.algafood.api.converter.CozinhaConverter;
+import br.com.apssystem.algafood.api.mapper.CozinhaMapper;
 import br.com.apssystem.algafood.api.model.CozinhaModel;
 import br.com.apssystem.algafood.api.model.input.CozinhaInput;
 import br.com.apssystem.algafood.domain.model.Cozinha;
@@ -29,40 +29,41 @@ import lombok.AllArgsConstructor;
 public class CozinhaController {
 
 	private CozinhaService serivce;
-	private CozinhaConverter cozinhaConverter;
+	private CozinhaMapper mapper;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public CozinhaModel salvar(@Valid @RequestBody CozinhaInput cozinhaInput) {
-		Cozinha cozinha = cozinhaConverter.toDomainObject(cozinhaInput);
-		return cozinhaConverter.toModel(serivce.salvar(cozinha));
+		Cozinha cozinha = mapper.toDomainObject(cozinhaInput);
+		return mapper.toModel(serivce.salvar(cozinha));
 	}
 
 	@PutMapping("/{id}")
 	public CozinhaModel atualizar(@Valid @RequestBody CozinhaInput cozinhaInput, @PathVariable Long id) {
 		Cozinha cozinha = serivce.buscarPorId(id);
-		return cozinhaConverter.toModel(serivce.atualizar(cozinha));
+		return mapper.toModel(serivce.atualizar(cozinha));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluir(@PathVariable Long id) {
+	public ResponseEntity<String> excluir(@PathVariable Long id) {
 		serivce.excluir(id);
-		return ResponseEntity.noContent().build();
+		return new ResponseEntity<String>("Cozinha de código " + id + " foi excluído com sucesso!",
+				HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping("/{id}")
 	public CozinhaModel buscarPorId(@PathVariable Long id) {
-		return cozinhaConverter.toModel(serivce.buscarPorId(id));
+		return mapper.toModel(serivce.buscarPorId(id));
 	}
 
 	@GetMapping("/porNome/{nome}")
 	public List<CozinhaModel> buscarPorNome(@PathVariable String nome) {
-		return cozinhaConverter.toCollectionModel(serivce.buscarPorNome(nome));
+		return mapper.toCollectionModel(serivce.buscarPorNome(nome));
 	}
 
 	@GetMapping
 	public List<CozinhaModel> listarTodos() {
-		return cozinhaConverter.toCollectionModel(serivce.listarTodos());
+		return mapper.toCollectionModel(serivce.listarTodos());
 	}
 
 }

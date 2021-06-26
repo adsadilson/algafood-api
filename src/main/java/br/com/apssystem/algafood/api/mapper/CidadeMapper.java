@@ -1,4 +1,4 @@
-package br.com.apssystem.algafood.api.converter;
+package br.com.apssystem.algafood.api.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +13,7 @@ import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.model.Estado;
 
 @Component
-public class CidadeConverter {
+public class CidadeMapper {
 
 	@Autowired
 	private ModelMapper modelMapper;

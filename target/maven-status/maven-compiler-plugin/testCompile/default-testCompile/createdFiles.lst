@@ -1,0 +1,3 @@
+br\com\apssystem\algafood\util\ResourceUtils.class
+br\com\apssystem\algafood\util\DatabaseCleaner.class
+br\com\apssystem\algafood\test\CozinhaIntegrationIT.class

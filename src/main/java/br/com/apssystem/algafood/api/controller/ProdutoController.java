@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.apssystem.algafood.api.mapper.ProdutoMapper;
+import br.com.apssystem.algafood.api.model.ProdutoModel;
+import br.com.apssystem.algafood.api.model.input.ProdutoInput;
 import br.com.apssystem.algafood.domain.model.Produto;
 import br.com.apssystem.algafood.domain.service.ProdutoService;
 import lombok.AllArgsConstructor;
@@ -25,36 +28,39 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ProdutoController {
 
-	private ProdutoService produtoService;
+	private ProdutoService service;
+	private ProdutoMapper mapper;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Produto salvar(@Valid @RequestBody Produto produto) {
-		Produto produtoSalva = produtoService.salvar(produto);
-		return produtoSalva;
+	public ProdutoModel salvar(@Valid @RequestBody ProdutoInput input) {
+		Produto produto = mapper.toDomainObject(input);
+		return mapper.toModel(service.salvar(produto));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Produto> atualizar(@Valid @RequestBody Produto produto, @PathVariable Long id) {
-		Produto produtoSalvor = produtoService.atualizar(produto, id);
-		return ResponseEntity.ok(produtoSalvor);
+	public ResponseEntity<ProdutoModel> atualizar(@Valid @RequestBody ProdutoInput input, @PathVariable Long id) {
+		Produto produto = service.buscarPorId(id);
+		mapper.copyToDomainObject(input, produto);
+		return ResponseEntity.ok(mapper.toModel(service.atualizar(produto)));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluir(@PathVariable Long id) {
-		produtoService.excluir(id);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<String> excluir(@PathVariable Long id) {
+		service.excluir(id);
+		return new ResponseEntity<String>("Produto de código " + id + " foi excluído com sucesso!",
+				HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping("{id}")
-	public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
-		Produto produto = produtoService.buscarPorId(id);
-		return ResponseEntity.ok(produto);
+	public ResponseEntity<ProdutoModel> buscarPorId(@PathVariable Long id) {
+		Produto produto = service.buscarPorId(id);
+		return ResponseEntity.ok(mapper.toModel(produto));
 	}
 
 	@GetMapping
-	public List<Produto> listarTodos() {
-		return produtoService.listarTodos();
+	public List<ProdutoModel> listarTodos() {
+		return mapper.toColletionModel(service.listarTodos());
 	}
 
 }

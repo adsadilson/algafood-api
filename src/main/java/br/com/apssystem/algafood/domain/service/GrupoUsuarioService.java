@@ -2,7 +2,6 @@ package br.com.apssystem.algafood.domain.service;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -18,22 +17,21 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class GrupoUsuarioService {
 
-	private GrupoUsuarioRepository grupoUsuarioRepository;
+	private GrupoUsuarioRepository repository;
 
-	public GrupoUsuario salvar(GrupoUsuario grupoUsuario) {
+	public GrupoUsuario adicionar(GrupoUsuario grupoUsuario) {
 		grupoUsuarioExistente(grupoUsuario);
-		return grupoUsuarioRepository.save(grupoUsuario);
+		return repository.save(grupoUsuario);
 	}
 
-	public GrupoUsuario atualizar(GrupoUsuario grupoUsuario, Long id) {
-		GrupoUsuario grupoUsuarioSalvo = buscarPorId(id);
-		BeanUtils.copyProperties(grupoUsuario, grupoUsuarioSalvo, "id");
-		return salvar(grupoUsuarioSalvo);
+	public GrupoUsuario atualizar(GrupoUsuario grupoUsuario) {
+		return adicionar(grupoUsuario);
 	}
 
 	public void excluir(Long id) {
 		try {
-			grupoUsuarioRepository.deleteById(id);
+			repository.deleteById(id);
+			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new RegistroNaoEncontradoException("Grupo de Usuário", id);
 		} catch (DataIntegrityViolationException e) {
@@ -42,17 +40,17 @@ public class GrupoUsuarioService {
 	}
 
 	public List<GrupoUsuario> listarTodos() {
-		return grupoUsuarioRepository.findAll();
+		return repository.findAll();
 	}
 
 	public GrupoUsuario buscarPorId(Long id) {
-		GrupoUsuario grupoUsuarioSalvo = grupoUsuarioRepository.findById(id).orElseThrow(() -> new NegocioException(
+		GrupoUsuario grupoUsuarioSalvo = repository.findById(id).orElseThrow(() -> new NegocioException(
 				String.format("Não existe nenhum cadastro de Grupo de Usuário com esse código %d", id)));
 		return grupoUsuarioSalvo;
 	}
 
 	public void grupoUsuarioExistente(GrupoUsuario grupoUsuario) {
-		boolean grupoUsuarioSalvo = grupoUsuarioRepository.findByNome(grupoUsuario.getNome()).stream()
+		boolean grupoUsuarioSalvo = repository.findByNome(grupoUsuario.getNome()).stream()
 				.anyMatch(grupoExistente -> !grupoExistente.equals(grupoUsuario));
 		if (grupoUsuarioSalvo) {
 			throw new NegocioException(

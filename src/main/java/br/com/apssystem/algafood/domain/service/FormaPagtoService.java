@@ -18,10 +18,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class FormaPagtoService {
 
-	private FormaPagtoRespository formaPagtoRespository;
+	private FormaPagtoRespository repository;
 
 	public FormaPagto salvar(FormaPagto formaPagto) {
-		return formaPagtoRespository.save(formaPagto);
+		return repository.save(formaPagto);
 	}
 
 	public FormaPagto atualizar(FormaPagto formaPagto, Long id) {
@@ -32,7 +32,8 @@ public class FormaPagtoService {
 
 	public void excluir(Long id) {
 		try {
-			formaPagtoRespository.deleteById(id);
+			repository.deleteById(id);
+			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new RegistroNaoEncontradoException("Forma de Pagto", id);
 		} catch (DataIntegrityViolationException e) {
@@ -41,17 +42,17 @@ public class FormaPagtoService {
 	}
 
 	public List<FormaPagto> listarTodos() {
-		return formaPagtoRespository.findAll();
+		return repository.findAll();
 	}
 
 	public FormaPagto buscarPorId(Long id) {
-		FormaPagto formaPagto = formaPagtoRespository.findById(id).orElseThrow(() -> new NegocioException(
+		FormaPagto formaPagto = repository.findById(id).orElseThrow(() -> new NegocioException(
 				String.format("Não existe nenhum cadastro de Forma de Pagto com esse código %d", id)));
 		return formaPagto;
 	}
 
 	public void formaPagtoExistente(FormaPagto formaPagto) {
-		boolean result = formaPagtoRespository.findByDescricao(formaPagto.getDescricao()).stream()
+		boolean result = repository.findByDescricao(formaPagto.getDescricao()).stream()
 				.anyMatch(fPagtoExistente -> !fPagtoExistente.equals(formaPagto));
 		if (result) {
 			throw new NegocioException(

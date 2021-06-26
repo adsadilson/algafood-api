@@ -13,22 +13,15 @@ import lombok.Setter;
 public class RestauranteModel {
 
 	private Long id;
-
 	private String nome;
-
 	private BigDecimal frete;
-
-	@JsonIgnore
 	private boolean ativo;
-
 	@JsonIgnore
 	private boolean aberto;
-
 	@JsonIgnore
 	private LocalDate dataCadastro;
-
-	@JsonIgnore
 	private LocalDate dataAtualizacao;
-
 	private CozinhaModel cozinha;
+	
+	private EnderecoModel endereco;
 }

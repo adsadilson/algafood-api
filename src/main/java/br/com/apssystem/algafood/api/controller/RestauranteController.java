@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.apssystem.algafood.api.converter.RestauranteConverter;
 import br.com.apssystem.algafood.api.exception.ValidacaoException;
+import br.com.apssystem.algafood.api.mapper.RestauranteMapper;
 import br.com.apssystem.algafood.api.model.RestauranteModel;
 import br.com.apssystem.algafood.api.model.input.RestauranteInput;
 import br.com.apssystem.algafood.domain.model.Restaurante;
@@ -38,68 +38,81 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RestauranteController {
 
-	private RestauranteService restauranteService;
+	private RestauranteService service;
 	private CozinhaService cozinhaService;
-	private RestauranteConverter restuaranteConverter;
+	private RestauranteMapper mapper;
 	private SmartValidator validator;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public RestauranteModel salvar(@Valid @RequestBody RestauranteInput restauranteInput) {
 
-		Restaurante restaurante = restuaranteConverter.toDomainObject(restauranteInput);
+		Restaurante restaurante = mapper.toDomainObject(restauranteInput);
 
-		restaurante = restauranteService.salvar(restaurante);
+		restaurante = service.salvar(restaurante);
 
-		return restuaranteConverter.toModel(restaurante);
+		return mapper.toModel(restaurante);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<RestauranteModel> atualizar(@Valid @RequestBody RestauranteInput restauranteInput,
 			@PathVariable Long id) {
 
-		Restaurante restauranteAtual = restauranteService.buscarPorId(id);
+		Restaurante restauranteAtual = service.buscarPorId(id);
 
-		restuaranteConverter.copyToDomainObject(restauranteInput, restauranteAtual);
+		mapper.copyToDomainObject(restauranteInput, restauranteAtual);
 
-		restauranteAtual = restauranteService.autalizar(restauranteAtual);
+		restauranteAtual = service.autalizar(restauranteAtual);
 
-		return ResponseEntity.ok(restuaranteConverter.toModel(restauranteAtual));
+		return ResponseEntity.ok(mapper.toModel(restauranteAtual));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluir(@PathVariable Long id) {
-		restauranteService.buscarPorId(id);
-		restauranteService.excluir(id);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<String> excluir(@PathVariable Long id) {
+		service.buscarPorId(id);
+		service.excluir(id);
+		return new ResponseEntity<String>("Restaurante de código " + id + " foi excluído com sucesso!",
+				HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping()
 	public List<RestauranteModel> listarTodos() {
-		return restuaranteConverter.toCollectionModel(restauranteService.listarTodos());
+		return mapper.toCollectionModel(service.listarTodos());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<RestauranteModel> buscarPorId(@PathVariable Long id) {
 
-		Restaurante restaurante = restauranteService.buscarPorId(id);
+		Restaurante restaurante = service.buscarPorId(id);
 
-		return ResponseEntity.ok(restuaranteConverter.toModel(restaurante));
+		return ResponseEntity.ok(mapper.toModel(restaurante));
 	}
 
 	@GetMapping("/por-nome")
 	public List<RestauranteModel> consultarPorNome(String nome, Long cozinhaId) {
-		return restuaranteConverter.toCollectionModel(restauranteService.consultarPorNome(nome, cozinhaId));
+		return mapper.toCollectionModel(service.consultarPorNome(nome, cozinhaId));
 	}
 
 	@PatchMapping("/{id}")
 	public ResponseEntity<Restaurante> atualizarParcial(@Valid @RequestBody Map<String, Object> campos,
 			@PathVariable Long id) {
-		Restaurante restaurante = restauranteService.buscarPorId(id);
+		Restaurante restaurante = service.buscarPorId(id);
 		merge(campos, restaurante);
 		validate(restaurante, "restaurante");
-		restauranteService.autalizar(restaurante);
+		service.autalizar(restaurante);
 		return ResponseEntity.ok(restaurante);
+	}
+
+	@PutMapping("{id}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativo(@PathVariable Long id) {
+		service.ativar(id);
+	}
+
+	@DeleteMapping("{id}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativo(@PathVariable Long id) {
+		service.inativar(id);
 	}
 
 	private void validate(Restaurante restaurante, String objectName) {

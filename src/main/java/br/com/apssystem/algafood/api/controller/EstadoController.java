@@ -17,16 +17,16 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EstadoController {
 
-	private EstadoService estadoService;
+	private EstadoService service;
 
 	@GetMapping
 	public List<Estado> listarTodos() {
-		return estadoService.listarTodos();
+		return service.listarTodos();
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Estado> buscarPorId(@PathVariable Long id) {
-		Estado estado = estadoService.buscarPorId(id);
+		Estado estado = service.buscarPorId(id);
 		return ResponseEntity.ok(estado);
 	}
 }

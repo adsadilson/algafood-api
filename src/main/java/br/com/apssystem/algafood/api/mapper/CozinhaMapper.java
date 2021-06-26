@@ -1,4 +1,4 @@
-package br.com.apssystem.algafood.api.converter;
+package br.com.apssystem.algafood.api.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +12,7 @@ import br.com.apssystem.algafood.api.model.input.CozinhaInput;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 
 @Component
-public class CozinhaConverter {
+public class CozinhaMapper {
 
 	@Autowired
 	private ModelMapper modelMapper;

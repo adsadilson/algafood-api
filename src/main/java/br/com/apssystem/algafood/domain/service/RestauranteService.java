@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
 import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
+import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.model.Restaurante;
 import br.com.apssystem.algafood.domain.repository.RestauranteRepository;
@@ -18,17 +19,25 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RestauranteService {
 
-	private RestauranteRepository restauranteRepository;
+	private RestauranteRepository repository;
 	private CozinhaService cozinhaService;
+	private CidadeService cidadeService;
 
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		if (restaurante.getId() == null) {
 			restaurante.setAtivo(true);
 		}
+		
 		Cozinha cozinha = cozinhaService.buscarPorId(restaurante.getCozinha().getId());
+		
 		restaurante.setCozinha(cozinha);
-		return restauranteRepository.save(restaurante);
+		
+		if (restaurante.getEndereco().getCidade().getId() != null) {
+			Cidade cidade = cidadeService.buscarPorId(restaurante.getEndereco().getCidade().getId());
+			restaurante.getEndereco().setCidade(cidade);
+		}
+		return repository.save(restaurante);
 	}
 
 	@Transactional
@@ -39,8 +48,8 @@ public class RestauranteService {
 	@Transactional
 	public void excluir(Long id) {
 		try {
-			restauranteRepository.deleteById(id);
-			restauranteRepository.flush();
+			repository.deleteById(id);
+			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new RegistroNaoEncontradoException("Restaurante", id);
 		} catch (DataIntegrityViolationException e) {
@@ -49,17 +58,29 @@ public class RestauranteService {
 	}
 
 	public List<Restaurante> listarTodos() {
-		return restauranteRepository.teste();
+		return repository.teste();
 	}
 
 	public List<Restaurante> consultarPorNome(String nome, Long id) {
-		return restauranteRepository.consultarPorNome(nome, id);
+		return repository.consultarPorNome(nome, id);
 	}
 
 	public Restaurante buscarPorId(Long id) {
-		Restaurante restaurante = restauranteRepository.findById(id)
+		Restaurante restaurante = repository.findById(id)
 				.orElseThrow(() -> new RegistroNaoEncontradoException("Restaurante", id));
 		return restaurante;
+	}
+
+	@Transactional
+	public void ativar(Long id) {
+		Restaurante restauranteAtual = buscarPorId(id);
+		restauranteAtual.ativar();
+	}
+
+	@Transactional
+	public void inativar(Long id) {
+		Restaurante restauranteAtual = buscarPorId(id);
+		restauranteAtual.inativar();
 	}
 
 }

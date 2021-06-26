@@ -82,8 +82,8 @@ class CozinhaIntegrationIT {
 	public void testRetornarStatus201_QuandoCadastrarCozinha() {
 		RestAssured.given()
 			.body(jsonCorretoCozinhaChinesa)
-			.contentType(ContentType.JSON).
-			accept(ContentType.JSON)
+			.contentType(ContentType.JSON)
+			.accept(ContentType.JSON)
 		.when()
 			.post()
 		.then()
