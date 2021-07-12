@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
-import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
+import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.model.Restaurante;
@@ -51,7 +51,7 @@ public class RestauranteService {
 			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new RegistroNaoEncontradoException("Restaurante", id);
+			throw new EntidadeNaoEncontradaException("Restaurante", id);
 		} catch (DataIntegrityViolationException e) {
 			throw new RegistroEmUsoException("Restaurante", id);
 		}
@@ -67,7 +67,7 @@ public class RestauranteService {
 
 	public Restaurante buscarPorId(Long id) {
 		Restaurante restaurante = repository.findById(id)
-				.orElseThrow(() -> new RegistroNaoEncontradoException("Restaurante", id));
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("Restaurante", id));
 		return restaurante;
 	}
 

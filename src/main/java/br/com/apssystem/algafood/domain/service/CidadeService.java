@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
-import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
+import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.model.Estado;
 import br.com.apssystem.algafood.domain.repository.CidadeRepository;
@@ -41,7 +41,7 @@ public class CidadeService {
 		try {
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new RegistroNaoEncontradoException("Cidade", id);
+			throw new EntidadeNaoEncontradaException("Cidade", id);
 		} catch (DataIntegrityViolationException e) {
 			throw new RegistroEmUsoException("Cidade", id);
 		}
@@ -49,7 +49,7 @@ public class CidadeService {
 
 	public Cidade buscarPorId(Long id) {
 		Cidade cidade = repository.findById(id)
-				.orElseThrow(() -> new RegistroNaoEncontradoException("Cidade", id));
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("Cidade", id));
 		return cidade;
 	}
 

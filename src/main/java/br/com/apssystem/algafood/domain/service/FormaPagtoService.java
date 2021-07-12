@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
-import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
+import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.domain.model.FormaPagto;
 import br.com.apssystem.algafood.domain.repository.FormaPagtoRespository;
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public class FormaPagtoService {
 			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new RegistroNaoEncontradoException("Forma de Pagto", id);
+			throw new EntidadeNaoEncontradaException("Forma de Pagto", id);
 		} catch (DataIntegrityViolationException e) {
 			throw new RegistroEmUsoException("Forma de Pagto", id);
 		}

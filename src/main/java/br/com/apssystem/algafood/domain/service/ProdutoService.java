@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
-import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
+import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.domain.model.Produto;
 import br.com.apssystem.algafood.domain.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ public class ProdutoService {
 		try {
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new RegistroNaoEncontradoException("Produto", id);
+			throw new EntidadeNaoEncontradaException("Produto", id);
 		} catch (DataIntegrityViolationException e) {
 			throw new RegistroEmUsoException("Produto", id);
 		}
@@ -40,7 +40,7 @@ public class ProdutoService {
 
 	public Produto buscarPorId(Long id) {
 		Produto produto = repository.findById(id)
-				.orElseThrow(() -> new RegistroNaoEncontradoException("Produto", id));
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("Produto", id));
 		return produto;
 	}
 

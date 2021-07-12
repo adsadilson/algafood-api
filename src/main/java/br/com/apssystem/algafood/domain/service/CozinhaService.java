@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
-import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
+import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.repository.CozinhaRepository;
 import lombok.AllArgsConstructor;
@@ -38,7 +38,7 @@ public class CozinhaService {
 			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new RegistroNaoEncontradoException("Cozinha", id);
+			throw new EntidadeNaoEncontradaException("Cozinha", id);
 		} catch (DataIntegrityViolationException e) {
 			throw new RegistroEmUsoException("Cozinha", id);
 		}
@@ -54,7 +54,7 @@ public class CozinhaService {
 
 	public Cozinha buscarPorId(Long id) {
 		Cozinha cozinha = repository.findById(id)
-				.orElseThrow(() -> new RegistroNaoEncontradoException("Cozinha", id));
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("Cozinha", id));
 		return cozinha;
 	}
 

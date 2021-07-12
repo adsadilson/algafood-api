@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
-import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
+import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.domain.model.GrupoUsuario;
 import br.com.apssystem.algafood.domain.repository.GrupoUsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class GrupoUsuarioService {
 			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new RegistroNaoEncontradoException("Grupo de Usuário", id);
+			throw new EntidadeNaoEncontradaException("Grupo de Usuário", id);
 		} catch (DataIntegrityViolationException e) {
 			throw new RegistroEmUsoException("Grupo de Usuário", id);
 		}

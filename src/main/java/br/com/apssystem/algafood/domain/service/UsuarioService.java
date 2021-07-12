@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
-import br.com.apssystem.algafood.api.exception.RegistroNaoEncontradoException;
+import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.domain.model.Usuario;
 import br.com.apssystem.algafood.domain.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class UsuarioService {
 	}
 
 	public Usuario buscarPorId(Long id) {
-		return repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Usuário", id));
+		return repository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("Usuário", id));
 	}
 
 	public void usuarioExistente(Usuario user) {
@@ -59,7 +59,7 @@ public class UsuarioService {
 			repository.findById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new RegistroNaoEncontradoException("Usuário", id);
+			throw new EntidadeNaoEncontradaException("Usuário", id);
 		} catch (DataIntegrityViolationException e) {
 			throw new RegistroEmUsoException("Usuário", id);
 		}

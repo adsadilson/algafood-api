@@ -96,8 +96,8 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 
-	@ExceptionHandler(RegistroNaoEncontradoException.class)
-	public ResponseEntity<Object> handlerNegocioExcepitonHandler(RegistroNaoEncontradoException ex,
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
+	public ResponseEntity<Object> handlerNegocioExcepitonHandler(EntidadeNaoEncontradaException ex,
 			WebRequest request) {
 
 		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
