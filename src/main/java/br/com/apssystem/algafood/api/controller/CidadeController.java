@@ -21,8 +21,11 @@ import br.com.apssystem.algafood.api.model.CidadeModel;
 import br.com.apssystem.algafood.api.model.input.CidadeInput;
 import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.service.CidadeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 
+@Api(tags = "Cidades")
 @RestController
 @RequestMapping("/cidades")
 @AllArgsConstructor
@@ -31,6 +34,7 @@ public class CidadeController {
 	private CidadeService service;
 	private CidadeMapper mapper;
 
+	@ApiOperation("Cadasta uma cidade")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public CidadeModel salvar(@Valid @RequestBody CidadeInput cidadeInput) {
@@ -38,6 +42,7 @@ public class CidadeController {
 		return mapper.toModel(service.salvar(cidade));
 	}
 
+	@ApiOperation("Atualiza uma cidade por ID")
 	@PutMapping("/{id}")
 	public ResponseEntity<CidadeModel> atualizar(@Valid @RequestBody CidadeInput cidadeInput, @PathVariable Long id) {
 		Cidade cidade = service.buscarPorId(id);
@@ -45,6 +50,7 @@ public class CidadeController {
 		return ResponseEntity.ok(mapper.toModel(service.atualizar(cidade)));
 	}
 
+	@ApiOperation("Excluir uma cidade por ID")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> excluir(@PathVariable Long id) {
 		service.excluir(id);
@@ -52,11 +58,13 @@ public class CidadeController {
 				HttpStatus.NO_CONTENT);
 	}
 
+	@ApiOperation("Busca uma cidade por ID")
 	@GetMapping("/{id}")
 	public CidadeModel buscarPorId(@PathVariable Long id) {
 		return mapper.toModel(service.buscarPorId(id));
 	}
 
+	@ApiOperation("Busca todas as  cidades")
 	@GetMapping
 	public List<CidadeModel> listarTodos() {
 		return mapper.toCollectionModel(service.listarTodos());

@@ -11,5 +11,4 @@ public class EntidadeNaoEncontradaException extends NegocioException {
 	public EntidadeNaoEncontradaException(String classe, Long id) {
 		super(String.format("Não existe nenhum cadastro de %s com código %d", classe, id));
 	}
-
 }
