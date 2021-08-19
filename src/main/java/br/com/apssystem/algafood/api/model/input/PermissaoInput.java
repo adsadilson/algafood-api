@@ -7,6 +7,11 @@ import lombok.Data;
 @Data
 public class PermissaoInput {
 
+	private Long id;
+	
+	@NotBlank
+	private String nome;
+	
 	@NotBlank
 	private String descricao;
 
