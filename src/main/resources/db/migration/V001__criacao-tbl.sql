@@ -36,15 +36,33 @@ CREATE TABLE grupo_usuario (
 
 CREATE TABLE permissao (
 	id serial NOT NULL,
-	descricao varchar(150) NULL,
+	nome varchar(150) NOT NULL,
+	descricao varchar(150) NOT NULL,
 	CONSTRAINT permissao_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE grupo_usuario_permissao (
-	grupo_usuario_id int8 NOT NULL,
+	grupo_usuario_id serial NOT NULL,
 	permissao_id int8 NOT NULL,
 	CONSTRAINT grupo_usuario_x_grupo_usuario_permissao_fk FOREIGN KEY (grupo_usuario_id) REFERENCES grupo_usuario(id),
 	CONSTRAINT permissao_x_grupo_usuario_permissao_fk FOREIGN KEY (permissao_id) REFERENCES permissao(id)
+);
+
+CREATE TABLE usuario (
+	id serial NOT NULL,
+	nome varchar(150) NOT NULL,
+	email varchar(255) NOT NULL,
+	senha varchar NOT NULL,
+	data_cadastro date NOT NULL,
+	CONSTRAINT usuario_pk PRIMARY KEY (id)
+);
+
+
+CREATE TABLE usuario_grupo_usuario (
+	grupo_usuario_id serial NOT NULL,
+	usuario_id int8 NOT NULL,
+	CONSTRAINT usuario_grupo_x_usuario_fk FOREIGN KEY (usuario_id) REFERENCES usuario(id),
+	CONSTRAINT usuario_grupo_x_usuario_fk_1 FOREIGN KEY (grupo_usuario_id) REFERENCES grupo_usuario(id)
 );
 
 CREATE TABLE restaurante (
@@ -72,6 +90,13 @@ CREATE TABLE restaurante_forma_pagto (
 	forma_pagto_id int8 NOT NULL,
 	CONSTRAINT restaurante_x_res_forma_pagto_fk FOREIGN KEY (restaurante_id) REFERENCES restaurante(id),
 	CONSTRAINT forma_pagto_x_res_forma_pagto_fk FOREIGN KEY (forma_pagto_id) REFERENCES forma_pagto(id)
+);
+
+CREATE TABLE restuarante_usuario_responsavel (
+	restaurante_id int8 NOT NULL,
+	usuario_id int8 NOT NULL,
+	CONSTRAINT restuarante_usuario_responsavel_fk FOREIGN KEY (usuario_id) REFERENCES usuario(id),
+	CONSTRAINT restuarante_usuario_responsavel_fk_1 FOREIGN KEY (usuario_id) REFERENCES restaurante(id)
 );
 
 CREATE TABLE produto (
@@ -123,12 +148,12 @@ INSERT INTO cidade(nome, estado_id) VALUES('Garulhos', 26);
 INSERT INTO cidade(nome, estado_id) VALUES('Campinas', 26);
 
 
-INSERT INTO forma_pagto (id, nome, descricao) values (1, 'Cartão de crédito','Cartão de crédito');
-INSERT INTO forma_pagto (id, nome, descricao) values (2, 'Cartão de débito', 'Cartão de débito');
-INSERT INTO forma_pagto (id, nome, descricao) values (3, 'Dinheiro','A vista em dinheiro');
-INSERT INTO forma_pagto (id, nome, descricao) values (4, 'Cheque A vista','A vista');
-INSERT INTO forma_pagto (id, nome, descricao) values (5, 'Cheuqe Pre-datado','A prazo');
-INSERT INTO forma_pagto (id, nome, descricao) values (6, 'Nota a Receber','A prazo');
+INSERT INTO forma_pagto (nome, descricao) values ('Cartão de crédito','Cartão de crédito');
+INSERT INTO forma_pagto (nome, descricao) values ('Cartão de débito', 'Cartão de débito');
+INSERT INTO forma_pagto (nome, descricao) values ('Dinheiro','A vista em dinheiro');
+INSERT INTO forma_pagto (nome, descricao) values ('Cheque A vista','A vista');
+INSERT INTO forma_pagto (nome, descricao) values ('Cheuqe Pre-datado','A prazo');
+INSERT INTO forma_pagto (nome, descricao) values ('Nota a Receber','A prazo');
 
 
 INSERT INTO cozinha(nome) VALUES('Brasileira');
@@ -144,6 +169,11 @@ INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atuali
 INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atualizacao) values (4, 'Java Steakhouse', 12, 3,  now(),  now());
 INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atualizacao) values (5, 'Lanchonete do Tio Sam', 11, 4,  now(),  now());
 INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atualizacao) values (6, 'Bar da Maria', 6, 4,  now(),  now());
+
+update restaurante set aberto = true;
+
+insert into grupo_usuario (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+
 
 
 INSERT INTO restaurante_forma_pagto (restaurante_id, forma_pagto_id) values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);

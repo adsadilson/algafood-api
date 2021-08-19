@@ -1,15 +1,20 @@
 package br.com.apssystem.algafood.api.model.input;
 
+import java.util.Set;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
 @Data
 public class GrupoUsuarioInput {
 
+	private Long id;
+
 	@NotBlank
 	private String nome;
 
-	//@NotNull
-   //rivate List<Permissao> permissoes = new ArrayList<>();
+	@NotNull
+	private Set<PermissaoIdInput> permissaoIdInput;
 }

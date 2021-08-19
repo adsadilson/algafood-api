@@ -21,6 +21,7 @@ import br.com.apssystem.algafood.api.model.GrupoUsuarioModel;
 import br.com.apssystem.algafood.api.model.input.GrupoUsuarioInput;
 import br.com.apssystem.algafood.domain.model.GrupoUsuario;
 import br.com.apssystem.algafood.domain.service.GrupoUsuarioService;
+import br.com.apssystem.algafood.domain.service.PermissaoService;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -29,6 +30,7 @@ import lombok.AllArgsConstructor;
 public class GrupoUsuarioController {
 
 	private GrupoUsuarioService service;
+	private PermissaoService permissaoService;
 	private GrupoUsuarioMapper mapper;
 
 	@GetMapping
@@ -46,13 +48,14 @@ public class GrupoUsuarioController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public GrupoUsuarioModel adicionar(@Valid @RequestBody GrupoUsuarioInput input) {
 		GrupoUsuario grupo = mapper.toDomainObject(input);
+		input.getPermissaoIdInput().forEach(p -> grupo.getPermissoes().add(permissaoService.buscarPorId(p.getId())));
 		return mapper.toModel(service.adicionar(grupo));
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<GrupoUsuarioModel> atualizar(@Valid @RequestBody GrupoUsuarioInput input,
-			@PathVariable Long id) {
-		GrupoUsuario grupo = service.buscarPorId(id);
+	@PutMapping
+	public ResponseEntity<GrupoUsuarioModel> atualizar(@Valid @RequestBody GrupoUsuarioInput input) {
+		GrupoUsuario grupo = service.buscarPorId(input.getId());
+		input.getPermissaoIdInput().forEach(p -> grupo.getPermissoes().add(permissaoService.buscarPorId(p.getId())));
 		mapper.copyToDomainObject(input, grupo);
 		return ResponseEntity.ok(mapper.toModel(service.atualizar(grupo)));
 	}

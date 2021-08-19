@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.RegistroEmUsoException;
-import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.domain.model.GrupoUsuario;
 import br.com.apssystem.algafood.domain.repository.GrupoUsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class GrupoUsuarioService {
 
 	private GrupoUsuarioRepository repository;
 
+	@Transactional
 	public GrupoUsuario adicionar(GrupoUsuario grupoUsuario) {
 		grupoUsuarioExistente(grupoUsuario);
 		return repository.save(grupoUsuario);
@@ -28,6 +30,7 @@ public class GrupoUsuarioService {
 		return adicionar(grupoUsuario);
 	}
 
+	@Transactional
 	public void excluir(Long id) {
 		try {
 			repository.deleteById(id);

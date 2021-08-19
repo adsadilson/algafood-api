@@ -1,8 +1,9 @@
 package br.com.apssystem.algafood.domain.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ import lombok.EqualsAndHashCode;
 public class GrupoUsuario {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "GRUPO_USUARIO_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "GRUPO_USUARIO_ID_SEQ")
 	@EqualsAndHashCode.Include
 	private Long id;
 
@@ -34,9 +35,17 @@ public class GrupoUsuario {
 	@Column(nullable = false, unique = true)
 	private String nome;
 
-	@ManyToMany
-	@JoinTable(name = "grupo_usuario_permissao", 
-	joinColumns = @JoinColumn(name = "grupo_usuario_id"), 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "grupo_usuario_permissao", joinColumns = @JoinColumn(name = "grupo_usuario_id"), 
 	inverseJoinColumns = @JoinColumn(name = "permissao_id"))
-	private List<Permissao> permissoes = new ArrayList<>();
+	private Set<Permissao> permissoes = new HashSet<Permissao>();
+
+	public boolean removerPermissao(Permissao permissao) {
+		return getPermissoes().remove(permissao);
+	}
+
+	public boolean adicionarPermissao(Permissao permissao) {
+		return getPermissoes().add(permissao);
+	}
+
 }
