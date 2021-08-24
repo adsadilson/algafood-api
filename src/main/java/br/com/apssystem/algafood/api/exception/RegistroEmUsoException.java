@@ -9,6 +9,6 @@ public class RegistroEmUsoException extends RuntimeException {
 	}
 
 	public RegistroEmUsoException(String classe, Long id) {
-		super(String.format("%s de código %d não pode ser excluido pois está em uso", classe, id));
+		super(String.format("%s de código %d não pode ser excluido pois possui vinculos com outras tabelas", classe, id));
 	}
 }

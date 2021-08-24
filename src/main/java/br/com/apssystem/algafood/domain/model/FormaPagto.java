@@ -23,6 +23,9 @@ public class FormaPagto {
 	@EqualsAndHashCode.Include
 	private Long id;
 
+	@Column(nullable = false, length = 20)
+	private String nome;
+
 	@Column(nullable = false)
 	private String descricao;
 

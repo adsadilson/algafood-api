@@ -1,13 +1,18 @@
 package br.com.apssystem.algafood.api.model.input;
 
+import java.util.Set;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
 @Data
 public class UsuarioInput {
 
+	private Long id;
+	
 	@NotBlank
 	private String nome;
 
@@ -18,6 +23,7 @@ public class UsuarioInput {
 	@NotBlank
 	private String senha;
 
-	//private List<GrupoUsuario> grupoUsuario;
+	@NotNull
+	private Set<GrupoUsuarioIdInput> grupoUsuarioIdInput;
 
 }

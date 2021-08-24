@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.apssystem.algafood.api.model.UsuarioModel;
+import br.com.apssystem.algafood.api.model.input.UsuarioAtulizarInput;
 import br.com.apssystem.algafood.api.model.input.UsuarioInput;
 import br.com.apssystem.algafood.domain.model.Usuario;
 
@@ -29,7 +30,7 @@ public class UsuarioMapper {
 		return modelMapper.map(input, Usuario.class);
 	}
 
-	public void copyToDomainObject(UsuarioInput input, Usuario user) {
+	public void copyToDomainObject(UsuarioAtulizarInput input, Usuario user) {
 		modelMapper.map(input, user);
 	}
 

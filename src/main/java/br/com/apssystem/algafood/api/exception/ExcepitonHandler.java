@@ -100,7 +100,7 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handlerNegocioExcepitonHandler(EntidadeNaoEncontradaException ex,
 			WebRequest request) {
 
-		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+		HttpStatus status = HttpStatus.BAD_REQUEST;
 
 		ProblemType problemType = ProblemType.ERRO_NEGOCIO;
 

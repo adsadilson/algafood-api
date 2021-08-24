@@ -82,5 +82,27 @@ public class RestauranteService {
 		Restaurante restauranteAtual = buscarPorId(id);
 		restauranteAtual.inativar();
 	}
+	
+	@Transactional
+	public void ativar(List<Long> id) {
+		id.forEach(this::ativar);
+	}
+	
+	@Transactional
+	public void inativar(List<Long> id) {
+		id.forEach(this::inativar);
+	}
+	
+	@Transactional
+	public void abrir(Long id) {
+	    Restaurante restauranteAtual = buscarPorId(id);
+	    restauranteAtual.abrir();
+	}
+
+	@Transactional
+	public void fechar(Long id) {
+	    Restaurante restauranteAtual = buscarPorId(id);
+	    restauranteAtual.fechar();
+	}       
 
 }

@@ -1,6 +1,7 @@
 package br.com.apssystem.algafood.api.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,9 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.apssystem.algafood.api.mapper.UsuarioMapper;
 import br.com.apssystem.algafood.api.model.UsuarioModel;
+import br.com.apssystem.algafood.api.model.input.GrupoUsuarioIdInput;
 import br.com.apssystem.algafood.api.model.input.SenhaInput;
+import br.com.apssystem.algafood.api.model.input.UsuarioAtulizarInput;
 import br.com.apssystem.algafood.api.model.input.UsuarioInput;
+import br.com.apssystem.algafood.domain.model.GrupoUsuario;
 import br.com.apssystem.algafood.domain.model.Usuario;
+import br.com.apssystem.algafood.domain.repository.GrupoUsuarioRepository;
 import br.com.apssystem.algafood.domain.service.UsuarioService;
 import lombok.AllArgsConstructor;
 
@@ -30,6 +35,7 @@ import lombok.AllArgsConstructor;
 public class UsuarioController {
 
 	private UsuarioService service;
+	private GrupoUsuarioRepository grupoUsuarioRepository;
 	private UsuarioMapper mapper;
 
 	@GetMapping
@@ -46,12 +52,29 @@ public class UsuarioController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<UsuarioModel> adicionar(@Valid @RequestBody UsuarioInput input) {
 		Usuario usuario = mapper.toDomainObject(input);
+		
+		List<Long> idsGrupos = input.getGrupoUsuarioIdInput()
+				.stream()
+				.map(GrupoUsuarioIdInput::getId)
+				.collect(Collectors.toList());
+		
+		List<GrupoUsuario> Grupos = grupoUsuarioRepository.findAllById(idsGrupos);
+		usuario.getGrupos().addAll(Grupos);
 		return ResponseEntity.ok(mapper.toModel(service.adicionar(usuario)));
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<UsuarioModel> atualizar(@Valid @RequestBody UsuarioInput input, @PathVariable Long id) {
-		Usuario usuario = service.buscarPorId(id);
+	@PutMapping
+	public ResponseEntity<UsuarioModel> atualizar(@Valid @RequestBody UsuarioAtulizarInput input) {
+		Usuario usuario = service.buscarPorId(input.getId());
+		
+		List<Long> idsGrupos = input.getGrupoUsuarioIdInput()
+				.stream()
+				.map(GrupoUsuarioIdInput::getId)
+				.collect(Collectors.toList());
+		
+		List<GrupoUsuario> Grupos = grupoUsuarioRepository.findAllById(idsGrupos);
+		usuario.getGrupos().clear();
+		usuario.getGrupos().addAll(Grupos);
 		mapper.copyToDomainObject(input, usuario);
 		return ResponseEntity.ok(mapper.toModel(service.atualizar(usuario)));
 	}

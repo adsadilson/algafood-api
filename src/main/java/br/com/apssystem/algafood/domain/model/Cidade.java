@@ -20,15 +20,15 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cidade {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "CIDADE_ID_SEQ")
-	@EqualsAndHashCode.Include
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "CIDADE_ID_SEQ")
+    @EqualsAndHashCode.Include
+    private Long id;
 
-	@Column(nullable = false)
-	private String nome;
+    @Column(nullable = false)
+    private String nome;
 
-	@ManyToOne
-	@JoinColumn(name = "estado_id", nullable = false)
-	private Estado estado;
+    @ManyToOne
+    @JoinColumn(name = "estado_id", nullable = false)
+    private Estado estado;
 }

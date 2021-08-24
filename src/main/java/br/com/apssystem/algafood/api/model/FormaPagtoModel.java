@@ -10,8 +10,6 @@ import lombok.Setter;
 public class FormaPagtoModel {
 
 	private Long id;
-
-	@NotBlank
 	private String descricao;
 
 }

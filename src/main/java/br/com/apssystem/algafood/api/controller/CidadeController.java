@@ -34,7 +34,7 @@ public class CidadeController {
 	private CidadeService service;
 	private CidadeMapper mapper;
 
-	@ApiOperation("Cadasta uma cidade")
+	@ApiOperation("Cadastrar uma cidade")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public CidadeModel salvar(@Valid @RequestBody CidadeInput cidadeInput) {

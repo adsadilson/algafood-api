@@ -68,15 +68,31 @@ public class Restaurante {
 
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<Produto>();
-	
+
 	public void ativar() {
 		setDataAtualizacao(LocalDate.now());
 		setAtivo(true);
 	}
-	
+
 	public void inativar() {
 		setDataAtualizacao(LocalDate.now());
 		setAtivo(false);
+	}
+
+	public void abrir() {
+		setAberto(true);
+	}
+
+	public void fechar() {
+		setAberto(false);
+	}
+
+	public boolean aceitaFormaPagamento(FormaPagto formaPagto) {
+		return getFormasPagtos().contains(formaPagto);
+	}
+
+	public boolean naoAceitaFormaPagamento(FormaPagto formaPagto) {
+		return !aceitaFormaPagamento(formaPagto);
 	}
 
 }

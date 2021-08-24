@@ -48,7 +48,6 @@ public class UsuarioService {
 		return repository.save(usuario);
 	}
 
-	@Transactional
 	public Usuario atualizar(Usuario usuario) {
 		return adicionar(usuario);
 	}
@@ -56,7 +55,7 @@ public class UsuarioService {
 	@Transactional
 	public void excluir(Long id) {
 		try {
-			repository.findById(id);
+			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException("Usuário", id);

@@ -1,6 +1,7 @@
 package br.com.apssystem.algafood.api.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.apssystem.algafood.api.mapper.GrupoUsuarioMapper;
 import br.com.apssystem.algafood.api.model.GrupoUsuarioModel;
 import br.com.apssystem.algafood.api.model.input.GrupoUsuarioInput;
+import br.com.apssystem.algafood.api.model.input.PermissaoIdInput;
 import br.com.apssystem.algafood.domain.model.GrupoUsuario;
+import br.com.apssystem.algafood.domain.model.Permissao;
+import br.com.apssystem.algafood.domain.repository.PermissaoRepository;
 import br.com.apssystem.algafood.domain.service.GrupoUsuarioService;
-import br.com.apssystem.algafood.domain.service.PermissaoService;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -30,7 +33,7 @@ import lombok.AllArgsConstructor;
 public class GrupoUsuarioController {
 
 	private GrupoUsuarioService service;
-	private PermissaoService permissaoService;
+	private PermissaoRepository permissaoRepository;
 	private GrupoUsuarioMapper mapper;
 
 	@GetMapping
@@ -48,14 +51,28 @@ public class GrupoUsuarioController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public GrupoUsuarioModel adicionar(@Valid @RequestBody GrupoUsuarioInput input) {
 		GrupoUsuario grupo = mapper.toDomainObject(input);
-		input.getPermissaoIdInput().forEach(p -> grupo.getPermissoes().add(permissaoService.buscarPorId(p.getId())));
+		
+		List<Long> idsPermissoes = input.getPermissaoIdInputs()
+				.stream()
+				.map(PermissaoIdInput::getId)
+				.collect(Collectors.toList());
+		
+		List<Permissao> permissoes = permissaoRepository.findAllById(idsPermissoes);
+		grupo.getPermissoes().addAll(permissoes);
 		return mapper.toModel(service.adicionar(grupo));
 	}
 
 	@PutMapping
 	public ResponseEntity<GrupoUsuarioModel> atualizar(@Valid @RequestBody GrupoUsuarioInput input) {
 		GrupoUsuario grupo = service.buscarPorId(input.getId());
-		input.getPermissaoIdInput().forEach(p -> grupo.getPermissoes().add(permissaoService.buscarPorId(p.getId())));
+		List<Long> idsPermissoes = input.getPermissaoIdInputs()
+				.stream()
+				.map(PermissaoIdInput::getId)
+				.collect(Collectors.toList());
+		
+		List<Permissao> permissoes = permissaoRepository.findAllById(idsPermissoes);
+		grupo.getPermissoes().clear();
+		grupo.getPermissoes().addAll(permissoes);
 		mapper.copyToDomainObject(input, grupo);
 		return ResponseEntity.ok(mapper.toModel(service.atualizar(grupo)));
 	}

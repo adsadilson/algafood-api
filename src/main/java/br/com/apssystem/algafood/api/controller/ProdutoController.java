@@ -38,9 +38,9 @@ public class ProdutoController {
 		return mapper.toModel(service.salvar(produto));
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<ProdutoModel> atualizar(@Valid @RequestBody ProdutoInput input, @PathVariable Long id) {
-		Produto produto = service.buscarPorId(id);
+	@PutMapping
+	public ResponseEntity<ProdutoModel> atualizar(@Valid @RequestBody ProdutoInput input) {
+		Produto produto = service.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, produto);
 		return ResponseEntity.ok(mapper.toModel(service.atualizar(produto)));
 	}

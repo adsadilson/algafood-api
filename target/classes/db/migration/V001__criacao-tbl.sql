@@ -57,7 +57,6 @@ CREATE TABLE usuario (
 	CONSTRAINT usuario_pk PRIMARY KEY (id)
 );
 
-
 CREATE TABLE usuario_grupo_usuario (
 	grupo_usuario_id serial NOT NULL,
 	usuario_id int8 NOT NULL,
@@ -107,7 +106,46 @@ CREATE TABLE produto (
 	ativo boolean NOT NULL DEFAULT true,
 	restaurante_id int8 NULL,
 	CONSTRAINT produto_pk PRIMARY KEY (id),
-	CONSTRAINT produto_x_restaurante_fk FOREIGN KEY (id) REFERENCES public.restaurante(id)
+	CONSTRAINT produto_x_restaurante_fk FOREIGN KEY (restaurante_id) REFERENCES restaurante(id)
+);
+
+CREATE TABLE pedido (
+	id serial NOT NULL,
+	sub_total numeric(12,2) NULL,
+	taxa_frete numeric(12,2) NULL,
+	valor_total numeric(12,2) NULL,
+	status varchar(30) NULL,
+	data_criacao date NOT NULL,
+	hora time(0) NOT NULL,
+	data_confirmacao date NULL,
+	data_cancelamento date NULL,
+	data_entrega date NULL,
+	forma_pagto_id int8 NOT NULL,
+	restaurante_id int8 NOT NULL,
+	cliente_id int8 NOT NULL,
+	end_cep varchar(15) NULL,
+	end_logradouro varchar(80) NULL,
+	end_numero varchar(15) NULL,
+	end_bairro varchar(80) NULL,
+	end_complemento varchar(70) NULL,
+	end_cidade_id int8,
+	CONSTRAINT pedido_pk PRIMARY KEY (id),
+	CONSTRAINT pedido_fk_forma_pagto FOREIGN KEY (forma_pagto_id) REFERENCES forma_pagto(id),
+	CONSTRAINT pedido_fk_restaurante FOREIGN KEY (restaurante_id) REFERENCES restaurante(id),
+	CONSTRAINT pedido_fk_usuario FOREIGN KEY (cliente_id) REFERENCES usuario(id)
+);
+
+CREATE TABLE item_pedido (
+	id serial NOT NULL,
+	preco_unitario numeric(12,2) NULL,
+	preco_total numeric(12,2) NULL,
+	quantidade int4 NULL,
+	observacao varchar NULL,
+	pedido_id int8 NOT NULL,
+	produto_id int8 NOT NULL,
+	CONSTRAINT item_pedido_pk PRIMARY KEY (id),
+	CONSTRAINT item_pedido_fk_pedido FOREIGN KEY (pedido_id) REFERENCES pedido(id),
+	CONSTRAINT item_pedido_fk_produto FOREIGN KEY (produto_id) REFERENCES produto(id)
 );
 
 
@@ -139,14 +177,12 @@ INSERT INTO estado (nome, sigla, capital, regiao) VALUES('Sergipe', 'SE', 'Araca
 INSERT INTO estado (nome, sigla, capital, regiao) VALUES('São Paulo', 'SP', 'São Paulo', 'Sudeste');
 INSERT INTO estado (nome, sigla, capital, regiao) VALUES('Tocantins', 'TO', 'Palmas', 'Norte');
 
-
 INSERT INTO cidade(nome, estado_id) VALUES('Planalto', 5);
 INSERT INTO cidade(nome, estado_id) VALUES('Jequie', 5);
 INSERT INTO cidade(nome, estado_id) VALUES('Vitoria da Conquista', 5);
 INSERT INTO cidade(nome, estado_id) VALUES('São Paulo', 26);
 INSERT INTO cidade(nome, estado_id) VALUES('Garulhos', 26);
 INSERT INTO cidade(nome, estado_id) VALUES('Campinas', 26);
-
 
 INSERT INTO forma_pagto (nome, descricao) values ('Cartão de crédito','Cartão de crédito');
 INSERT INTO forma_pagto (nome, descricao) values ('Cartão de débito', 'Cartão de débito');
@@ -155,7 +191,6 @@ INSERT INTO forma_pagto (nome, descricao) values ('Cheque A vista','A vista');
 INSERT INTO forma_pagto (nome, descricao) values ('Cheuqe Pre-datado','A prazo');
 INSERT INTO forma_pagto (nome, descricao) values ('Nota a Receber','A prazo');
 
-
 INSERT INTO cozinha(nome) VALUES('Brasileira');
 INSERT INTO cozinha(nome) VALUES('Italiana');
 INSERT INTO cozinha(nome) VALUES('Japonesa');
@@ -163,20 +198,63 @@ INSERT INTO cozinha(nome) VALUES('Bahiana');
 INSERT INTO cozinha(nome) VALUES('Mineira');
 INSERT INTO cozinha(nome) VALUES('Internacional');
 
-INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atualizacao, end_cidade_id, end_cep, end_logradouro, end_numero, end_bairro) values (1, 'Thai Gourmet', 10, 1,  now(),  now(), 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
-INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atualizacao) values (2, 'Thai Delivery', 9.50, 1,  now(),  now());
-INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atualizacao) values (3, 'Tuk Tuk Comida Indiana', 15, 2,  now(),  now());
-INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atualizacao) values (4, 'Java Steakhouse', 12, 3,  now(),  now());
-INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atualizacao) values (5, 'Lanchonete do Tio Sam', 11, 4,  now(),  now());
-INSERT INTO restaurante (id, nome, frete, cozinha_id, data_cadastro, data_atualizacao) values (6, 'Bar da Maria', 6, 4,  now(),  now());
+INSERT INTO restaurante (nome, frete, cozinha_id, data_cadastro, data_atualizacao, end_cidade_id, end_cep, end_logradouro,
+end_numero, end_bairro) VALUES ('Thai Gourmet', 10, 1,  now(),  now(), 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
+INSERT INTO restaurante (nome, frete, cozinha_id, data_cadastro, data_atualizacao) VALUES ('Thai Delivery', 9.50, 1,  now(),  now());
+INSERT INTO restaurante (nome, frete, cozinha_id, data_cadastro, data_atualizacao) VALUES ('Tuk Tuk Comida Indiana', 15, 2,  now(),  now());
+INSERT INTO restaurante (nome, frete, cozinha_id, data_cadastro, data_atualizacao) VALUES ('Java Steakhouse', 12, 3,  now(),  now());
+INSERT INTO restaurante (nome, frete, cozinha_id, data_cadastro, data_atualizacao) VALUES ('Lanchonete do Tio Sam', 11, 4,  now(),  now());
+INSERT INTO restaurante (nome, frete, cozinha_id, data_cadastro, data_atualizacao) VALUES ('Bar da Maria', 6, 4,  now(),  now());
 
-update restaurante set aberto = true;
+UPDATE restaurante SET aberto = true;
 
-insert into grupo_usuario (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+INSERT INTO grupo_usuario (nome) VALUES ('Administrador'), ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
 
+INSERT INTO permissao (nome, descricao) VALUES ('Cadastar Usuário','Permitir cadastrar um novo usuário'),
+('Editar Usuário', 'Permitir atualizar o cadastro de usuário'), ('Excluir Usuário','Permitir excluir um usuário'), 
+('Cadastrar Permissão' ,'Permitir cadastar uma nova permissão');
 
+INSERT INTO restaurante_forma_pagto (restaurante_id, forma_pagto_id) VALUES (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3),
+(4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
 
-INSERT INTO restaurante_forma_pagto (restaurante_id, forma_pagto_id) values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
+INSERT INTO grupo_usuario_permissao (grupo_usuario_id, permissao_id) VALUES (1,1), (1,2), (1,3), (1,4), (2,1), (2,2);
+
+INSERT INTO usuario (nome, email, senha, data_cadastro) VALUES ('APSSYSTEM', 'apssystem@apss.com.br', '123', '2021-01-01'),
+('CLEITON', 'cleiton@apss.com.br', '456', '2021-01-05'), ('CAMILA', 'camila@apss.com.br', '6654', '2021-01-10'),
+('FERNANDA', 'fernanda@apss.com.br', '456', '2021-01-30'), ('MARCELO', 'marcelo@apss.com.br', '879454', '2021-03-01');
+
+INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
+VALUES ('Almôndega caseira', 'Almôndega caseira', 35.40, true, 1);
+
+INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
+VALUES ('Estrogonofe', 'Estrogonofe', 25, true, 1);
+
+INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
+VALUES ('Costelinha de porco assada', 'Costelinha de porco assada', 45, true, 2);
+
+INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
+VALUES ('Filé de atum assado no forno', 'Filé de atum assado no forno', 75.40, true, 2);
+
+INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
+VALUES ('Salada de feijão fradinho simples', 'Salada de feijão fradinho simples', 30, true, 2);
+
+INSERT INTO pedido (restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro, end_numero,
+                    end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
+VALUES (1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+'CRIADO', '2021-08-24', '06:00', 95.80, 10, 85.80);
+
+INSERT INTO pedido (restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro, end_numero,
+                    end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
+VALUES (4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', '2021-08-24', '06:23', 150.8, 0, 150.8);
+
+INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (1, 1, 2, 35.4, 70.8, null);
+
+INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (1, 2, 1, 25, 25, 'Menos picante, por favor');
+
+INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (2, 4, 2, 75.4, 150.8, 'Ao ponto');
 
 
 

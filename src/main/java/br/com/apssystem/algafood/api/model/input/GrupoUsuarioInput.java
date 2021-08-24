@@ -16,5 +16,5 @@ public class GrupoUsuarioInput {
 	private String nome;
 
 	@NotNull
-	private Set<PermissaoIdInput> permissaoIdInput;
+	private Set<PermissaoIdInput> permissaoIdInputs;
 }

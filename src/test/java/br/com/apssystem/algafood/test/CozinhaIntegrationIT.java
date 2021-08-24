@@ -109,7 +109,7 @@ class CozinhaIntegrationIT {
 			.accept(ContentType.JSON)
 		.when()
 			.get("/{id}").then()
-		.statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value());
+		.statusCode(HttpStatus.BAD_REQUEST.value());
 	}
 	
 	// @formatter:on

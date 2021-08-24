@@ -21,10 +21,10 @@ import lombok.EqualsAndHashCode;
 @SequenceGenerator(name = "COZINHA_ID", sequenceName = "COZINHA_ID_SEQ")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Cozinha {
+public class Cozinha{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "COZINHA_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "COZINHA_ID_SEQ")
 	@EqualsAndHashCode.Include
 	private Long id;
 

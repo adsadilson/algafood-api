@@ -1,8 +1,10 @@
 package br.com.apssystem.algafood.domain.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +29,7 @@ import lombok.EqualsAndHashCode;
 public class Usuario {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "USUARIO_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "USUARIO_ID_SEQ")
 	@EqualsAndHashCode.Include
 	private Long id;
 
@@ -44,9 +46,10 @@ public class Usuario {
 	@Column(name = "data_cadastro", nullable = false, columnDefinition = "datetime")
 	private LocalDateTime dataCadastro;
 
-	@ManyToMany
-	@JoinTable(name = "usuario_grupo_usuario", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_usuario_id"))
-	private List<GrupoUsuario> grupoUsuario;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "usuario_grupo_usuario", joinColumns = @JoinColumn(name = "usuario_id"), 
+	inverseJoinColumns = @JoinColumn(name = "grupo_usuario_id"))
+	private Set<GrupoUsuario> grupos = new HashSet<GrupoUsuario>();
 
 	public boolean senhaCoincideCom(String senha) {
 		return getSenha().equals(senha);
@@ -54,6 +57,14 @@ public class Usuario {
 
 	public boolean senhaNaoCoincideCom(String senha) {
 		return !senhaCoincideCom(senha);
+	}
+	
+	public boolean removerGrupo(GrupoUsuario grupo) {
+		return getGrupos().remove(grupo);
+	}
+	
+	public boolean adicionarGrupo(GrupoUsuario grupo) {
+		return getGrupos().add(grupo);
 	}
 
 }

@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
+import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.ValidacaoException;
 import br.com.apssystem.algafood.api.mapper.RestauranteMapper;
 import br.com.apssystem.algafood.api.model.RestauranteModel;
@@ -93,6 +95,26 @@ public class RestauranteController {
 		service.autalizar(restaurante);
 		return ResponseEntity.ok(restaurante);
 	}
+	
+	@PutMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+			service.ativar(restauranteIds);
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+	
+	@DeleteMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativarMultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+			service.inativar(restauranteIds);
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
 
 	@PutMapping("{id}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -105,6 +127,18 @@ public class RestauranteController {
 	public void inativo(@PathVariable Long id) {
 		service.inativar(id);
 	}
+	
+	@PutMapping("/{id}/abertura")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void abrir(@PathVariable Long id) {
+	    service.abrir(id);
+	}
+
+	@PutMapping("/{id}/fechamento")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void fechar(@PathVariable Long id) {
+		service.fechar(id);
+	}        
 
 	private void validate(Restaurante restaurante, String objectName) {
 		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);

@@ -34,7 +34,7 @@ public class PermissaoService {
 	@Transactional
 	public void excluir(Long id) {
 		try {
-			repository.findById(id);
+			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException("permissão", id);
@@ -60,4 +60,5 @@ public class PermissaoService {
 					String.format("Já existe um cadastro de permissão com nome %s!", permissao.getNome()));
 		}
 	}
+
 }

@@ -19,7 +19,6 @@ public class RestauranteModel {
 	private String nome;
 	private BigDecimal frete;
 	private boolean ativo;
-	@JsonIgnore
 	private boolean aberto;
 	@JsonIgnore
 	private LocalDate dataCadastro;
