@@ -19,8 +19,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CidadeService {
 
+	private static final String NOMECLASS ="Cidade";
 	private CidadeRepository repository;
-
 	private EstadoService estadoService;
 
 	@Transactional
@@ -41,16 +41,15 @@ public class CidadeService {
 		try {
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("Cidade", id);
+			throw new EntidadeNaoEncontradaException(NOMECLASS, id);
 		} catch (DataIntegrityViolationException e) {
-			throw new RegistroEmUsoException("Cidade", id);
+			throw new RegistroEmUsoException(NOMECLASS, id);
 		}
 	}
 
 	public Cidade buscarPorId(Long id) {
-		Cidade cidade = repository.findById(id)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException("Cidade", id));
-		return cidade;
+		return repository.findById(id)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(NOMECLASS, id));
 	}
 
 	public List<Cidade> listarTodos() {
@@ -58,7 +57,7 @@ public class CidadeService {
 	}
 
 	public boolean cidadeExistente(String cid, String uf) {
-		Cidade cidade = repository.consultarCidadeEstado(cid, uf);
+		var cidade = repository.consultarCidadeEstado(cid, uf);
 		if (null != cidade) {
 			throw new NegocioException(
 					String.format("Já existe um cadastro de cidade com nome %s para o estado %s ", cid, uf));

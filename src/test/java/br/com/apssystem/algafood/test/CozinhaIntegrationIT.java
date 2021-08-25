@@ -25,113 +25,112 @@ import io.restassured.http.ContentType;
 @TestPropertySource("/application.test.properties")
 class CozinhaIntegrationIT {
 
-	@Autowired
-	private DatabaseCleaner databaseCleaner;
+    @Autowired
+    DatabaseCleaner databaseCleaner;
 
-	@Autowired
-	private CozinhaRepository cozinhaRepository;
+    @Autowired
+    CozinhaRepository cozinhaRepository;
 
-	private Long  qtdeCozinha;
-	private String jsonCorretoCozinhaChinesa;
-	private Cozinha cozinhaAmericana;
+    private String jsonCorretoCozinhaChinesa;
+    private Cozinha cozinhaAmericana;
 
-	private static final int COZINHA_ID_INEXISTENTE = 100;
+    private static final int COZINHA_ID_INEXISTENTE = 100;
 
-	@LocalServerPort
-	private int port;
+    @LocalServerPort
+    int port;
 
-	// @formatter:off
-	
-	@BeforeEach
-	public void setUp() {
-		// Habilitar o log no console para mostrar o erro apresentado.
-		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-		RestAssured.port = port;
-		RestAssured.basePath = "algafood-api/cozinhas";
-		
-		jsonCorretoCozinhaChinesa = ResourceUtils.getContentFromResource(
-				"/json/cozinha/cozinha-chinesa.json");
+    // @formatter:off
 
-		databaseCleaner.clearTables();
-		prepararDados();
-	}
+    @BeforeEach
+    void setUp() {
+        // Habilitar o log no console para mostrar o erro apresentado.
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.port = port;
+        RestAssured.basePath = "algafood-api/cozinhas";
 
-	@Test
-	public void deveRetornarStatus200_QuandoConsultarCozinhas() {
-		RestAssured.given()
-			.accept(ContentType.JSON)
-		.when()
-			.get()
-		.then()
-			.statusCode(HttpStatus.OK.value());
-	}
+        jsonCorretoCozinhaChinesa = ResourceUtils.getContentFromResource(
+                "/json/cozinha/cozinha-chinesa.json");
 
-	@Test
-	public void deveConterListQtdeCozinhas_QuandoConsultarCozinhas() {
-		RestAssured.given()
-			.accept(ContentType.JSON)
-		.when()
-			.get()
-		.then()
-			//.body("", Matchers.hasValue(4))
-			.body("nome", Matchers.hasItems("Internacional", "Italiana"));
-		// Validar se no corpo da resposta tem as conzinhas mecionadas
-	}
+        databaseCleaner.clearTables();
+        prepararDados();
+    }
 
-	@Test
-	public void testRetornarStatus201_QuandoCadastrarCozinha() {
-		RestAssured.given()
-			.body(jsonCorretoCozinhaChinesa)
-			.contentType(ContentType.JSON)
-			.accept(ContentType.JSON)
-		.when()
-			.post()
-		.then()
-			.statusCode(HttpStatus.CREATED.value());
-	}
+    @Test
+    void deveRetornarStatus200_QuandoConsultarCozinhas() {
+        RestAssured.given()
+                .accept(ContentType.JSON)
+                .when()
+                .get()
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
 
-	@Test
-	public void deveRetornarRespostaEStatusCorretos_QuandoConsultarCozinhaExistente() {
-		RestAssured.given()
-			.pathParam("id", cozinhaAmericana.getId())
-			.accept(ContentType.JSON)
-		.when()
-			.get("/{id}")
-		.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("nome", equalTo(cozinhaAmericana.getNome()));
-	}
+    @Test
+    void deveConterListQtdeCozinhas_QuandoConsultarCozinhas() {
+        RestAssured.given()
+                .accept(ContentType.JSON)
+                .when()
+                .get()
+                .then()
+                //.body("", Matchers.hasValue(4))
+                .body("nome", Matchers.hasItems("Internacional", "Italiana"));
+        // Validar se no corpo da resposta tem as conzinhas mecionadas
+    }
 
-	@Test
-	public void deveRetornarStatus404_QuandoConsultarCozinhaInexistente() {
-		RestAssured.given()
-			.pathParam("id", COZINHA_ID_INEXISTENTE)
-			.accept(ContentType.JSON)
-		.when()
-			.get("/{id}").then()
-		.statusCode(HttpStatus.BAD_REQUEST.value());
-	}
-	
-	// @formatter:on
+    @Test
+    void testRetornarStatus201_QuandoCadastrarCozinha() {
+        RestAssured.given()
+                .body(jsonCorretoCozinhaChinesa)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.CREATED.value());
+    }
 
-	private void prepararDados() {
-		Cozinha cozinha1 = new Cozinha();
-		cozinha1.setNome("Tailandesa");
-		cozinhaRepository.save(cozinha1);
+    @Test
+    void deveRetornarRespostaEStatusCorretos_QuandoConsultarCozinhaExistente() {
+        RestAssured.given()
+                .pathParam("id", cozinhaAmericana.getId())
+                .accept(ContentType.JSON)
+                .when()
+                .get("/{id}")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("nome", equalTo(cozinhaAmericana.getNome()));
+    }
 
-		cozinhaAmericana = new Cozinha();
-		cozinhaAmericana.setNome("Americana");
-		cozinhaAmericana = cozinhaRepository.save(cozinhaAmericana);
+    @Test
+    void deveRetornarStatus404_QuandoConsultarCozinhaInexistente() {
+        RestAssured.given()
+                .pathParam("id", COZINHA_ID_INEXISTENTE)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/{id}").then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
 
-		Cozinha cozinha3 = new Cozinha();
-		cozinha3.setNome("Internacional");
-		cozinhaRepository.save(cozinha3);
+    // @formatter:on
 
-		Cozinha cozinha4 = new Cozinha();
-		cozinha4.setNome("Italiana");
-		cozinhaRepository.save(cozinha4);
+    private void prepararDados() {
+        Cozinha cozinha1 = new Cozinha();
+        cozinha1.setNome("Tailandesa");
+        cozinhaRepository.save(cozinha1);
 
-		this.qtdeCozinha = cozinhaRepository.count();
-	}
+        cozinhaAmericana = new Cozinha();
+        cozinhaAmericana.setNome("Americana");
+        cozinhaAmericana = cozinhaRepository.save(cozinhaAmericana);
+
+        Cozinha cozinha3 = new Cozinha();
+        cozinha3.setNome("Internacional");
+        cozinhaRepository.save(cozinha3);
+
+        Cozinha cozinha4 = new Cozinha();
+        cozinha4.setNome("Italiana");
+        cozinhaRepository.save(cozinha4);
+
+        //Long qtdeCozinha = cozinhaRepository.count();
+    }
 
 }

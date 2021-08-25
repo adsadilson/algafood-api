@@ -36,7 +36,7 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 	private MessageSource messageSource;
 
 	private String joinPath(List<Reference> references) {
-		return references.stream().map(ref -> ref.getFieldName()).collect(Collectors.joining("."));
+		return references.stream().map(Reference::getFieldName).collect(Collectors.joining("."));
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(RegistroEmUsoException.class)
-	public ResponseEntity<?> handlerEntidadeEmUso(RegistroEmUsoException ex, WebRequest request) {
+	public ResponseEntity<Object> handlerEntidadeEmUso(RegistroEmUsoException ex, WebRequest request) {
 
 		HttpStatus status = HttpStatus.CONFLICT;
 

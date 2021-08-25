@@ -63,16 +63,16 @@ public class RestauranteController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> excluir(@PathVariable Long id) {
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		service.buscarPorId(id);
 		service.excluir(id);
-		return new ResponseEntity<String>("Restaurante de código " + id + " foi excluído com sucesso!",
-				HttpStatus.NO_CONTENT);
+		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping()
 	public List<RestauranteModel> listarTodos() {
-		return mapper.toCollectionModel(service.listarTodos());
+		List<Restaurante> list = service.listarTodos();
+		return mapper.toCollectionModel(list);
 	}
 
 	@GetMapping("/{id}")
@@ -168,7 +168,6 @@ public class RestauranteController {
 			Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
 			field.setAccessible(true);
 			Object novoValor = ReflectionUtils.getField(field, restOrigem);
-			// System.out.println(nomePropriedade + " - " + vlrPropriedade);
 			ReflectionUtils.setField(field, restauranteDestino, novoValor);
 		});
 	}

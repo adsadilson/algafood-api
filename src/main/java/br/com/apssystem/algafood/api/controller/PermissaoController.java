@@ -48,10 +48,9 @@ public class PermissaoController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> excluir(@PathVariable Long id) {
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		permissaoService.excluir(id);
-		return new ResponseEntity<String>(String.format("Permissão de código %d foi excluído com sucesso!", id),
-				HttpStatus.NO_CONTENT);
+		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping

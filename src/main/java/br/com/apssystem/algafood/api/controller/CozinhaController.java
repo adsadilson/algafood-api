@@ -45,10 +45,9 @@ public class CozinhaController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> excluir(@PathVariable Long id) {
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		serivce.excluir(id);
-		return new ResponseEntity<String>("Cozinha de código " + id + " foi excluído com sucesso!",
-				HttpStatus.NO_CONTENT);
+		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping("/{id}")

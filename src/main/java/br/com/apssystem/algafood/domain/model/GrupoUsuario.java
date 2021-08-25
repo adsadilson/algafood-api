@@ -16,36 +16,40 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 @Entity
 @Table(name = "grupo_usuario")
-@SequenceGenerator(name = "GRUPO_USUARIO_ID", sequenceName = "GRUPO_USUARIO_ID_SEQ")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class GrupoUsuario {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "GRUPO_USUARIO_ID_SEQ")
-	@EqualsAndHashCode.Include
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+    private Long id;
 
-	@NotBlank
-	@Column(nullable = false, unique = true)
-	private String nome;
+    @NotBlank
+    @Column(nullable = false, unique = true)
+    private String nome;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "grupo_usuario_permissao", joinColumns = @JoinColumn(name = "grupo_usuario_id"), 
-	inverseJoinColumns = @JoinColumn(name = "permissao_id"))
-	private Set<Permissao> permissoes = new HashSet<Permissao>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "grupo_usuario_permissao", joinColumns = @JoinColumn(name = "grupo_usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "permissao_id"))
 
-	public boolean removerPermissao(Permissao permissao) {
-		return getPermissoes().remove(permissao);
-	}
+    private Set<Permissao> permissoes = new HashSet<>();
 
-	public boolean adicionarPermissao(Permissao permissao) {
-		return getPermissoes().add(permissao);
-	}
+    public boolean removerPermissao(Permissao permissao) {
+
+        return getPermissoes().remove(permissao);
+    }
+
+    public boolean adicionarPermissao(Permissao permissao) {
+
+        return getPermissoes().add(permissao);
+    }
 
 }

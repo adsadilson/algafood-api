@@ -256,6 +256,8 @@ VALUES (1, 2, 1, 25, 25, 'Menos picante, por favor');
 INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 VALUES (2, 4, 2, 75.4, 150.8, 'Ao ponto');
 
+INSERT INTO usuario_grupo_usuario (grupo_usuario_id, usuario_id) VALUES (1,1), (1,2), (1,3), (1,4), (1,5);
+
 
 
 

@@ -16,14 +16,14 @@ import br.com.apssystem.algafood.domain.model.Usuario;
 public class UsuarioMapper {
 
 	@Autowired
-	private ModelMapper modelMapper;
+	ModelMapper modelMapper;
 
 	public UsuarioModel toModel(Usuario usuario) {
 		return modelMapper.map(usuario, UsuarioModel.class);
 	}
 
 	public List<UsuarioModel> toCollectionModel(List<Usuario> usuarios) {
-		return usuarios.stream().map(user -> toModel(user)).collect(Collectors.toList());
+		return usuarios.stream().map(this::toModel).collect(Collectors.toList());
 	}
 
 	public Usuario toDomainObject(UsuarioInput input) {

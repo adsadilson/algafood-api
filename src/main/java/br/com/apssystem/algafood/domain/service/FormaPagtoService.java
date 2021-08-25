@@ -18,9 +18,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class FormaPagtoService {
 
+	private static final String NOMECLASSE = "Forma de Pagto";
 	private FormaPagtoRespository repository;
 
 	public FormaPagto salvar(FormaPagto formaPagto) {
+		this.formaPagtoExistente(formaPagto);
 		return repository.save(formaPagto);
 	}
 
@@ -35,9 +37,9 @@ public class FormaPagtoService {
 			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("Forma de Pagto", id);
+			throw new EntidadeNaoEncontradaException(NOMECLASSE, id);
 		} catch (DataIntegrityViolationException e) {
-			throw new RegistroEmUsoException("Forma de Pagto", id);
+			throw new RegistroEmUsoException(NOMECLASSE, id);
 		}
 	}
 
@@ -46,9 +48,8 @@ public class FormaPagtoService {
 	}
 
 	public FormaPagto buscarPorId(Long id) {
-		FormaPagto formaPagto = repository.findById(id).orElseThrow(() -> new NegocioException(
+		return repository.findById(id).orElseThrow(() -> new NegocioException(
 				String.format("Não existe nenhum cadastro de Forma de Pagto com esse código %d", id)));
-		return formaPagto;
 	}
 
 	public void formaPagtoExistente(FormaPagto formaPagto) {

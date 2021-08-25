@@ -1,22 +1,5 @@
 package br.com.apssystem.algafood.api.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
 import br.com.apssystem.algafood.api.mapper.GrupoUsuarioMapper;
 import br.com.apssystem.algafood.api.model.GrupoUsuarioModel;
 import br.com.apssystem.algafood.api.model.input.GrupoUsuarioInput;
@@ -26,6 +9,13 @@ import br.com.apssystem.algafood.domain.model.Permissao;
 import br.com.apssystem.algafood.domain.repository.PermissaoRepository;
 import br.com.apssystem.algafood.domain.service.GrupoUsuarioService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/grupo-usuarios")
@@ -78,10 +68,9 @@ public class GrupoUsuarioController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> excluir(@PathVariable Long id) {
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		service.excluir(id);
-		return new ResponseEntity<String>("Grupo de Usuário de código " + id + " foi excluído com sucesso!",
-				HttpStatus.NO_CONTENT);
+		return ResponseEntity.noContent().build();
 	}
 
 }

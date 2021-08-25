@@ -1,19 +1,15 @@
 package br.com.apssystem.algafood.api.model.input;
 
+import br.com.apssystem.algafood.domain.enums.StatusPedido;
+import lombok.Data;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
-import br.com.apssystem.algafood.domain.enums.StatusPedido;
-import br.com.apssystem.algafood.domain.model.Endereco;
-import br.com.apssystem.algafood.domain.model.FormaPagto;
-import br.com.apssystem.algafood.domain.model.ItemPedido;
-import br.com.apssystem.algafood.domain.model.Restaurante;
-import br.com.apssystem.algafood.domain.model.Usuario;
-import lombok.Data;
 
 @Data
 public class PedidoInput {
@@ -22,18 +18,27 @@ public class PedidoInput {
 	private BigDecimal subtotal;
 	private BigDecimal taxaFrete;
 	private BigDecimal valorTotal;
-	private Endereco enderecoEntrega;
+
+	@NotNull
+	@Valid
+	private EnderecoInput enderecoEntrega;
+
 	private StatusPedido status;
 	private LocalDateTime dataEntrega;
 	
 	@NotNull
-	private FormaPagto formaPagto;
+	@Valid
+	private FormaPagtoIdInput formaPagto;
 	
 	@NotNull
-	private Restaurante restaurante;
+	@Valid
+	private RestauranteIdInput restaurante;
 	
 	@NotNull
-	private Usuario cliente;
-	
-	private List<ItemPedido> itens = new ArrayList<>();
+	@Valid
+	private UsuarioIdInput cliente;
+
+	@Size(min = 1)
+	@Valid
+	private List<ItemPedidoInput> itens = new ArrayList<>();
 }

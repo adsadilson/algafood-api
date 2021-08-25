@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class GrupoUsuarioService {
 
+	private static final String NOMECLASSE = "Grupo de Usuário";
 	private GrupoUsuarioRepository repository;
 
 	@Transactional
@@ -26,6 +27,7 @@ public class GrupoUsuarioService {
 		return repository.save(grupoUsuario);
 	}
 
+	@Transactional
 	public GrupoUsuario atualizar(GrupoUsuario grupoUsuario) {
 		return adicionar(grupoUsuario);
 	}
@@ -36,9 +38,9 @@ public class GrupoUsuarioService {
 			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("Grupo de Usuário", id);
+			throw new EntidadeNaoEncontradaException(NOMECLASSE, id);
 		} catch (DataIntegrityViolationException e) {
-			throw new RegistroEmUsoException("Grupo de Usuário", id);
+			throw new RegistroEmUsoException(NOMECLASSE, id);
 		}
 	}
 
@@ -47,9 +49,8 @@ public class GrupoUsuarioService {
 	}
 
 	public GrupoUsuario buscarPorId(Long id) {
-		GrupoUsuario grupoUsuarioSalvo = repository.findById(id).orElseThrow(() -> new NegocioException(
+		return repository.findById(id).orElseThrow(() -> new NegocioException(
 				String.format("Não existe nenhum cadastro de Grupo de Usuário com esse código %d", id)));
-		return grupoUsuarioSalvo;
 	}
 
 	public void grupoUsuarioExistente(GrupoUsuario grupoUsuario) {

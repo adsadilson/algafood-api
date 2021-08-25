@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RestauranteService {
 
+	private static final String NOMECLASSE = "Restaurante";
 	private RestauranteRepository repository;
 	private CozinhaService cozinhaService;
 	private CidadeService cidadeService;
@@ -51,14 +52,14 @@ public class RestauranteService {
 			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("Restaurante", id);
+			throw new EntidadeNaoEncontradaException(NOMECLASSE, id);
 		} catch (DataIntegrityViolationException e) {
-			throw new RegistroEmUsoException("Restaurante", id);
+			throw new RegistroEmUsoException(NOMECLASSE, id);
 		}
 	}
 
 	public List<Restaurante> listarTodos() {
-		return repository.teste();
+		return repository.listarTodosRestaurantes();
 	}
 
 	public List<Restaurante> consultarPorNome(String nome, Long id) {
@@ -66,9 +67,8 @@ public class RestauranteService {
 	}
 
 	public Restaurante buscarPorId(Long id) {
-		Restaurante restaurante = repository.findById(id)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException("Restaurante", id));
-		return restaurante;
+		return repository.findById(id)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(NOMECLASSE, id));
 	}
 
 	@Transactional

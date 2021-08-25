@@ -13,5 +13,4 @@ public class ProdutoModel {
 	private BigDecimal preco;
 	private boolean ativo;
 
-	//private Restaurante restaurante;
 }

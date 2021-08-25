@@ -1,19 +1,15 @@
 package br.com.apssystem.algafood.api.model;
 
+import br.com.apssystem.algafood.domain.enums.StatusPedido;
+import br.com.apssystem.algafood.domain.model.ItemPedido;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.apssystem.algafood.domain.enums.StatusPedido;
-import br.com.apssystem.algafood.domain.model.Endereco;
-import br.com.apssystem.algafood.domain.model.FormaPagto;
-import br.com.apssystem.algafood.domain.model.ItemPedido;
-import br.com.apssystem.algafood.domain.model.Restaurante;
-import br.com.apssystem.algafood.domain.model.Usuario;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
-import lombok.Data;
 
 @Data
 public class PedidoModel {

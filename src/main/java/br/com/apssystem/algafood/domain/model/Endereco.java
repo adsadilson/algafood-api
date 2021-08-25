@@ -6,9 +6,12 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
 public class Endereco	 {
 
@@ -16,7 +19,7 @@ public class Endereco	 {
 	private String cep;
 	
 	@Column(name = "end_logradouro")
-	private String lougradouro;
+	private String logradouro;
 
 	@Column(name = "end_numero")
 	private String numero;

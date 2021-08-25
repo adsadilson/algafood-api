@@ -1,12 +1,10 @@
 package br.com.apssystem.algafood.api.model.input;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
+@Data
 public class FormaPagtoIdInput {
 
 	@NotNull

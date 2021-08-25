@@ -5,35 +5,25 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import br.com.apssystem.algafood.domain.enums.StatusPedido;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "pedido")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Pedido {
 
     @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "sub_total", precision = 12, scale = 2)
@@ -68,7 +58,7 @@ public class Pedido {
     @Column(name = "data_entrega")
     private LocalDateTime dataEntrega;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "forma_pagto_id", nullable = false)
     private FormaPagto formaPagto;
 
@@ -80,21 +70,33 @@ public class Pedido {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Usuario cliente;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemPedido> itens = new ArrayList<>();
 
+    public boolean inclusao() {
+        if (null == this.getId()) {
+            this.setStatus(StatusPedido.CRIADO);
+            return true;
+        }
+        return false;
+    }
+
     public void calcularValorTotal() {
-        this.subtotal = getItens().stream()
+        getItens().forEach(ItemPedido::calcularPrecoTotal);
+        this.subtotal = this.getItens().stream()
                 .map(item -> item.getPrecoTotal())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
         this.valorTotal = this.subtotal.add(this.taxaFrete);
     }
 
     public void definirFrete() {
+
         setTaxaFrete(getRestaurante().getFrete());
     }
 
     public void atribuirPedidoAosItens() {
+
         getItens().forEach(item -> item.setPedido(this));
     }
 }

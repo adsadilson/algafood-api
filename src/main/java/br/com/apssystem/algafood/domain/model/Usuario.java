@@ -16,15 +16,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "usuario")
 @SequenceGenerator(name = "USUARIO_ID", sequenceName = "USUARIO_ID_SEQ")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario {
 
@@ -49,7 +50,7 @@ public class Usuario {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "usuario_grupo_usuario", joinColumns = @JoinColumn(name = "usuario_id"), 
 	inverseJoinColumns = @JoinColumn(name = "grupo_usuario_id"))
-	private Set<GrupoUsuario> grupos = new HashSet<GrupoUsuario>();
+	private Set<GrupoUsuario> grupos = new HashSet<>();
 
 	public boolean senhaCoincideCom(String senha) {
 		return getSenha().equals(senha);

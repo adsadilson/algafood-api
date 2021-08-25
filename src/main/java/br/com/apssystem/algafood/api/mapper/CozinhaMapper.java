@@ -14,22 +14,22 @@ import br.com.apssystem.algafood.domain.model.Cozinha;
 @Component
 public class CozinhaMapper {
 
-	@Autowired
-	private ModelMapper modelMapper;
+    @Autowired
+    ModelMapper modelMapper;
 
-	public CozinhaModel toModel(Cozinha cozinha) {
-		return modelMapper.map(cozinha, CozinhaModel.class);
-	}
+    public CozinhaModel toModel(Cozinha cozinha) {
+        return modelMapper.map(cozinha, CozinhaModel.class);
+    }
 
-	public List<CozinhaModel> toCollectionModel(List<Cozinha> cozinhas) {
-		return cozinhas.stream().map(cozinha -> toModel(cozinha)).collect(Collectors.toList());
-	}
+    public List<CozinhaModel> toCollectionModel(List<Cozinha> cozinhas) {
+        return cozinhas.stream().map(this::toModel).collect(Collectors.toList());
+    }
 
-	public Cozinha toDomainObject(CozinhaInput cozinhaInput) {
-		return modelMapper.map(cozinhaInput, Cozinha.class);
-	}
+    public Cozinha toDomainObject(CozinhaInput cozinhaInput) {
+        return modelMapper.map(cozinhaInput, Cozinha.class);
+    }
 
-	public void copyToDomainObject(CozinhaInput cozinhaInput, Cozinha cozinha) {
-		modelMapper.map(cozinhaInput, cozinha);
-	}
+    public void copyToDomainObject(CozinhaInput cozinhaInput, Cozinha cozinha) {
+        modelMapper.map(cozinhaInput, cozinha);
+    }
 }

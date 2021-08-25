@@ -23,7 +23,7 @@ public class CidadeMapper {
 	}
 
 	public List<CidadeModel> toCollectionModel(List<Cidade> cozinhas) {
-		return cozinhas.stream().map(cidade -> toModel(cidade)).collect(Collectors.toList());
+		return cozinhas.stream().map(this::toModel).collect(Collectors.toList());
 	}
 
 	public Cidade toDomainObject(CidadeInput cidadeInput) {

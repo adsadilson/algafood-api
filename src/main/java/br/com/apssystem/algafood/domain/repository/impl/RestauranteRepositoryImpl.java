@@ -16,10 +16,9 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 	private EntityManager manager;
 	
 	@Override
-	public List<Restaurante> teste() {
-		
-		var jpql = "from Restaurante r join fetch r.cozinha";
-		
+	public List<Restaurante> listarTodosRestaurantes() {
+		var jpql = "from Restaurante r join fetch r.cozinha join fetch r.formasPagtos join fetch r.endereco e " +
+				"join fetch e.cidade a join fetch a.estado";
 		return manager.createQuery(jpql, Restaurante.class)
 				.getResultList();
 	}

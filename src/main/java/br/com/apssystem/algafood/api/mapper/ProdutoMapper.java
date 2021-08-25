@@ -14,22 +14,22 @@ import br.com.apssystem.algafood.domain.model.Produto;
 @Component
 public class ProdutoMapper {
 
-	@Autowired
-	private ModelMapper modelMapper;
+    @Autowired
+    ModelMapper modelMapper;
 
-	public ProdutoModel toModel(Produto produto) {
-		return modelMapper.map(produto, ProdutoModel.class);
-	}
+    public ProdutoModel toModel(Produto produto) {
+        return modelMapper.map(produto, ProdutoModel.class);
+    }
 
-	public List<ProdutoModel> toColletionModel(List<Produto> produtos) {
-		return produtos.stream().map(produto -> toModel(produto)).collect(Collectors.toList());
-	}
+    public List<ProdutoModel> toColletionModel(List<Produto> produtos) {
+        return produtos.stream().map(this::toModel).collect(Collectors.toList());
+    }
 
-	public Produto toDomainObject(ProdutoInput input) {
-		return modelMapper.map(input, Produto.class);
-	}
+    public Produto toDomainObject(ProdutoInput input) {
+        return modelMapper.map(input, Produto.class);
+    }
 
-	public void copyToDomainObject(ProdutoInput input, Produto produto) {
-		modelMapper.map(input, produto);
-	}
+    public void copyToDomainObject(ProdutoInput input, Produto produto) {
+        modelMapper.map(input, produto);
+    }
 }

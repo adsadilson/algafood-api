@@ -46,10 +46,9 @@ public class FormaPagtoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> excluir(@PathVariable Long id) {
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		service.excluir(id);
-		return new ResponseEntity<String>("Forma de Pagto de código " + id + " foi excluído com sucesso!",
-				HttpStatus.NO_CONTENT);
+		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping("/{id}")

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import br.com.apssystem.algafood.api.mapper.PedidoResumoMapper;
+import br.com.apssystem.algafood.api.model.PedidoResumoModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +33,7 @@ PedidoController {
 
 	private PedidoService pedidoService;
 	private PedidoMapper mapper;
+	private PedidoResumoMapper pedidoResumoMapper;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -59,8 +62,8 @@ PedidoController {
 	}
 
 	@GetMapping
-	public List<PedidoModel> listarTodos() {
-		return mapper.toColletionModel(pedidoService.listarTodos());
+	public List<PedidoResumoModel> listarTodos() {
+		return pedidoResumoMapper.toColletionModel(pedidoService.listarTodos());
 	}
 
 }

@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PermissaoService {
 
+	private static final String NOMECLASSE = "Permissão";
 	private PermissaoRepository repository;
 
 	@Transactional
@@ -27,6 +28,7 @@ public class PermissaoService {
 		return repository.save(permissao);
 	}
 
+	@Transactional
 	public Permissao atualizar(Permissao permissao) {
 		return salvar(permissao);
 	}
@@ -37,9 +39,9 @@ public class PermissaoService {
 			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("permissão", id);
+			throw new EntidadeNaoEncontradaException(NOMECLASSE, id);
 		} catch (DataIntegrityViolationException e) {
-			throw new RegistroEmUsoException("permissão", id);
+			throw new RegistroEmUsoException(NOMECLASSE, id);
 		}
 	}
 
@@ -48,9 +50,8 @@ public class PermissaoService {
 	}
 
 	public Permissao buscarPorId(Long id) {
-		Permissao permissao = repository.findById(id).orElseThrow(() -> new NegocioException(
+		return repository.findById(id).orElseThrow(() -> new NegocioException(
 				String.format("Não existe nenhum cadastro de permissão com esse código %d", id)));
-		return permissao;
 	}
 	
 	public void permissaoExistente(Permissao permissao) {

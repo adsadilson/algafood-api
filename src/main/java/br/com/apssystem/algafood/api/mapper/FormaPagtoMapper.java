@@ -14,26 +14,26 @@ import br.com.apssystem.algafood.domain.model.FormaPagto;
 @Component
 public class FormaPagtoMapper {
 
-	@Autowired
-	ModelMapper modelMapper;
+    @Autowired
+    ModelMapper modelMapper;
 
-	public FormaPagtoModel toModel(FormaPagto formaPagto) {
-		return modelMapper.map(formaPagto, FormaPagtoModel.class);
-	}
+    public FormaPagtoModel toModel(FormaPagto formaPagto) {
+        return modelMapper.map(formaPagto, FormaPagtoModel.class);
+    }
 
-	public List<FormaPagtoModel> toCollectionModel(List<FormaPagto> formaPagtos) {
-		return formaPagtos.stream().map(formaPagto -> toModel(formaPagto)).collect(Collectors.toList());
-	}
-	
-	public FormaPagto toDomainObject(FormaPagtoInput formaPagtoInput) {
-		return modelMapper.map(formaPagtoInput, FormaPagto.class);
-	}
+    public List<FormaPagtoModel> toCollectionModel(List<FormaPagto> formaPagtos) {
+        return formaPagtos.stream().map(this::toModel).collect(Collectors.toList());
+    }
 
-	public void copyToDomainObject(FormaPagtoInput formaPagtoInput, FormaPagto formaPagto) {
-		// Para evitar org.hibernate.HibernateException: identifier of an instance of
-		// br.com.apssystem.algafood-api.domain.model.FormaPagto was altered from 1 to 2
-		//cidade.setEstado(new Estado());
-		modelMapper.map(formaPagtoInput, formaPagto);
-	}
+    public FormaPagto toDomainObject(FormaPagtoInput formaPagtoInput) {
+        return modelMapper.map(formaPagtoInput, FormaPagto.class);
+    }
+
+    public void copyToDomainObject(FormaPagtoInput formaPagtoInput, FormaPagto formaPagto) {
+        // Para evitar org.hibernate.HibernateException: identifier of an instance of
+        // br.com.apssystem.algafood-api.domain.model.FormaPagto was altered from 1 to 2
+        //cidade.setEstado(new Estado());
+        modelMapper.map(formaPagtoInput, formaPagto);
+    }
 
 }

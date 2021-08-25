@@ -52,10 +52,9 @@ public class CidadeController {
 
 	@ApiOperation("Excluir uma cidade por ID")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> excluir(@PathVariable Long id) {
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		service.excluir(id);
-		return new ResponseEntity<String>("Cidade de código " + id + " foi excluído com sucesso!",
-				HttpStatus.NO_CONTENT);
+		return ResponseEntity.noContent().build();
 	}
 
 	@ApiOperation("Busca uma cidade por ID")

@@ -9,22 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 @Entity
 @Table(name = "item_pedido")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@SequenceGenerator(name = "ITEM_PEDIDO_ID", sequenceName = "ITEM_PEDIDO_ID_SEQ")
 public class ItemPedido {
 
 	@EqualsAndHashCode.Include
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "ITEM_PEDIDO_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "preco_unitario")
@@ -44,4 +44,19 @@ public class ItemPedido {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Produto produto;
+
+    public void calcularPrecoTotal() {
+		BigDecimal prcUnitario = this.getPrecoUnitario();
+		var qtde = this.getQuantidade();
+
+		if (prcUnitario == null) {
+			prcUnitario = BigDecimal.ZERO;
+		}
+
+		if (qtde == null) {
+			qtde = 0;
+		}
+
+		this.setPrecoTotal(prcUnitario.multiply(new BigDecimal(qtde)));
+    }
 }

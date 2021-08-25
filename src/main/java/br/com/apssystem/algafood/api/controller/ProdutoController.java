@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import br.com.apssystem.algafood.domain.model.Restaurante;
+import br.com.apssystem.algafood.domain.service.RestauranteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,39 +30,42 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ProdutoController {
 
-	private ProdutoService service;
+	private ProdutoService produtoService;
 	private ProdutoMapper mapper;
+	private RestauranteService restauranteService;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProdutoModel salvar(@Valid @RequestBody ProdutoInput input) {
+		Restaurante restaurante = restauranteService.buscarPorId(input.getRestaurante().getId());
 		Produto produto = mapper.toDomainObject(input);
-		return mapper.toModel(service.salvar(produto));
+		produto.setRestaurante(restaurante);
+		return mapper.toModel(produtoService.salvar(produto));
 	}
 
 	@PutMapping
 	public ResponseEntity<ProdutoModel> atualizar(@Valid @RequestBody ProdutoInput input) {
-		Produto produto = service.buscarPorId(input.getId());
+		Produto produto = produtoService.buscarPorId(input.getId());
 		mapper.copyToDomainObject(input, produto);
-		return ResponseEntity.ok(mapper.toModel(service.atualizar(produto)));
+		return ResponseEntity.ok(mapper.toModel(produtoService.atualizar(produto)));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> excluir(@PathVariable Long id) {
-		service.excluir(id);
-		return new ResponseEntity<String>("Produto de código " + id + " foi excluído com sucesso!",
-				HttpStatus.NO_CONTENT);
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
+		produtoService.excluir(id);
+		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("{id}")
-	public ResponseEntity<ProdutoModel> buscarPorId(@PathVariable Long id) {
-		Produto produto = service.buscarPorId(id);
-		return ResponseEntity.ok(mapper.toModel(produto));
+
+	@GetMapping("/{id}")
+	public ProdutoModel buscarPorId(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+		Produto produto = produtoService.buscarPorIdAndRestaurante(restauranteId, produtoId);
+		return mapper.toModel(produto);
 	}
 
 	@GetMapping
 	public List<ProdutoModel> listarTodos() {
-		return mapper.toColletionModel(service.listarTodos());
+		return mapper.toColletionModel(produtoService.listarTodos());
 	}
 
 }

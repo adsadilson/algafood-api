@@ -13,15 +13,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EstadoService {
 
-	private EstadoRepository repository;
+    private EstadoRepository repository;
 
-	public List<Estado> listarTodos() {
-		return repository.findAll();
-	}
+    public List<Estado> listarTodos() {
+        return repository.findAll();
+    }
 
-	public Estado buscarPorId(Long id) {
-		Estado estado = repository.findById(id).orElseThrow(() -> new NegocioException(
-				String.format("Não exite nenhum cadastro de estado com esse código %d", id)));
-		return estado;
-	}
+    public Estado buscarPorId(Long id) {
+        return repository.findById(id).orElseThrow(() -> new NegocioException(
+                String.format("Não existe nenhum cadastro de estado com esse código %d", id)));
+    }
 }

@@ -22,7 +22,7 @@ public class PermissaoMapper {
 	}
 
 	public List<PermissaoModel> toCollectionModel(List<Permissao> objs) {
-		return objs.stream().map(permissao -> toModel(permissao)).collect(Collectors.toList());
+		return objs.stream().map(this::toModel).collect(Collectors.toList());
 	}
 
 	public Permissao toDomainObject(PermissaoInput input) {

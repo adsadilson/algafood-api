@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CozinhaService {
 
+	private static final String NOMECLASS = "Cozinha";
 	private CozinhaRepository repository;
 
 	@Transactional
@@ -38,9 +39,9 @@ public class CozinhaService {
 			repository.deleteById(id);
 			repository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("Cozinha", id);
+			throw new EntidadeNaoEncontradaException(NOMECLASS, id);
 		} catch (DataIntegrityViolationException e) {
-			throw new RegistroEmUsoException("Cozinha", id);
+			throw new RegistroEmUsoException(NOMECLASS, id);
 		}
 	}
 
@@ -53,9 +54,8 @@ public class CozinhaService {
 	}
 
 	public Cozinha buscarPorId(Long id) {
-		Cozinha cozinha = repository.findById(id)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException("Cozinha", id));
-		return cozinha;
+		return repository.findById(id)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(NOMECLASS, id));
 	}
 
 	public void cozinhaExistente(Cozinha cozinha) {
