@@ -1,6 +1,7 @@
 package br.com.apssystem.algafood.api.mapper;
 
 import br.com.apssystem.algafood.api.model.PedidoResumoModel;
+import br.com.apssystem.algafood.api.model.PedidoStatusResumoModel;
 import br.com.apssystem.algafood.api.model.input.PedidoInput;
 import br.com.apssystem.algafood.domain.model.Pedido;
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,9 @@ public class PedidoResumoMapper {
 
 	public PedidoResumoModel toModel(Pedido pedido) {
 		return modelMapper.map(pedido, PedidoResumoModel.class);
+	}
+	public PedidoStatusResumoModel toModelResumo(Pedido pedido) {
+		return modelMapper.map(pedido, PedidoStatusResumoModel.class);
 	}
 
 	public List<PedidoResumoModel> toColletionModel(List<Pedido> pedidos) {

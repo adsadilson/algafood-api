@@ -3,7 +3,9 @@ package br.com.apssystem.algafood.domain.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -50,7 +52,7 @@ public class Restaurante {
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagto", joinColumns = @JoinColumn(name = "restaurante_id"),
 			inverseJoinColumns = @JoinColumn(name = "forma_pagto_id"))
-	private List<FormaPagto> formasPagtos = new ArrayList<>();
+	private Set<FormaPagto> formasPagtos = new HashSet<>();
 
 	@Embedded
 	private Endereco endereco;

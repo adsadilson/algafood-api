@@ -1,16 +1,15 @@
 package br.com.apssystem.algafood.domain.model;
 
+import br.com.apssystem.algafood.api.exception.NegocioException;
+import br.com.apssystem.algafood.domain.enums.StatusPedido;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.*;
-
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
-import br.com.apssystem.algafood.domain.enums.StatusPedido;
 
 @Entity
 @Table(name = "pedido")
@@ -55,8 +54,8 @@ public class Pedido {
     @Column(name = "data_cancelamento")
     private LocalDateTime dataCancelamento;
 
-    @Column(name = "data_entrega")
-    private LocalDateTime dataEntrega;
+    @Column(name = "data_entregue")
+    private LocalDateTime dataEntregue;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "forma_pagto_id", nullable = false)
@@ -84,10 +83,31 @@ public class Pedido {
     public void calcularValorTotal() {
         getItens().forEach(ItemPedido::calcularPrecoTotal);
         this.subtotal = this.getItens().stream()
-                .map(item -> item.getPrecoTotal())
+                .map(ItemPedido::getPrecoTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         this.valorTotal = this.subtotal.add(this.taxaFrete);
+    }
+
+    public void confirmar(){
+        setStatus(StatusPedido.CONFIRMADO);
+        setDataConfirmacao(LocalDateTime.now());
+    }
+    public void entregar(){
+        setStatus(StatusPedido.ENTREGUE);
+        setDataEntregue(LocalDateTime.now());
+    }
+    public void cancelar(){
+        setStatus(StatusPedido.CANCELADO);
+        setDataCancelamento(LocalDateTime.now());
+    }
+
+    public void setStatus(StatusPedido novoStatus) {
+        if(!status.naoPodeAlterarParaNovoStatus(novoStatus)){
+            throw new NegocioException(String.format("O pedido de código %d não pode ser alterado de %s para %s ",
+                             getId(), getStatus().getDescricao(), novoStatus.getDescricao()));
+        }
+        this.status= novoStatus;
     }
 
     public void definirFrete() {

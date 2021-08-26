@@ -119,7 +119,7 @@ CREATE TABLE pedido (
 	hora time(0) NOT NULL,
 	data_confirmacao date NULL,
 	data_cancelamento date NULL,
-	data_entrega date NULL,
+	data_entregue date NULL,
 	forma_pagto_id int8 NOT NULL,
 	restaurante_id int8 NOT NULL,
 	cliente_id int8 NOT NULL,
