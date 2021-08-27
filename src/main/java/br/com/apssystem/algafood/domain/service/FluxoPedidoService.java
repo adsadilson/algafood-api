@@ -12,24 +12,24 @@ public class FluxoPedidoService {
     private PedidoService pedidoService;
 
     @Transactional
-    public void pedidoConfirmado(Long id) {
-        Pedido obj = pedidoService.buscarPorId(id);
+    public void pedidoConfirmado(String id) {
+        Pedido obj = pedidoService.buscarPorCodigo(id);
         obj.confirmar();
     }
 
     @Transactional
-    public void pedidoCancelado(Long id) {
-        Pedido obj = pedidoService.buscarPorId(id);
+    public void pedidoCancelado(String codigo) {
+        Pedido obj = pedidoService.buscarPorCodigo(codigo);
         obj.cancelar();
     }
 
     @Transactional
-    public void pedidoEntregar(Long id) {
-        Pedido obj = pedidoService.buscarPorId(id);
+    public void pedidoEntregar(String codigo) {
+        Pedido obj = pedidoService.buscarPorCodigo(codigo);
         obj.entregar();
     }
 
-    public Pedido buscarPorId(Long id) {
-        return pedidoService.buscarPorId(id);
+    public Pedido buscarPorCodigo(String codigo) {
+        return pedidoService.buscarPorCodigo(codigo);
     }
 }

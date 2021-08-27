@@ -44,20 +44,20 @@ PedidoController {
 
 	@PutMapping
 	public ResponseEntity<PedidoModel> atualizar(@Valid @RequestBody PedidoInput input) {
-		Pedido pedido = pedidoService.buscarPorId(input.getId());
+		Pedido pedido = pedidoService.buscarPorCodigo(input.getCodigo());
 		mapper.copyToDomainObject(input, pedido);
 		return ResponseEntity.ok(mapper.toModel(pedidoService.atualizar(pedido)));
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluir(@PathVariable Long id) {
-		pedidoService.excluir(id);
+	@DeleteMapping("/{codigo}")
+	public ResponseEntity<Void> excluir(@PathVariable String codigo) {
+		pedidoService.excluir(codigo);
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<PedidoModel> buscarPorId(@PathVariable Long id) {
-		Pedido pedido = pedidoService.buscarPorId(id);
+	@GetMapping("/{codigo}")
+	public ResponseEntity<PedidoModel> buscarPorCodigo(@PathVariable String codigo) {
+		Pedido pedido = pedidoService.buscarPorCodigo(codigo);
 		return ResponseEntity.ok(mapper.toModel(pedido));
 	}
 

@@ -121,16 +121,6 @@ z
 Jsrc/main/java/br/com/apssystem/algafood/domain/service/UsuarioService.java,5\e\5eb3014b00cbd00347ca40428302daada62550fe
 Y
 )src/main/resources/application.properties,0\6\06f65155ec73600b9fc5c4dc2883d4bb84d8e284
-r
-Bsrc/main/java/br/com/apssystem/algafood/api/model/PedidoModel.java,7\1\710f6e813076e1ff4167322fbfc14c9a761f0270
-t
-Dsrc/main/java/br/com/apssystem/algafood/api/mapper/PedidoMapper.java,3\d\3d8c1949f646dbe748a6d03a79f124cfcdefe489
-x
-Hsrc/main/java/br/com/apssystem/algafood/api/model/input/PedidoInput.java,6\b\6b9e4b7cd51655c98208fd7ecd07bfe6cf18862b
-|
-Lsrc/main/java/br/com/apssystem/algafood/api/controller/PedidoController.java,b\6\b601868be950b1d494b59f8363faff1c9f92e569
-
-Osrc/main/java/br/com/apssystem/algafood/domain/repository/PedidoRepository.java,7\b\7b2112adaff6072874e0d8126e04c8f5112883fa
 Ä
 Psrc/main/java/br/com/apssystem/algafood/api/model/input/GrupoUsuarioIdInput.java,9\9\99ae206334a759407b10f22ca6af5a75f4f053b7
 Å
@@ -241,8 +231,6 @@ d
 0src/main/resources/static/js/jquery-3.6.0.min.js,0\b\0b313e4b3691faf97e3f4cfe111281ebc79ab0d0
 }
 Msrc/main/java/br/com/apssystem/algafood/api/exception/ValidacaoException.java,2\c\2c4a7f818c78d5bc05dbc35ae786c2b9fe6672a1
-â
-Ysrc/main/java/br/com/apssystem/algafood/api/exception/EntidadeNaoEncontradaException.java,a\8\a8a746c9133a8726d674523f1413214103f5076d
 v
 Fsrc/main/java/br/com/apssystem/algafood/api/exception/ProblemType.java,6\1\61ef948a57c04e07e348f6d08a62bfac4bf3ee83
 r

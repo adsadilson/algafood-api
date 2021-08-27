@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 public class PedidoResumoModel {
 
-	private Long id;
+	private String codigo;
 	private BigDecimal subtotal;
 	private BigDecimal taxaFrete;
 	private BigDecimal valorTotal;

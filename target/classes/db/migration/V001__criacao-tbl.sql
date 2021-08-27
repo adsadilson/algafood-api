@@ -111,6 +111,7 @@ CREATE TABLE produto (
 
 CREATE TABLE pedido (
 	id serial NOT NULL,
+	codigo varchar(36) NOT NULL UNIQUE,
 	sub_total numeric(12,2) NULL,
 	taxa_frete numeric(12,2) NULL,
 	valor_total numeric(12,2) NULL,
@@ -238,14 +239,15 @@ VALUES ('Filé de atum assado no forno', 'Filé de atum assado no forno', 75.40,
 INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
 VALUES ('Salada de feijão fradinho simples', 'Salada de feijão fradinho simples', 30, true, 2);
 
-INSERT INTO pedido (restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro, end_numero,
-                    end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
-VALUES (1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+INSERT INTO pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro,
+end_numero, end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
+VALUES ('85se878e' ,1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
 'CRIADO', '2021-08-24', '06:00', 95.80, 10, 85.80);
 
-INSERT INTO pedido (restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro, end_numero,
-                    end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
-VALUES (4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', '2021-08-24', '06:23', 150.8, 0, 150.8);
+INSERT INTO pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro,
+end_numero, end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
+VALUES ('81se8785', 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', '2021-08-24', '06:23',
+150.8, 0, 150.8);
 
 INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 VALUES (1, 1, 2, 35.4, 70.8, null);

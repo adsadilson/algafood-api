@@ -8,10 +8,13 @@ import org.springframework.stereotype.Repository;
 import br.com.apssystem.algafood.domain.model.Pedido;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long>, PedidoRespositoryQueries {
 
     @Query("from Pedido p join fetch p.cliente join fetch p.restaurante r join fetch r.cozinha")
     List<Pedido> findAll();
+
+    Optional<Object> findByCodigo(String codigo);
 }

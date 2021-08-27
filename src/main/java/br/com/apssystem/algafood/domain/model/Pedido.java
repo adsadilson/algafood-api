@@ -3,6 +3,7 @@ package br.com.apssystem.algafood.domain.model;
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.domain.enums.StatusPedido;
 import lombok.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -25,6 +26,8 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String codigo;
+
     @Column(name = "sub_total", precision = 12, scale = 2)
     private BigDecimal subtotal;
 
@@ -38,7 +41,7 @@ public class Pedido {
     private Endereco enderecoEntrega;
 
     @Enumerated(EnumType.STRING)
-    private StatusPedido status;
+    private StatusPedido status = StatusPedido.CRIADO;
 
     @CreationTimestamp
     @Column(name = "data_criacao")
@@ -72,14 +75,6 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemPedido> itens = new ArrayList<>();
 
-    public boolean inclusao() {
-        if (null == this.getId()) {
-            this.setStatus(StatusPedido.CRIADO);
-            return true;
-        }
-        return false;
-    }
-
     public void calcularValorTotal() {
         getItens().forEach(ItemPedido::calcularPrecoTotal);
         this.subtotal = this.getItens().stream()
@@ -101,13 +96,20 @@ public class Pedido {
         setStatus(StatusPedido.CANCELADO);
         setDataCancelamento(LocalDateTime.now());
     }
-
     public void setStatus(StatusPedido novoStatus) {
-        if(!status.naoPodeAlterarParaNovoStatus(novoStatus)){
-            throw new NegocioException(String.format("O pedido de código %d não pode ser alterado de %s para %s ",
-                             getId(), getStatus().getDescricao(), novoStatus.getDescricao()));
+        if(null != novoStatus) {
+            if (!getStatus().naoPodeAlterarParaNovoStatus(novoStatus)) {
+                throw new NegocioException(String.format("O pedido de código %s não pode ser alterado de %s para %s ",
+                        getCodigo(), getStatus().getDescricao(), novoStatus.getDescricao()));
+            }
+            this.status = novoStatus;
         }
-        this.status= novoStatus;
+    }
+
+    @PrePersist
+    private void gerarCodigo(){
+        String shortId = RandomStringUtils.randomAlphanumeric(10);
+        setCodigo(shortId);
     }
 
     public void definirFrete() {
