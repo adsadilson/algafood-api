@@ -18,8 +18,6 @@ y
 Isrc/main/java/br/com/apssystem/algafood/domain/service/CidadeService.java,4\8\48a83c9d7dd7204055ad4e46f39efaa23d2b041a
 4
 mvnw,5\d\5d837c4ed85ecaaf932c506e80ff5d7b9f3d590d
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 7
@@ -51,8 +49,6 @@ Psrc/main/java/br/com/apssystem/algafood/domain/repository/ProdutoRepository.jav
 Rsrc/main/java/br/com/apssystem/algafood/domain/repository/PermissaoRepository.java,9\7\975dca2b61a86cd3a769784960345607ef2f678d
 …
 Usrc/main/java/br/com/apssystem/algafood/domain/repository/GrupoUsuarioRepository.java,4\2\426a28e4105000fececf8c7ed1ff6a04448addcf
->
-.metadata/.log,c\a\cab00ac24422875c0136ae8b097cd9ff205d7a6c
 
 Osrc/main/java/br/com/apssystem/algafood/domain/repository/EstadoRepository.java,5\6\56f83e89d6cbaad022d5c60aa27ac4e33265c869
 E
@@ -101,8 +97,6 @@ s
 Csrc/main/java/br/com/apssystem/algafood/api/model/UsuarioModel.java,6\9\69d26083094f232f8c054c5b1398c3a87ef302c8
 ‰
 Y.metadata/.plugins/org.eclipse.m2e.logback.configuration/logback.1.16.0.20200318-1040.xml,7\d\7d694d3a0a78f1e4b3762e5ebfde95975ecd182f
-n
->.metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log,e\3\e3d6f833247005b71bb0e0853246a54bddcf0ef2
 ~
 Nsrc/main/java/br/com/apssystem/algafood/api/model/input/GrupoUsuarioInput.java,2\1\219984069c7f09f4b319cf1b9a20090aa9952f6f
 y
