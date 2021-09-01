@@ -65,8 +65,6 @@ i
 9.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml,4\f\4f935254d7124d2db9f06dafafd579c8fda9b892
 r
 B.metadata/.plugins/org.eclipse.jdt.ui/QualifiedTypeNameHistory.xml,8\5\85fd975955204aa4050230bee8a554c7b4a4b2c8
-å
-\src/main/java/br/com/apssystem/algafood/domain/repository/impl/PedidoRespositoryQueries.java,1\3\13578b88e831d77f09dd25ebe0555d0bf4bb20d1
 {
 Ksrc/main/java/br/com/apssystem/algafood/api/model/input/UsuarioIdInput.java,b\3\b3d81da5f6f10a780b90b43d7d109ff17b32d749
 |
@@ -85,8 +83,6 @@ Msrc/main/java/br/com/apssystem/algafood/api/controller/ProdutoController.java,
 Qsrc/main/java/br/com/apssystem/algafood/api/controller/RestauranteController.java,a\5\a5aed333c3efd4b33f099b02fe45e258772f312e
 }
 Msrc/main/java/br/com/apssystem/algafood/api/controller/UsuarioController.java,a\d\ad03ba3e90d54d62c684936ca8a1eed5fcf1159f
-{
-Ksrc/main/java/br/com/apssystem/algafood/api/exception/ExcepitonHandler.java,8\9\896f461b9e97399307078ccf97419317e98844a6
 Å
 Qsrc/main/java/br/com/apssystem/algafood/api/exception/RegistroEmUsoException.java,1\0\1011cc65bd2219e396dae0e247c47d717a402fb7
 u
@@ -105,8 +101,6 @@ y
 Isrc/main/java/br/com/apssystem/algafood/api/model/input/UsuarioInput.java,d\e\def82527d39c6fb0a7dd0bc120fcb5bc04c2905d
 t
 Dsrc/main/java/br/com/apssystem/algafood/domain/model/ItemPedido.java,d\5\d5ff35aaa88b584d9c4c19b0f0fc64ab32fcbbc1
-q
-Asrc/main/java/br/com/apssystem/algafood/domain/model/Usuario.java,b\5\b562e33b0dc66fd8bd9c56d1b1c86baa355be450
 |
 Lsrc/main/java/br/com/apssystem/algafood/domain/service/PermissaoService.java,a\0\a041d7fca82e37071bb42ceae8bdcd182eaae5a0
 ~
@@ -141,8 +135,6 @@ u
 E.metadata/.plugins/org.eclipse.pde.core/.cache/clean-cache.properties,f\b\fb03bfaf23fcbc894e1a4a885feed41ee65955bd
 J
 src/main/resources/ddl.sql,c\a\cac8e6d6c1daecc05a2460a18c61e947ddeafbf8
-V
-&src/main/resources/messages.properties,7\7\77906e46f0e91702a3d64a15647ee2a5325bdab6
 s
 Csrc/main/java/br/com/apssystem/algafood/AlgafoodApiApplication.java,c\b\cb4f71bbcbce94686a944a4214a16418754a3033
 ^
@@ -177,16 +169,10 @@ z
 Jsrc/main/java/br/com/apssystem/algafood/api/model/input/CidadeIdInput.java,5\a\5a9abe0b0586ec6d20318c93ce0736a0a5aa4728
 x
 Hsrc/main/java/br/com/apssystem/algafood/api/model/input/CidadeInput.java,f\0\f09ecd695ab9870c832268cdc402b1ede513c538
-~
-Nsrc/main/java/br/com/apssystem/algafood/api/model/input/FormaPagtoIdInput.java,0\9\090c8f045eeb3e20758cc5f6bbdbdef7c93cf28c
-}
-Msrc/main/java/br/com/apssystem/algafood/api/model/input/RestauranteInput.java,f\a\fa3701042895a74570a19b1fc3cd1b93dffe5d9f
 
 Osrc/main/java/br/com/apssystem/algafood/api/model/input/RestauranteIdInput.java,9\8\987643569dfa762dbb8961b84c052086481bd77d
 z
 Jsrc/main/java/br/com/apssystem/algafood/api/model/input/EstadoIdInput.java,b\b\bb02f4532393c21245b9cc611fcf3f1038ac7782
-z
-Jsrc/main/java/br/com/apssystem/algafood/api/model/input/EnderecoInput.java,3\e\3edc8ed370df82a41396c3880064675b1a891f89
 w
 Gsrc/main/java/br/com/apssystem/algafood/api/model/input/SenhaInput.java,a\7\a7ea4b08f162ef9df8c354e747f326529c5bf2db
 k
@@ -299,9 +285,9 @@ p
 @src/main/java/br/com/apssystem/algafood/domain/model/Estado.java,0\1\018ee7e0f27acf1bd1e054132aaa277248f65543
 g
 7src/main/resources/static/css/themes/thema-vermelho.css,2\8\2830e928111e849ab044a5c21dbcc4f847a42c38
-r
-Bsrc/main/java/br/com/apssystem/algafood/domain/model/Endereco.java,4\0\403235210669c7044819df743a8c219d524ef0eb
 p
 @src/main/java/br/com/apssystem/algafood/domain/model/Cidade.java,c\9\c927f101d0d84716e99da16b63cdd7fe73c1b930
 c
 3src/main/resources/static/css/themes/thema-roxo.css,6\6\661160d03fadea060c1256067b28b0f96d65fdbc
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d

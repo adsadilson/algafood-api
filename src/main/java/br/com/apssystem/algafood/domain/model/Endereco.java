@@ -15,6 +15,7 @@ import lombok.*;
 @Embeddable
 public class Endereco	 {
 
+
 	@Column(name = "end_cep")
 	private String cep;
 	

@@ -8,6 +8,7 @@ import br.com.apssystem.algafood.domain.repository.PedidoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,8 +59,8 @@ public class PedidoService {
         );
     }
 
-    public List<Pedido> listarTodos() {
-        return pedidoRepository.listarTodosPedidos();
+    public List<Pedido> pesquisar(Specification<Pedido> filter) {
+        return pedidoRepository.findAll(filter);
     }
 
     private void validarPedido(Pedido pedido) {

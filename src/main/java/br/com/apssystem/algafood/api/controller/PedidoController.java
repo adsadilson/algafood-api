@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import br.com.apssystem.algafood.api.mapper.PedidoResumoMapper;
 import br.com.apssystem.algafood.api.model.PedidoResumoModel;
+import br.com.apssystem.algafood.domain.model.filter.PedidoFilter;
+import br.com.apssystem.algafood.infrastructure.repository.specification.PedidoSpecification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,8 +64,9 @@ PedidoController {
 	}
 
 	@GetMapping
-	public List<PedidoResumoModel> listarTodos() {
-		return pedidoResumoMapper.toColletionModel(pedidoService.listarTodos());
+	public List<PedidoResumoModel> pesquisar(PedidoFilter filtro) {
+		List<Pedido> pedidos = pedidoService.pesquisar(PedidoSpecification.filter(filtro));
+		return pedidoResumoMapper.toColletionModel(pedidos);
 	}
 
 }
