@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,12 +47,12 @@ public class CozinhaService {
 		}
 	}
 
-	public List<Cozinha> listarTodos() {
-		return repository.findAll();
+	public Page<Cozinha> listarTodos(Pageable pageable) {
+		return repository.findAll(pageable);
 	}
 
-	public List<Cozinha> buscarPorNome(String nome) {
-		return repository.findByNomeContaining(nome);
+	public Page<Cozinha> buscarPorNome(Pageable pageable, String nome) {
+		return repository.findByNomeContaining(pageable, nome);
 	}
 
 	public Cozinha buscarPorId(Long id) {

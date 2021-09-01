@@ -1,6 +1,4 @@
 
-z
-Jsrc/main/java/br/com/apssystem/algafood/domain/service/CozinhaService.java,5\3\53ab232ce0098de19ef992c694f6d5b6de46d802
 y
 Isrc/main/java/br/com/apssystem/algafood/domain/service/EstadoService.java,5\a\5a1ccbafa1dccf47e4d3c36e29596da6bdcb85fc
 }
@@ -41,8 +39,6 @@ Osrc/main/java/br/com/apssystem/algafood/domain/repository/CidadeRepository.java
 Tsrc/main/java/br/com/apssystem/algafood/domain/repository/FormaPagtoRespository.java,2\7\273c94d20ff061f511dc2e816f514e2c0f6866d5
 „
 Tsrc/main/java/br/com/apssystem/algafood/domain/repository/RestauranteRepository.java,1\0\101b53e0f9526df217e8eb3c5229ea0ac19e73ef
-€
-Psrc/main/java/br/com/apssystem/algafood/domain/repository/CozinhaRepository.java,3\9\394c642f04b44e388045c4a5946a581021b7d0da
 €
 Psrc/main/java/br/com/apssystem/algafood/domain/repository/ProdutoRepository.java,a\e\ae0c109ba3286ca172d6c080e06354012a57f48e
 ‚
@@ -223,8 +219,6 @@ Osrc/main/java/br/com/apssystem/algafood/api/controller/PermissaoController.java
 Lsrc/main/java/br/com/apssystem/algafood/api/controller/CidadeController.java,c\d\cd46da4841db62f30321cf5f324eca040fa774a5
 |
 Lsrc/main/java/br/com/apssystem/algafood/api/controller/EstadoController.java,b\7\b76a87b3a5ad0981b8d26d4320f04693dcbd3f01
-}
-Msrc/main/java/br/com/apssystem/algafood/api/controller/CozinhaController.java,f\f\ffb8c6a2377a0932bde1585d600e103f3acc7738
 €
 Psrc/main/java/br/com/apssystem/algafood/api/controller/FormaPagtoController.java,c\1\c1f1f314865549ee0df2f622c0e5d4c19896dfdd
 r
