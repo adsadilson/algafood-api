@@ -1,6 +1,6 @@
 package br.com.apssystem.algafood.api.mapper;
 
-import br.com.apssystem.algafood.api.model.PedidoResumoModel;
+import br.com.apssystem.algafood.api.model.PedidoModel;
 import br.com.apssystem.algafood.api.model.PedidoStatusResumoModel;
 import br.com.apssystem.algafood.api.model.input.PedidoInput;
 import br.com.apssystem.algafood.domain.model.Pedido;
@@ -14,25 +14,27 @@ import java.util.stream.Collectors;
 @Component
 public class PedidoResumoMapper {
 
-	@Autowired
-	ModelMapper modelMapper;
+    @Autowired
+    ModelMapper modelMapper;
 
-	public PedidoResumoModel toModel(Pedido pedido) {
-		return modelMapper.map(pedido, PedidoResumoModel.class);
-	}
-	public PedidoStatusResumoModel toModelResumo(Pedido pedido) {
-		return modelMapper.map(pedido, PedidoStatusResumoModel.class);
-	}
+    public PedidoModel toModel(Pedido pedido) {
 
-	public List<PedidoResumoModel> toColletionModel(List<Pedido> pedidos) {
-		return pedidos.stream().map(this::toModel).collect(Collectors.toList());
-	}
+        return modelMapper.map(pedido, PedidoModel.class);
+    }
 
-	public Pedido toDomainObject(PedidoInput input) {
-		return modelMapper.map(input, Pedido.class);
-	}
+    public PedidoStatusResumoModel toModelResumo(Pedido pedido) {
+        return modelMapper.map(pedido, PedidoStatusResumoModel.class);
+    }
 
-	public void copyToDomainObject(PedidoInput input, Pedido pedido) {
-		modelMapper.map(input, pedido);
-	}
+    public List<PedidoModel> toColletionModel(List<Pedido> pedidos) {
+        return pedidos.stream().map(this::toModel).collect(Collectors.toList());
+    }
+
+    public Pedido toDomainObject(PedidoInput input) {
+        return modelMapper.map(input, Pedido.class);
+    }
+
+    public void copyToDomainObject(PedidoInput input, Pedido pedido) {
+        modelMapper.map(input, pedido);
+    }
 }

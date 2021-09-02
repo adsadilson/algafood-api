@@ -261,6 +261,18 @@ end_numero, end_complemento, end_bairro, status, data_criacao, hora, sub_total, 
 VALUES ('81se8785', 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', '2021-08-24', '06:23',
 150.8, 0, 150.8);
 
+INSERT INTO pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro,
+end_numero, end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
+VALUES ('81se8786', 4, 2, 2, 1, '3811-100', 'Rua Fernandes Gomes', '18', 'Casa 1', 'Centro', 'CRIADO', '2021-08-31',
+'06:28',
+624.8, 0, 624.8);
+
+INSERT INTO pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro,
+end_numero, end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
+VALUES ('81se8787', 1, 2, 2, 1, '75041-104', 'Av. Joaquim Avles', '218', 'Apt 1', 'Tigre', 'CRIADO', '2021-08-31',
+'07:33',
+150.04, 0, 150.04);
+
 INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 VALUES (1, 1, 2, 35.4, 70.8, null);
 
@@ -269,6 +281,18 @@ VALUES (1, 2, 1, 25, 25, 'Menos picante, por favor');
 
 INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 VALUES (2, 4, 2, 75.4, 150.8, 'Ao ponto');
+
+INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (3, 4, 5, 75.4, 377, 'Ao ponto');
+
+INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (3, 1, 7, 35.4, 247.8, 'Ao ponto');
+
+INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (4, 2, 3, 75, 75, 'Menos picante, por favor');
+
+INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (4, 4, 1, 75.4, 75.4, 'Ao ponto');
 
 INSERT INTO usuario_grupo_usuario (grupo_usuario_id, usuario_id) VALUES (1,1), (1,2), (1,3), (1,4), (1,5);
 

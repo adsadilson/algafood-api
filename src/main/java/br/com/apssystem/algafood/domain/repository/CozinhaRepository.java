@@ -17,9 +17,13 @@ public interface CozinhaRepository extends JpaRepository<Cozinha, Long> {
 
     Optional<Cozinha> findByNome(String nome);
 
-    @Query(value = "from Cozinha c join fetch c.restaurantes r where c.nome like :nome",
-            countQuery = "select count(c.id) from Cozinha c where c.nome like :nome")
+    @Query(value = "from Cozinha c join fetch c.restaurantes r where upper(c.nome) like %:nome%",
+            countQuery = "select count(c.id) from Cozinha c where c.nome like %:nome%")
     Page<Cozinha> findByNomeContaining(Pageable pageable, @Param("nome") String nome);
+
+    @Query(value = "select c from Cozinha c left join fetch c.restaurantes",
+            countQuery = "select count(c.id) from Cozinha c")
+    Page<Cozinha> findAll(Pageable pageable);
 
     long count();
 

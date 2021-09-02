@@ -62,7 +62,7 @@ public class CozinhaController {
     @GetMapping("/porNome/{nome}")
     public Page<CozinhaModel> buscarPorNome(@PageableDefault(size = 10) Pageable pageable,
                                             @PathVariable String nome) {
-        Page<Cozinha> cozinhasPage = serivce.buscarPorNome(pageable, nome);
+        Page<Cozinha> cozinhasPage = serivce.buscarPorNome(pageable, nome.toUpperCase());
         List<CozinhaModel> cozinhasModel = mapper.toCollectionModel(cozinhasPage.getContent());
         Page<CozinhaModel> cozinhasModelPage = new PageImpl<>(cozinhasModel, pageable,
                 cozinhasPage.getTotalElements());

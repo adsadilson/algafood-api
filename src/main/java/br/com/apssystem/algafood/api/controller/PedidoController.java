@@ -1,31 +1,30 @@
 package br.com.apssystem.algafood.api.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import br.com.apssystem.algafood.api.mapper.PedidoResumoMapper;
-import br.com.apssystem.algafood.api.model.PedidoResumoModel;
-import br.com.apssystem.algafood.domain.model.filter.PedidoFilter;
-import br.com.apssystem.algafood.infrastructure.repository.specification.PedidoSpecification;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
+import br.com.apssystem.algafood.api.mapper.PageModelMapper;
 import br.com.apssystem.algafood.api.mapper.PedidoMapper;
+import br.com.apssystem.algafood.api.mapper.PedidoResumoMapper;
 import br.com.apssystem.algafood.api.model.PedidoModel;
 import br.com.apssystem.algafood.api.model.input.PedidoInput;
+import br.com.apssystem.algafood.core.PageableTranslator.PageableTranslator;
+import br.com.apssystem.algafood.core.jackson.PageModel;
 import br.com.apssystem.algafood.domain.model.Pedido;
+import br.com.apssystem.algafood.domain.model.filter.PedidoFilter;
 import br.com.apssystem.algafood.domain.service.PedidoService;
+import br.com.apssystem.algafood.infrastructure.repository.specification.PedidoSpecification;
+import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -33,40 +32,54 @@ import lombok.AllArgsConstructor;
 public class
 PedidoController {
 
-	private PedidoService pedidoService;
-	private PedidoMapper mapper;
-	private PedidoResumoMapper pedidoResumoMapper;
+    private PedidoService pedidoService;
+    private PedidoMapper mapper;
+    private PedidoResumoMapper pedidoResumoMapper;
 
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public PedidoModel salvar(@Valid @RequestBody PedidoInput input) {
-		Pedido pedido = mapper.toDomainObject(input);
-		return mapper.toModel(pedidoService.salvar(pedido));
-	}
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public PedidoModel salvar(@Valid @RequestBody PedidoInput input) {
+        Pedido pedido = mapper.toDomainObject(input);
+        return mapper.toModel(pedidoService.salvar(pedido));
+    }
 
-	@PutMapping
-	public ResponseEntity<PedidoModel> atualizar(@Valid @RequestBody PedidoInput input) {
-		Pedido pedido = pedidoService.buscarPorCodigo(input.getCodigo());
-		mapper.copyToDomainObject(input, pedido);
-		return ResponseEntity.ok(mapper.toModel(pedidoService.atualizar(pedido)));
-	}
+    @PutMapping
+    public ResponseEntity<PedidoModel> atualizar(@Valid @RequestBody PedidoInput input) {
+        Pedido pedido = pedidoService.buscarPorCodigo(input.getCodigo());
+        mapper.copyToDomainObject(input, pedido);
+        return ResponseEntity.ok(mapper.toModel(pedidoService.atualizar(pedido)));
+    }
 
-	@DeleteMapping("/{codigo}")
-	public ResponseEntity<Void> excluir(@PathVariable String codigo) {
-		pedidoService.excluir(codigo);
-		return ResponseEntity.noContent().build();
-	}
+    @DeleteMapping("/{codigo}")
+    public ResponseEntity<Void> excluir(@PathVariable String codigo) {
+        pedidoService.excluir(codigo);
+        return ResponseEntity.noContent().build();
+    }
 
-	@GetMapping("/{codigo}")
-	public ResponseEntity<PedidoModel> buscarPorCodigo(@PathVariable String codigo) {
-		Pedido pedido = pedidoService.buscarPorCodigo(codigo);
-		return ResponseEntity.ok(mapper.toModel(pedido));
-	}
+    @GetMapping("/{codigo}")
+    public ResponseEntity<PedidoModel> buscarPorCodigo(@PathVariable String codigo) {
+        Pedido pedido = pedidoService.buscarPorCodigo(codigo);
+        return ResponseEntity.ok(mapper.toModel(pedido));
+    }
 
-	@GetMapping
-	public List<PedidoResumoModel> pesquisar(PedidoFilter filtro) {
-		List<Pedido> pedidos = pedidoService.pesquisar(PedidoSpecification.filter(filtro));
-		return pedidoResumoMapper.toColletionModel(pedidos);
-	}
+    @GetMapping
+    public Page<PedidoModel> pesquisar(PedidoFilter filtro, @PageableDefault(size = 2) Pageable pageable) {
+        pageable = traduzirPageable(pageable);
+        Page<Pedido> pedidosPage = pedidoService.pesquisar(PedidoSpecification.filter(filtro), pageable);
+        List<PedidoModel> pedidoResumoModels = pedidoResumoMapper.toColletionModel(pedidosPage.getContent());
+        Page<PedidoModel> resumoModelPage = new PageImpl<>(pedidoResumoModels, pageable,
+                pedidosPage.getTotalElements());
+        return resumoModelPage;
+    }
+
+    private Pageable traduzirPageable(Pageable pageable){
+        var mapeamento = ImmutableMap.of(
+                "codigo", "codigo",
+                "restaurante.nome", "restaurante.nome",
+                "cliente.nome", "cliente.nome",
+                "valorTotal", "valorTotal"
+        );
+        return PageableTranslator.translate(pageable,mapeamento);
+    }
 
 }

@@ -2,6 +2,7 @@ package br.com.apssystem.algafood.infrastructure.repository.specification;
 
 import br.com.apssystem.algafood.domain.model.Pedido;
 import br.com.apssystem.algafood.domain.model.filter.PedidoFilter;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
@@ -13,11 +14,12 @@ public class PedidoSpecification {
 
     public static Specification<Pedido> filter(PedidoFilter filtro) {
         return (root, query, builder) -> {
-            root.fetch("cliente").fetch("grupos");
-            root.fetch(RESTAURANTE).fetch("cozinha").fetch("restaurantes");
-            root.fetch(RESTAURANTE).fetch("formasPagtos");
-            root.fetch(RESTAURANTE).fetch("endereco").fetch("cidade").fetch("estado");
-
+            if (Pedido.class.equals(query.getResultType())) {
+                root.fetch("cliente").fetch("grupos");
+                root.fetch(RESTAURANTE).fetch("cozinha").fetch("restaurantes");
+                root.fetch(RESTAURANTE).fetch("formasPagtos");
+                root.fetch(RESTAURANTE).fetch("endereco").fetch("cidade").fetch("estado");
+            }
             var predicates = new ArrayList<Predicate>();
 
             if (filtro.getClienteId() != null) {
