@@ -116,11 +116,10 @@ CREATE TABLE pedido (
 	taxa_frete numeric(12,2) NULL,
 	valor_total numeric(12,2) NULL,
 	status varchar(30) NULL,
-	data_criacao date NOT NULL,
-	hora time(0) NOT NULL,
-	data_confirmacao date NULL,
-	data_cancelamento date NULL,
-	data_entregue date NULL,
+	data_criacao timestamp NOT NULL,
+	data_confirmacao timestamp NULL,
+	data_cancelamento timestamp NULL,
+	data_entrega timestamp NULL,
 	forma_pagto_id int8 NOT NULL,
 	restaurante_id int8 NOT NULL,
 	cliente_id int8 NOT NULL,
@@ -251,48 +250,57 @@ VALUES ('Filé de atum assado no forno', 'Filé de atum assado no forno', 75.40,
 INSERT INTO produto (nome, descricao, preco, ativo, restaurante_id)
 VALUES ('Salada de feijão fradinho simples', 'Salada de feijão fradinho simples', 30, true, 2);
 
-INSERT INTO pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro,
-end_numero, end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
-VALUES ('85se878e' ,1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
-'CRIADO', '2021-08-24', '06:00', 95.80, 10, 85.80);
+insert into pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep,
+                    end_logradouro, end_numero, end_complemento, end_bairro,
+	                status, data_criacao, sub_total, taxa_frete, valor_total)
+values ('f9981ca4', 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+        'CRIADO', '2019-10-28 10:10:00', 298.90, 10, 308.90);
 
-INSERT INTO pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro,
-end_numero, end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
-VALUES ('81se8785', 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', '2021-08-24', '06:23',
-150.8, 0, 150.8);
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (1, 1, 1, 78.9, 78.9, null);
 
-INSERT INTO pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro,
-end_numero, end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
-VALUES ('81se8786', 4, 2, 2, 1, '3811-100', 'Rua Fernandes Gomes', '18', 'Casa 1', 'Centro', 'CRIADO', '2021-08-31',
-'06:28',
-624.8, 0, 624.8);
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (1, 2, 2, 110, 220, 'Menos picante, por favor');
 
-INSERT INTO pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep, end_logradouro,
-end_numero, end_complemento, end_bairro, status, data_criacao, hora, sub_total, taxa_frete, valor_total)
-VALUES ('81se8787', 1, 2, 2, 1, '75041-104', 'Av. Joaquim Avles', '218', 'Apt 1', 'Tigre', 'CRIADO', '2021-08-31',
-'07:33',
-150.04, 0, 150.04);
 
-INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
-VALUES (1, 1, 2, 35.4, 70.8, null);
+insert into pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep,
+                    end_logradouro, end_numero, end_complemento, end_bairro,
+	                status, data_criacao, sub_total, taxa_frete, valor_total)
+values ('d178b637', 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
+        'CRIADO', '2019-10-30 21:10:00', 79, 0, 79);
 
-INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
-VALUES (1, 2, 1, 25, 25, 'Menos picante, por favor');
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (2, 4, 1, 79, 79, 'Ao ponto');
 
-INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
-VALUES (2, 4, 2, 75.4, 150.8, 'Ao ponto');
 
-INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
-VALUES (3, 4, 5, 75.4, 377, 'Ao ponto');
+insert into pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep,
+                    end_logradouro, end_numero, end_complemento, end_bairro,
+	                status, data_criacao,data_confirmacao, data_entrega, sub_total, taxa_frete, valor_total)
+values ('b5741512', 1, 1, 1, 1, '38400-222', 'Rua Natal', '200', null, 'Brasil',
+        'ENTREGUE', '2019-10-30 21:10:00', '2019-10-30 21:10:45', '2019-10-30 21:55:44', 110, 10, 120);
 
-INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
-VALUES (3, 1, 7, 35.4, 247.8, 'Ao ponto');
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (3, 2, 1, 110, 110, null);
 
-INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
-VALUES (4, 2, 3, 75, 75, 'Menos picante, por favor');
 
-INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
-VALUES (4, 4, 1, 75.4, 75.4, 'Ao ponto');
+insert into pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep,
+                    end_logradouro, end_numero, end_complemento, end_bairro,
+	                status, data_criacao,data_confirmacao, data_entrega, sub_total, taxa_frete, valor_total)
+values ('5c621c9a', 1, 2, 1, 1, '38400-800', 'Rua Fortaleza', '900', 'Apto 504', 'Centro',
+        'ENTREGUE', '2019-11-02 20:34:04', '2019-11-02 20:35:10', '2019-11-02 21:10:32', 174.4, 5, 179.4);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (1, 3, 2, 87.2, 174.4, null);
+
+
+insert into pedido (codigo, restaurante_id, cliente_id, forma_pagto_id, end_cidade_id, end_cep,
+                    end_logradouro, end_numero, end_complemento, end_bairro,
+	                status, data_criacao,data_confirmacao, data_entrega, sub_total, taxa_frete, valor_total)
+values ('8d774bcf', 1, 3, 2, 1, '38400-200', 'Rua 10', '930', 'Casa 20', 'Martins',
+        'ENTREGUE', '2019-11-03 02:00:30', '2019-11-03 02:01:21', '2019-11-03 02:20:10', 87.2, 10, 97.2);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (1, 3, 1, 87.2, 87.2, null);
 
 INSERT INTO usuario_grupo_usuario (grupo_usuario_id, usuario_id) VALUES (1,1), (1,2), (1,3), (1,4), (1,5);
 

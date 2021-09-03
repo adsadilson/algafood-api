@@ -15,7 +15,7 @@ import br.com.apssystem.algafood.domain.model.Pedido;
 public class PedidoMapper {
 
 	@Autowired
-	private ModelMapper modelMapper;
+	ModelMapper modelMapper;
 
 	public PedidoModel toModel(Pedido pedido) {
 		return modelMapper.map(pedido, PedidoModel.class);

@@ -8,7 +8,9 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,20 +47,16 @@ public class Pedido {
 
     @CreationTimestamp
     @Column(name = "data_criacao")
-    private LocalDateTime dataCriacao;
-
-    @CreationTimestamp
-    @Column(name = "hora")
-    private LocalDateTime hora;
+    private OffsetDateTime dataCriacao;
 
     @Column(name = "data_confirmacao")
-    private LocalDateTime dataConfirmacao;
+    private OffsetDateTime  dataConfirmacao;
 
     @Column(name = "data_cancelamento")
-    private LocalDateTime dataCancelamento;
+    private OffsetDateTime  dataCancelamento;
 
     @Column(name = "data_entregue")
-    private LocalDateTime dataEntregue;
+    private OffsetDateTime dataEntrega;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "forma_pagto_id", nullable = false)
@@ -86,15 +84,15 @@ public class Pedido {
 
     public void confirmar(){
         setStatus(StatusPedido.CONFIRMADO);
-        setDataConfirmacao(LocalDateTime.now());
+        setDataConfirmacao(OffsetDateTime.now());
     }
     public void entregar(){
         setStatus(StatusPedido.ENTREGUE);
-        setDataEntregue(LocalDateTime.now());
+        setDataEntrega(OffsetDateTime.now());
     }
     public void cancelar(){
         setStatus(StatusPedido.CANCELADO);
-        setDataCancelamento(LocalDateTime.now());
+        setDataCancelamento(OffsetDateTime.now());
     }
     public void setStatus(StatusPedido novoStatus) {
         if(null != novoStatus) {
