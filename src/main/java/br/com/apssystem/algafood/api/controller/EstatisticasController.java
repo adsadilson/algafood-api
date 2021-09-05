@@ -2,7 +2,7 @@ package br.com.apssystem.algafood.api.controller;
 
 import br.com.apssystem.algafood.domain.model.dto.Venda;
 import br.com.apssystem.algafood.domain.model.filter.VendaFilter;
-import br.com.apssystem.algafood.infrastructure.report.Relatorio;
+import br.com.apssystem.algafood.infrastructure.report.ReportService;
 import br.com.apssystem.algafood.infrastructure.repository.repository.query.VendaQuery;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,9 @@ import java.util.List;
 public class EstatisticasController {
 
     private VendaQuery vendaQuery;
-    private Relatorio relatorio;
+
+    @Autowired
+    private ReportService reportService;
 
 
     @GetMapping("/vendas-diarias")
@@ -34,11 +36,12 @@ public class EstatisticasController {
     public ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaFilter filtro) {
 
         var list = vendaQuery.consultarVendasDiarias(filtro);
-        var parametros = new HashMap<String,Object>();
-        byte[] bytesPdf = relatorio.gerarRelatorio("vendas-diarias",parametros, list);
+        var parametros = new HashMap<String, Object>();
+        parametros.put("par_nome_relat", "Relatório de Vendas Diarias");
+        byte[] bytesPdf = reportService.gerarRelatorio("vendas-diarias", parametros, list);
 
         var headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=vendas-diarias.pdf");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=vendas-diarias.pdf");
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .headers(headers)
@@ -53,5 +56,13 @@ public class EstatisticasController {
     @GetMapping("/vendas-anuais")
     public List<Venda> consultarVendasAnuais(VendaFilter filtro) {
         return vendaQuery.consultarVendasAnuais(filtro);
+    }
+
+    @GetMapping("/pdf")
+    public String generateReport(VendaFilter filtro) {
+        var list = vendaQuery.consultarVendasDiarias(filtro);
+        var parametros = new HashMap<String, Object>();
+        parametros.put("par_nome_relat", "Relatório de Vendas Diarias");
+        return reportService.exportarPDF("vendas-diarias", parametros, list);
     }
 }

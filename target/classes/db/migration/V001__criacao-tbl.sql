@@ -66,7 +66,9 @@ CREATE TABLE usuario_grupo_usuario (
 
 CREATE TABLE restaurante (
 	id serial NOT NULL,
-	nome varchar(70) NOT NULL,
+	nome varchar(70) NOT NULL UNIQUE,
+	cnpj varchar(18) UNIQUE,
+	telefone varchar(20),
 	frete numeric(12,2) NULL,
 	ativo bool NOT NULL DEFAULT true,
 	aberto bool NULL,
@@ -199,23 +201,39 @@ INSERT INTO cozinha(nome) VALUES('Mineira');
 INSERT INTO cozinha(nome) VALUES('Internacional');
 
 INSERT INTO restaurante
-(nome, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro, end_numero, end_bairro, end_complemento, end_cidade_id)
-VALUES('Thai Gourmet', 10.00, true, true, '2021-08-26', '2021-08-26', 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro', NULL, 1);
+(nome, cnpj, telefone, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro,
+end_numero,
+end_bairro, end_complemento, end_cidade_id)
+VALUES('Thai Gourmet', '65.818.473/0001-46', '71 99852-9024', 10.00, true, true, '2021-08-26', '2021-08-26', 1,
+'38400-999', 'Rua João
+Pinheiro', '1000',
+'Centro', NULL, 1);
 INSERT INTO restaurante
-(nome, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro, end_numero, end_bairro, end_complemento, end_cidade_id)
-VALUES('Thai Delivery', 9.50, true, true, '2021-08-26', '2021-08-26', 1, '45190-000', 'Rua Sete de Setembro', '713', 'Centro', NULL, 2);
+(nome, cnpj, telefone, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro,
+end_numero, end_bairro, end_complemento, end_cidade_id)
+VALUES('Thai Delivery', '10.652.412/0001-60', '71 99852-9757', 9.50, true, true, '2021-08-26', '2021-08-26', 1,
+'45190-000', 'Rua Sete de Setembro', '713', 'Centro', NULL, 2);
 INSERT INTO restaurante
-(nome, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro, end_numero, end_bairro, end_complemento, end_cidade_id)
-VALUES('Tuk Tuk Comida Indiana', 15.00, true, true, '2021-08-26', '2021-08-26', 2, '48500-001', 'AV. Jhon Kendy', '005', 'Piturba', NULL, 2);
+(nome, cnpj, telefone, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro,
+end_numero, end_bairro, end_complemento, end_cidade_id)
+VALUES('Tuk Tuk Comida Indiana', '29.975.274/0001-88', '31 97852-0024', 15.00, true, true, '2021-08-26', '2021-08-26',
+2, '48500-001', 'AV. Jhon Kendy', '005', 'Piturba', NULL, 2);
 INSERT INTO restaurante
-(nome, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro, end_numero, end_bairro, end_complemento, end_cidade_id)
-VALUES('Java Steakhouse', 12.00, true, true, '2021-08-26', '2021-08-26', 3, '47500-011', 'Rua Jardim da Saudade', 'SN', 'Centro', NULL, 1);
+(nome, cnpj, telefone, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro,
+end_numero, end_bairro, end_complemento, end_cidade_id)
+VALUES('Java Steakhouse', '67.433.717/0001-06', '11 99050-9991', 12.00, true, true, '2021-08-26', '2021-08-26', 3,
+'47500-011', 'Rua Jardim da Saudade', 'SN', 'Centro', NULL, 1);
 INSERT INTO restaurante
-(nome, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro, end_numero, end_bairro, end_complemento, end_cidade_id)
-VALUES('Lanchonete do Tio Sam', 11.00, true, true, '2021-08-26', '2021-08-26', 4, '47501-200', 'Rua José Pinheiro', '788', 'Alvorada', NULL, 1);
+(nome, cnpj, telefone, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro,
+end_numero, end_bairro, end_complemento, end_cidade_id)
+VALUES('Lanchonete do Tio Sam', '98.318.352/0001-94', '21 99992-9124', 11.00, true, true, '2021-08-26', '2021-08-26',
+4,
+ '47501-200', 'Rua José Pinheiro', '788', 'Alvorada', NULL, 1);
 INSERT INTO restaurante
-(nome, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro, end_numero, end_bairro, end_complemento, end_cidade_id)
-VALUES('Bar da Maria', 6.00, true, true, '2021-08-26', '2021-08-26', 4, '46006-000', 'AV. Jetulio Vagas', '25', 'Centro', NULL, 1);
+(nome, cnpj, telefone, frete, ativo, aberto, data_cadastro, data_atualizacao, cozinha_id, end_cep, end_logradouro,
+end_numero, end_bairro, end_complemento, end_cidade_id)
+VALUES('Bar da Maria', '58.357.067/0001-68', '71 98858-9241', 6.00, true, true, '2021-08-26', '2021-08-26', 4,
+'46006-000', 'AV. Jetulio Vagas', '25', 'Centro', NULL, 1);
 
 
 UPDATE restaurante SET aberto = true;

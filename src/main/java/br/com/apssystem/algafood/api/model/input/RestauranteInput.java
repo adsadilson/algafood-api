@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 @Getter
 @Setter
@@ -16,6 +17,13 @@ public class RestauranteInput {
 
 	@NotBlank
 	private String nome;
+
+	@CNPJ
+	@NotBlank
+	private String cnpj;
+
+	@NotBlank
+	private String telefone;
 
 	//@NotNull
 	@DecimalMin("0")

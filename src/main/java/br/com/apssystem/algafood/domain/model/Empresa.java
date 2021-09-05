@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-
 public class Empresa {
 
     @Id

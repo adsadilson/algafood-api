@@ -1,0 +1,41 @@
+
+u
+java:S3008"XRename this field "FORMATOPADRAO" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡…§¥8´†¾›»/
+P
+java:S1118":Add a private constructor to hide the implicit public one.(¸¨å‰
+C
+java:S2885"-Make "SIMPLEDATEFORMAT" an instance variable.(´¬ýå
+V	java:S125,"<This block of commented-out lines of code should be removed.(¢à©þÿÿÿÿ
+V	java:S1259"<This block of commented-out lines of code should be removed.(¢à©þÿÿÿÿ
+c	java:S100c"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£®“Ý
+S	java:S106l"9Replace this use of System.out or System.err by a logger.(§²†îùÿÿÿÿ
+S	java:S106o"9Replace this use of System.out or System.err by a logger.(–³Üûÿÿÿÿ
+U	java:S106q"9Replace this use of System.out or System.err by a logger.(€Îºà8·åÂ›»/
+J
+java:S1905º"'Remove this unnecessary cast to "Date".(·Öèùúÿÿÿÿ8³’¿›»/
+G
+java:S1874«"0Remove this use of "setHours"; it is deprecated.(Ç¤’‘
+H
+java:S1874¬"2Remove this use of "setMinutes"; it is deprecated.(ªô¨
+N
+java:S1874­"2Remove this use of "setSeconds"; it is deprecated.(©¦Þúÿÿÿÿ
+]
+java:S1126Ô"AReplace this if-then-else statement by a single return statement.(Øß…¯ÿÿÿÿÿ
+d	java:S100þ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(äü£ƒ
+O
+java:S1197ÿ"8Move the array designator from the variable to the type.(íü¶®
+i	java:S100”"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ç©»þÿÿÿÿ
+T
+java:S1197•"8Move the array designator from the variable to the type.(°Òâ•øÿÿÿÿ
+d	java:S100 "NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ú¼§ƒ
+F
+java:S1874¢"/Remove this use of "getDate"; it is deprecated.(±›„·
+L
+java:S1874£"0Remove this use of "getMonth"; it is deprecated.(ÖŠˆçüÿÿÿÿ
+K
+java:S1874¤"/Remove this use of "getYear"; it is deprecated.(ŸÆÕøÿÿÿÿ
+c	java:S100­"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î¨[
+s
+java:S1192l"QDefine a constant instead of duplicating this literal "A diferenÃ§a de " 3 times.(§²†îùÿÿÿÿ8ÛåÂ›»/
+s
+java:S1488ì"\Immediately return this expression instead of assigning it to the temporary variable "dias".(Šº¹

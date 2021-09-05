@@ -12,6 +12,7 @@ import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 @Entity
 @Table(name = "restaurante")
@@ -29,6 +30,13 @@ public class Restaurante {
 
 	@Column(nullable = false, unique = true)
 	private String nome;
+
+	@CNPJ
+	@Column(length = 18, unique = true)
+	private String cnpj;
+
+	@Column(length = 20)
+	private String telefone;
 
 	@Column(precision = 12, scale = 2)
 	private BigDecimal frete;
