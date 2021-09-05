@@ -21,6 +21,7 @@ import java.util.List;
 public class VendaQueryRepositoryImp implements VendaQuery {
 
     private static final String DATA_CRIACAO = "dataCriacao";
+    private static final String STATUS = "status";
 
     @PersistenceContext
     private EntityManager manager;
@@ -41,7 +42,7 @@ public class VendaQueryRepositoryImp implements VendaQuery {
         //Não alterar devido a consulta ser realizar pelo PostgresSQL
         var functionDateDataCriacao = builder.function("TO_CHAR", String.class,
                 functionConvertDataCriacao,
-                builder.literal("yyyy-MM-dd"));
+                builder.literal("dd/MM/yyyy"));
 
         var selection = builder.construct(
                 Venda.class, functionDateDataCriacao, builder.count(root.get("id")),
@@ -75,7 +76,7 @@ public class VendaQueryRepositoryImp implements VendaQuery {
 
         precondicoesParaFitro(filtro, builder, root, predicates);
 
-        predicates.add(root.get("status").in(
+        predicates.add(root.get(STATUS).in(
                 StatusPedido.CONFIRMADO, StatusPedido.ENTREGUE));
 
         query.select(selection).
@@ -104,7 +105,7 @@ public class VendaQueryRepositoryImp implements VendaQuery {
 
         precondicoesParaFitro(filtro, builder, root, predicates);
 
-        predicates.add(root.get("status").in(
+        predicates.add(root.get(STATUS).in(
                 StatusPedido.CONFIRMADO, StatusPedido.ENTREGUE));
 
         query.select(selection).
@@ -130,7 +131,7 @@ public class VendaQueryRepositoryImp implements VendaQuery {
                     filtro.getDataCriacaoFim()));
         }
 
-        predicates.add(root.get("status").in(
+        predicates.add(root.get(STATUS).in(
                 StatusPedido.CONFIRMADO, StatusPedido.ENTREGUE));
 
         return predicates;

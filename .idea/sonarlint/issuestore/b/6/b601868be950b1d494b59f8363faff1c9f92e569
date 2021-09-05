@@ -1,0 +1,13 @@
+
+b
+java:S4738L"@Use "java.util.Map.of()" or "java.util.Map.ofEntries()" instead.(§Ëú¦úÿÿÿÿ8Ãø‰¸º/
+m
+java:S1128"QRemove this unused import 'br.com.apssystem.algafood.api.mapper.PageModelMapper'.(ßŠ¥)8Äø‰¸º/
+i
+java:S1128	"MRemove this unused import 'br.com.apssystem.algafood.core.jackson.PageModel'.(ââ“]8Äø‰¸º/
+P
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8Åø‰¸º/
+L
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ8Åø‰¸º/
+‚
+java:S1488F"gImmediately return this expression instead of assigning it to the temporary variable "resumoModelPage".(¹š€·üÿÿÿÿ

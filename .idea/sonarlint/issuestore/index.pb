@@ -17,8 +17,6 @@ Isrc/main/java/br/com/apssystem/algafood/domain/service/CidadeService.java,4\8\
 4
 mvnw,5\d\5d837c4ed85ecaaf932c506e80ff5d7b9f3d590d
 7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-7
 LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
 7
 HELP.md,1\a\1a273f73b7a477b0745593641bd708a6182c7ad5
@@ -297,10 +295,6 @@ z
 Jsrc/main/java/br/com/apssystem/algafood/api/model/input/EnderecoInput.java,3\e\3edc8ed370df82a41396c3880064675b1a891f89
 }
 Msrc/main/java/br/com/apssystem/algafood/api/model/input/RestauranteInput.java,f\a\fa3701042895a74570a19b1fc3cd1b93dffe5d9f
-r
-Bsrc/main/java/br/com/apssystem/algafood/domain/model/Endereco.java,4\0\403235210669c7044819df743a8c219d524ef0eb
-{
-Ksrc/main/java/br/com/apssystem/algafood/api/exception/ExcepitonHandler.java,8\9\896f461b9e97399307078ccf97419317e98844a6
 ˆ
 Xsrc/main/java/br/com/apssystem/algafood/domain/repository/impl/PedidoRepositoryImpl.java,0\4\04f81e1713a9ed3080f8279a72e8113baa3f0c4a
 u
@@ -337,3 +331,15 @@ Jsrc/main/java/br/com/apssystem/algafood/api/mapper/PedidoResumoMapper.java,9\6
 Wsrc/main/java/br/com/apssystem/algafood/core/PageableTranslator/PageableTranslator.java,d\4\d4735999ee225572bc8c8e0ff605cdc362247168
 r
 Bsrc/main/java/br/com/apssystem/algafood/api/model/PedidoModel.java,7\1\710f6e813076e1ff4167322fbfc14c9a761f0270
+|
+Lsrc/main/java/br/com/apssystem/algafood/api/controller/PedidoController.java,b\6\b601868be950b1d494b59f8363faff1c9f92e569
+s
+Csrc/main/java/br/com/apssystem/algafood/AlgafoodApiApplication.java,c\b\cb4f71bbcbce94686a944a4214a16418754a3033
+}
+Msrc/main/java/br/com/apssystem/algafood/domain/model/filter/PedidoFilter.java,5\d\5d694be0f9d85a9350bc928dccb3298f40cccbdf
+˜
+hsrc/main/java/br/com/apssystem/algafood/infrastructure/repository/specification/PedidoSpecification.java,c\a\cacff67c7f3895f94cbe9dd9b4b13d8339418da1
+r
+Bsrc/main/java/br/com/apssystem/algafood/domain/model/Endereco.java,4\0\403235210669c7044819df743a8c219d524ef0eb
+s
+Csrc/main/java/br/com/apssystem/algafood/core/utils/SistemaUtil.java,c\b\cb3d20f1268bb7c8d3043589f19be268868b72a6
