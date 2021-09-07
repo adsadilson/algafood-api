@@ -1,4 +1,4 @@
-package br.com.apssystem.algafood.core.PageableTranslator;
+package br.com.apssystem.algafood.core.pageableTranslator;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

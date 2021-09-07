@@ -1,12 +1,10 @@
 package br.com.apssystem.algafood.api.controller;
 
-import br.com.apssystem.algafood.api.mapper.PageModelMapper;
 import br.com.apssystem.algafood.api.mapper.PedidoMapper;
 import br.com.apssystem.algafood.api.mapper.PedidoResumoMapper;
 import br.com.apssystem.algafood.api.model.PedidoModel;
 import br.com.apssystem.algafood.api.model.input.PedidoInput;
-import br.com.apssystem.algafood.core.PageableTranslator.PageableTranslator;
-import br.com.apssystem.algafood.core.jackson.PageModel;
+import br.com.apssystem.algafood.core.pageableTranslator.PageableTranslator;
 import br.com.apssystem.algafood.domain.model.Pedido;
 import br.com.apssystem.algafood.domain.model.filter.PedidoFilter;
 import br.com.apssystem.algafood.domain.service.PedidoService;
@@ -22,9 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/pedidos")

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -226,7 +227,18 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
 
+	@ExceptionHandler(FileUploadException.class)
+	public ResponseEntity<?> handleFileUploadException(FileUploadException ex, WebRequest request) {
 
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
+		String detail = "Erro ao realizar o upload, o corpo da requisição pode estar inválido.";
+
+		Problem problem = Problem.builder().title(problemType.getTitle()).type(problemType.getUri())
+				.status(status.value()).detail(detail).timestamp(LocalDateTime.now()).build();
+
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {

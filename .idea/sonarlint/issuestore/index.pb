@@ -283,8 +283,6 @@ Nsrc/main/java/br/com/apssystem/algafood/api/model/input/FormaPagtoIdInput.java
 ]src/main/java/br/com/apssystem/algafood/domain/repository/impl/RestauranteRepositoryImpl.java,d\9\d9f7454f72d40aae6ef4ba90675ebfab6acd08c1
 å
 \src/main/java/br/com/apssystem/algafood/domain/repository/impl/PedidoRespositoryQueries.java,1\3\13578b88e831d77f09dd25ebe0555d0bf4bb20d1
-q
-Asrc/main/java/br/com/apssystem/algafood/domain/model/Usuario.java,b\5\b562e33b0dc66fd8bd9c56d1b1c86baa355be450
 z
 Jsrc/main/java/br/com/apssystem/algafood/api/model/input/EnderecoInput.java,3\e\3edc8ed370df82a41396c3880064675b1a891f89
 à
@@ -297,8 +295,6 @@ Jsrc/main/java/br/com/apssystem/algafood/domain/service/CozinhaService.java,5\3
 Psrc/main/java/br/com/apssystem/algafood/domain/repository/CozinhaRepository.java,3\9\394c642f04b44e388045c4a5946a581021b7d0da
 ~
 Nsrc/main/java/br/com/apssystem/algafood/domain/service/FluxoPedidoService.java,d\3\d3b25d266e8bea5e24f9a9a4c960a740a61d9502
-y
-Isrc/main/java/br/com/apssystem/algafood/domain/service/PedidoService.java,9\5\951392c68a52dc0dbcaa7e073ba74c7ae5f726a8
 
 Osrc/main/java/br/com/apssystem/algafood/domain/repository/PedidoRepository.java,7\b\7b2112adaff6072874e0d8126e04c8f5112883fa
 t
@@ -317,8 +313,6 @@ Jsrc/main/java/br/com/apssystem/algafood/api/mapper/PedidoResumoMapper.java,9\6
 Wsrc/main/java/br/com/apssystem/algafood/core/PageableTranslator/PageableTranslator.java,d\4\d4735999ee225572bc8c8e0ff605cdc362247168
 r
 Bsrc/main/java/br/com/apssystem/algafood/api/model/PedidoModel.java,7\1\710f6e813076e1ff4167322fbfc14c9a761f0270
-|
-Lsrc/main/java/br/com/apssystem/algafood/api/controller/PedidoController.java,b\6\b601868be950b1d494b59f8363faff1c9f92e569
 s
 Csrc/main/java/br/com/apssystem/algafood/AlgafoodApiApplication.java,c\b\cb4f71bbcbce94686a944a4214a16418754a3033
 }
@@ -337,8 +331,6 @@ Bsrc/main/java/br/com/apssystem/algafood/core/utils/DatasUltis.java,4\b\4b12b9b
 Lsrc/main/java/br/com/apssystem/algafood/domain/model/filter/VendaFilter.java,f\6\f6b63c328175100ffa5eddd9501178be37f26147
 s
 Csrc/main/java/br/com/apssystem/algafood/domain/model/dto/Venda.java,1\e\1e201d5199dbc0364a2be3d3964e5dbbf95de1fe
-{
-Ksrc/main/java/br/com/apssystem/algafood/api/exception/ExcepitonHandler.java,8\9\896f461b9e97399307078ccf97419317e98844a6
 }
 Msrc/main/java/br/com/apssystem/algafood/api/model/input/RestauranteInput.java,f\a\fa3701042895a74570a19b1fc3cd1b93dffe5d9f
 û
@@ -354,10 +346,6 @@ Msrc/main/java/br/com/apssystem/algafood/api/controller/CozinhaController.java,
 ~
 Nsrc/main/java/br/com/apssystem/algafood/domain/service/RestauranteService.java,1\b\1b02ba6e86005c4141bb12f97300ee0ab241cc0e
 Å
-Qsrc/main/java/br/com/apssystem/algafood/api/controller/RestauranteController.java,a\5\a5aed333c3efd4b33f099b02fe45e258772f312e
-p
-@src/main/java/br/com/apssystem/algafood/domain/model/Pedido.java,f\e\fe5a0747a1a4038ae7898902f4d5ac4ebde9ca48
-Å
 Qsrc/main/java/br/com/apssystem/algafood/api/controller/FluxoPedidoController.java,1\6\16c3e462bbdc98d618a437dadfd7cc732c9c2875
 u
 Esrc/main/java/br/com/apssystem/algafood/domain/model/Restaurante.java,1\e\1e31912fb0f8cefcd316ee0b127dcc0cc68d518a
@@ -365,7 +353,3 @@ Esrc/main/java/br/com/apssystem/algafood/domain/model/Restaurante.java,1\e\1e31
 Psrc/main/java/br/com/apssystem/algafood/infrastructure/report/RelatorioTest.java,1\c\1c08e1432c8eb3791d058398021cd6285c0993cb
 í
 bsrc/main/java/br/com/apssystem/algafood/infrastructure/repository/repository/query/VendaQuery.java,f\8\f864599c2ebf80b660b8d76ca7f7facfd4c1cc36
-Ä
-Psrc/main/java/br/com/apssystem/algafood/infrastructure/report/ReportService.java,8\a\8a8b7090befdfb4e94d2107456ff4e628ef8f1f7
-Ç
-Rsrc/main/java/br/com/apssystem/algafood/api/controller/EstatisticasController.java,f\8\f804186b33d5742fca060ad341126cb74ffe9230

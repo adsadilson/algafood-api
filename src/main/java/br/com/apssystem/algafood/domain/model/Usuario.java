@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "usuario")
@@ -44,6 +45,7 @@ public class Usuario {
 	private String senha;
 
 	@CreationTimestamp
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_cadastro", nullable = false, columnDefinition = "datetime")
 	private LocalDateTime dataCadastro;
 
