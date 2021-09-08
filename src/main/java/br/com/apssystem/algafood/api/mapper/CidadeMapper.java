@@ -16,7 +16,7 @@ import br.com.apssystem.algafood.domain.model.Estado;
 public class CidadeMapper {
 
 	@Autowired
-	private ModelMapper modelMapper;
+	ModelMapper modelMapper;
 
 	public CidadeModel toModel(Cidade cidade) {
 		return modelMapper.map(cidade, CidadeModel.class);

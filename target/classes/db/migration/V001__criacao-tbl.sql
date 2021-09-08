@@ -150,6 +150,15 @@ CREATE TABLE item_pedido (
 	CONSTRAINT item_pedido_fk_produto FOREIGN KEY (produto_id) REFERENCES produto(id)
 );
 
+CREATE TABLE foto_produto (
+	produto_id int8 NOT NULL,
+	nome_arquivo varchar(150) NOT NULL,
+	descricao varchar(150) NULL,
+	content_type varchar(80) NOT NULL,
+	tamanho int8 NOT NULL,
+	CONSTRAINT foto_produto_pk PRIMARY KEY (produto_id),
+	CONSTRAINT foto_produto_fk FOREIGN KEY (produto_id) REFERENCES produto(id)
+);
 
 INSERT INTO estado (nome, sigla, capital, regiao) VALUES('Acre', 'AC', 'Rio Branco', 'Norte');
 INSERT INTO estado (nome, sigla, capital, regiao) VALUES('Alagoas', 'AL', 'Maceió', 'Nordeste');

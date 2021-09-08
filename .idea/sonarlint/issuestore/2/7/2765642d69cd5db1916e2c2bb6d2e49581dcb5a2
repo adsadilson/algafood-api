@@ -1,7 +1,0 @@
-
-R
-java:S1128"5Remove this unused import 'java.time.OffsetDateTime'.(ûùˆı8Ş–¬»/
-a
-java:S11921"KDefine a constant instead of duplicating this literal "valorTotal" 3 times.(’¤ ‡
-Š
-java:S41654"hRemove this useless assignment; "predicates" already holds the assigned value along all execution paths.(š‚½Èüÿÿÿÿ8”…§Üº/
