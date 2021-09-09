@@ -1,0 +1,9 @@
+
+b
+java:S18713"LThis branch's code block is the same as the block for the branch on line 48.(òÌŠª
+h	java:S100_"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°’Ì¦ûÿÿÿÿ
+B
+java:S1452î"&Remove usage of generic wildcard type.(Î©Î÷úÿÿÿÿ
+R	java:S125ý"<This block of commented-out lines of code should be removed.(ŒåÈô
+j
+java:S2259Ñ"NA "NullPointerException" could be thrown; "getRequiredType()" can return null.(ó–ú’ýÿÿÿÿ

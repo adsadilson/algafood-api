@@ -40,6 +40,7 @@ public class FotoProdutoService {
 
         var novaFoto = FotoStorageService.NovaFoto.builder()
                 .nomeAquivo(foto.getNomeArquivo())
+                .contentType(foto.getContentType())
                 .inputStream(dadosArquivo)
                 .build();
 
@@ -62,7 +63,8 @@ public class FotoProdutoService {
                 .orElseThrow(() -> new FotoProdutoNaoEncontradaException(restauranteId, produtoId));
     }
 
-    public InputStream recuperar(String nomeArquivo) {
+    public FotoStorageService.FotoRecuperada recuperar(String nomeArquivo) {
+
         return fotoStorageService.recuperar(nomeArquivo);
     }
 

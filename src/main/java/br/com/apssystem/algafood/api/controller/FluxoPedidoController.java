@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/pedidos/{id}")
+@RequestMapping("/pedidos/{codigo}")
 @AllArgsConstructor
 public class FluxoPedidoController {
 
@@ -22,7 +22,7 @@ public class FluxoPedidoController {
         fluxoPedidoService.pedidoConfirmado(codigo);
     }
 
-    @PutMapping("/entregar")
+    @PutMapping("/entrega")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void entregue(@PathVariable String codigo) {
 

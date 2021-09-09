@@ -55,7 +55,7 @@ public class Pedido {
     @Column(name = "data_cancelamento")
     private OffsetDateTime  dataCancelamento;
 
-    @Column(name = "data_entregue")
+    @Column(name = "data_entrega")
     private OffsetDateTime dataEntrega;
 
     @ManyToOne(fetch = FetchType.LAZY)

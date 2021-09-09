@@ -8,8 +8,10 @@ import br.com.apssystem.algafood.domain.model.FotoProduto;
 import br.com.apssystem.algafood.domain.model.Produto;
 import br.com.apssystem.algafood.domain.service.FotoProdutoService;
 import br.com.apssystem.algafood.domain.service.ProdutoService;
+import br.com.apssystem.algafood.infrastructure.storage.FotoStorageService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -66,8 +68,8 @@ public class RestauranteProdutoFotoController {
     }
 
     @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<InputStreamResource> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
-                                                          @RequestHeader(name = "accept") String acceptHeader){
+    public ResponseEntity<?> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
+                                        @RequestHeader(name = "accept") String acceptHeader) {
         try {
             FotoProduto fotoProduto = fotoProdutoService.buscarFotoProdutoPorRestaurante(restauranteId, produtoId);
 
@@ -76,10 +78,20 @@ public class RestauranteProdutoFotoController {
 
             verificarCompatibilidadeMediaType(mediaTypeFoto, mediaTypesAceitas);
 
-            InputStream inputStream = fotoProdutoService.recuperar(fotoProduto.getNomeArquivo());
-            return ResponseEntity.ok()
-                    .contentType(mediaTypeFoto)
-                    .body(new InputStreamResource(inputStream));
+            FotoStorageService.FotoRecuperada fotoRecuperada = fotoProdutoService.
+                    recuperar(fotoProduto.getNomeArquivo());
+
+            if (fotoRecuperada.temUrl) {
+                return ResponseEntity
+                        .status(HttpStatus.FOUND)
+                        .header(HttpHeaders.LOCATION, fotoRecuperada.getUrl())
+                        .build();
+            } else {
+                return ResponseEntity.ok()
+                        .contentType(mediaTypeFoto)
+                        .body(new InputStreamResource(fotoRecuperada.getInputStream()));
+            }
+
         } catch (EntidadeNaoEncontradaException | HttpMediaTypeNotAcceptableException e) {
             return ResponseEntity.notFound().build();
         }

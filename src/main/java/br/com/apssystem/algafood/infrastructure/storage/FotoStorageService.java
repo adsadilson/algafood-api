@@ -1,16 +1,14 @@
 package br.com.apssystem.algafood.infrastructure.storage;
 
-import br.com.apssystem.algafood.domain.model.FotoProduto;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.io.InputStream;
-import java.util.List;
 import java.util.UUID;
 
 public interface FotoStorageService {
 
-    InputStream recuperar(String nomeArquivo);
+    FotoRecuperada recuperar(String nomeArquivo);
 
     void armazenar(NovaFoto novaFoto);
 
@@ -31,9 +29,25 @@ public interface FotoStorageService {
     @Builder
     @Getter
     class NovaFoto {
-
         private String nomeAquivo;
+        private String contentType;
         private InputStream inputStream;
-
     }
+
+    @Builder
+    @Getter
+    class FotoRecuperada{
+        public boolean temUrl;
+        private InputStream inputStream;
+        private String url;
+
+        public boolean temUrl() {
+            return url != null;
+        }
+
+        public boolean temInputStream() {
+            return inputStream != null;
+        }
+    }
+
 }
