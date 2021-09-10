@@ -15,14 +15,16 @@ public class FluxoPedidoService {
 
     @Transactional
     public void pedidoConfirmado(String id) {
-        Pedido obj = pedidoService.buscarPorCodigo(id);
-        obj.confirmar();
+        Pedido pedido = pedidoService.buscarPorCodigo(id);
+        pedido.confirmar();
 
         var mensagem = EnvioEmailService.Mensagem.builder()
-                .assunto(obj.getRestaurante().getNome() + " - Pedido confirmado")
-                .corpo("O pedido de código <strong>"
-                        + obj.getCodigo() + "</strong> foi confirmado!")
-                .destinatario(obj.getCliente().getEmail())
+                .assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
+                .corpo("pedido-confirmado.html")
+                .destinatario(pedido.getCliente().getEmail())
+                .atributo("pedido",pedido)
+               /* .destinatario("elber_gyn@hotmail.com")
+                .destinatario("generoso.fernando@gmail.com")*/
                 .destinatario("adilson.curso@yahoo.com.br")
                 .build();
 
