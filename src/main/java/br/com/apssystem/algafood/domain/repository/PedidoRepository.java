@@ -19,5 +19,5 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long>, PedidoRes
     //@Query("from Pedido p join fetch p.cliente join fetch p.restaurante r join fetch r.cozinha")
     Page<Pedido> findAll(Pageable pageable);
 
-    Optional<Object> findByCodigo(String codigo);
+    Optional<Pedido> findByCodigo(String codigo);
 }

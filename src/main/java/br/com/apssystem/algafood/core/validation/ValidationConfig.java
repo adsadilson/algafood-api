@@ -1,4 +1,4 @@
-package br.com.apssystem.algafood.core;
+package br.com.apssystem.algafood.core.validation;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

@@ -2,9 +2,12 @@ package br.com.apssystem.algafood.domain.model;
 
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.domain.enums.StatusPedido;
+import br.com.apssystem.algafood.domain.event.PedidoCanceladoEvent;
+import br.com.apssystem.algafood.domain.event.PedidoConfirmadoEvent;
 import lombok.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,8 +23,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Pedido {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public class Pedido extends AbstractAggregateRoot<Pedido> {
 
     @EqualsAndHashCode.Include
     @Id
@@ -85,6 +88,7 @@ public class Pedido {
     public void confirmar(){
         setStatus(StatusPedido.CONFIRMADO);
         setDataConfirmacao(OffsetDateTime.now());
+        registerEvent(new PedidoConfirmadoEvent(this));
     }
     public void entregar(){
         setStatus(StatusPedido.ENTREGUE);
@@ -93,6 +97,7 @@ public class Pedido {
     public void cancelar(){
         setStatus(StatusPedido.CANCELADO);
         setDataCancelamento(OffsetDateTime.now());
+        registerEvent(new PedidoCanceladoEvent(this));
     }
     public void setStatus(StatusPedido novoStatus) {
         if(null != novoStatus) {

@@ -56,7 +56,7 @@ public class PedidoService {
     }
 
     public Pedido buscarPorCodigo(String codigo) {
-        return (Pedido) pedidoRepository.findByCodigo(codigo).orElseThrow(
+        return pedidoRepository.findByCodigo(codigo).orElseThrow(
                 () -> new EntidadeNaoEncontradaException("Pedido não encontrado com o código "+codigo)
         );
     }

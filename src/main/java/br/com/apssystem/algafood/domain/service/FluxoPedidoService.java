@@ -11,36 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class FluxoPedidoService {
 
     private PedidoService pedidoService;
-    private EnvioEmailService envioEmailService;
 
     @Transactional
     public void pedidoConfirmado(String id) {
         Pedido pedido = pedidoService.buscarPorCodigo(id);
         pedido.confirmar();
-
-        var mensagem = EnvioEmailService.Mensagem.builder()
-                .assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
-                .corpo("pedido-confirmado.html")
-                .destinatario(pedido.getCliente().getEmail())
-                .atributo("pedido",pedido)
-               /* .destinatario("elber_gyn@hotmail.com")
-                .destinatario("generoso.fernando@gmail.com")*/
-                .destinatario("adilson.curso@yahoo.com.br")
-                .build();
-
-        envioEmailService.enviar(mensagem);
+        pedidoService.salvar(pedido);
     }
 
     @Transactional
     public void pedidoCancelado(String codigo) {
-        Pedido obj = pedidoService.buscarPorCodigo(codigo);
-        obj.cancelar();
+        Pedido pedido = pedidoService.buscarPorCodigo(codigo);
+        pedido.cancelar();
+        pedidoService.salvar(pedido);
     }
 
     @Transactional
     public void pedidoEntregar(String codigo) {
-        Pedido obj = pedidoService.buscarPorCodigo(codigo);
-        obj.entregar();
+        Pedido pedido = pedidoService.buscarPorCodigo(codigo);
+        pedido.entregar();
     }
 
     public Pedido buscarPorCodigo(String codigo) {

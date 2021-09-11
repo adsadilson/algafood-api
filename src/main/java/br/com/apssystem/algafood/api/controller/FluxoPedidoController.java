@@ -25,7 +25,6 @@ public class FluxoPedidoController {
     @PutMapping("/entrega")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void entregue(@PathVariable String codigo) {
-
         fluxoPedidoService.pedidoEntregar(codigo);
     }
 
