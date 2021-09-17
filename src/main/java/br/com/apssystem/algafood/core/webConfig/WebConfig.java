@@ -21,8 +21,6 @@ import javax.servlet.Filter;
 public class WebConfig implements WebMvcConfigurer{
 	
 	// @formatter:off
- 
-
 	@Bean
 	public Docket apiDocket() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -32,7 +30,7 @@ public class WebConfig implements WebMvcConfigurer{
 				//.paths(PathSelectors.ant("/restaurante/*"))
 				.build()
 				.apiInfo(apiInfo())
-				.tags(new Tag("Cidades", "Gerencia as cidades"));
+				.tags(tags()[0],tags());
 	}
 	
 	public ApiInfo apiInfo() {
@@ -56,6 +54,27 @@ public class WebConfig implements WebMvcConfigurer{
 	@Bean
 	public Filter shallowEtagHeaderFilter() {
 		return new org.springframework.web.filter.ShallowEtagHeaderFilter();
+	}
+
+
+	private Tag[] tags() {
+		return new Tag[]{
+				new Tag("Cidades", "Gerencia as cidades"),
+				new Tag("Cozinhas", "Gerencia as cozinhas"),
+				new Tag("Endereços", "Gerencia os endereço"),
+				new Tag("Estados", "Gerencia os estados"),
+				new Tag("Estatisticas", "Gerencia as estatisticas"),
+				new Tag("Forma de Pagamentos", "Gerencia as formas de pagamentos"),
+				new Tag("Fluxo de Pedidos", "Gerencia o fluxo do pedido"),
+				new Tag("Grupos de Usuários", "Gerencia o grupo de usuários"),
+				new Tag("Pedidos", "Gerencia o pedido"),
+				new Tag("Permissões", "Gerencia as permissões"),
+				new Tag("Produtos", "Gerencia os produtos"),
+				new Tag("Restaurantes", "Gerencia os restaurantes"),
+				new Tag("Produto do Restaurante", "Gerencia o produto do restaurante"),
+				new Tag("Usuários", "Gerencia os usuários"),
+				new Tag("Foto do Usuário", "Gerencia as fotos do usuários")
+		};
 	}
 
 	// @formatter:on

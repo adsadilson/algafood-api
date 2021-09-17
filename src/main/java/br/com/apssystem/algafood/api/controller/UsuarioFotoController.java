@@ -2,6 +2,7 @@ package br.com.apssystem.algafood.api.controller;
 
 import br.com.apssystem.algafood.api.model.input.FotoUsuarioInput;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RequestMapping("/usuarios/{usuarioId}/foto")
 public class UsuarioFotoController {
 
+    @ApiOperation("Atualizar a foto do usuário")
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void atualizarFoto(@PathVariable Long usuarioId, FotoUsuarioInput fotoUsuarioInput) {
 

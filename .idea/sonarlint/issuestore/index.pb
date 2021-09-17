@@ -107,8 +107,6 @@ J
 src/main/resources/ddl.sql,c\a\cac8e6d6c1daecc05a2460a18c61e947ddeafbf8
 ^
 .src/test/resources/application.test.properties,1\f\1fdfdb1e0a1c37f04c19eb4046677fc5db067d10
-r
-Bsrc/main/java/br/com/apssystem/algafood/api/model/CidadeModel.java,1\a\1aca25e8f2c119d1aa55f58343bbe0c0038f63d3
 v
 Fsrc/main/java/br/com/apssystem/algafood/api/model/FormaPagtoModel.java,0\0\003e67c397d1541ca7d40bc9e82d396c8ccf7b2a
 x
@@ -117,8 +115,6 @@ u
 Esrc/main/java/br/com/apssystem/algafood/api/model/PermissaoModel.java,6\2\62e2c0120f70cf3f61c8a0799ee6eea53ce4ae54
 s
 Csrc/main/java/br/com/apssystem/algafood/api/model/CozinhaModel.java,c\9\c9f74e9889d24dd220aaee1da1d8d66e97ad0057
-r
-Bsrc/main/java/br/com/apssystem/algafood/api/model/EstadoModel.java,a\f\aff931ace3d9139720949568d249c6031123218c
 s
 Csrc/main/java/br/com/apssystem/algafood/api/model/ProdutoModel.java,1\1\11621097099d5b84a9acd8c640cc5036e26be268
 d
@@ -229,8 +225,6 @@ p
 @src/main/java/br/com/apssystem/algafood/domain/model/Estado.java,0\1\018ee7e0f27acf1bd1e054132aaa277248f65543
 g
 7src/main/resources/static/css/themes/thema-vermelho.css,2\8\2830e928111e849ab044a5c21dbcc4f847a42c38
-p
-@src/main/java/br/com/apssystem/algafood/domain/model/Cidade.java,c\9\c927f101d0d84716e99da16b63cdd7fe73c1b930
 c
 3src/main/resources/static/css/themes/thema-roxo.css,6\6\661160d03fadea060c1256067b28b0f96d65fdbc
 9
@@ -403,5 +397,3 @@ s
 Csrc/main/java/br/com/apssystem/algafood/core/email/EmailConfig.java,3\d\3d4f36f8868718594c87706916af804753c95c9c
 w
 Gsrc/main/java/br/com/apssystem/algafood/core/email/EmailProperties.java,b\2\b2d1853105e077186432916969b337b5925d8c5a
-ƒ
-Ssrc/main/java/br/com/apssystem/algafood/core/webConfig/ShallowEtagHeaderFilter.java,8\9\89ac21ed4c9fd62e42a97e6b71664e80f58b04b2

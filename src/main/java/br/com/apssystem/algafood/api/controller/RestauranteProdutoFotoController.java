@@ -10,6 +10,7 @@ import br.com.apssystem.algafood.domain.service.FotoProdutoService;
 import br.com.apssystem.algafood.domain.service.ProdutoService;
 import br.com.apssystem.algafood.infrastructure.storage.FotoStorageService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +36,7 @@ public class RestauranteProdutoFotoController {
     private FotoProdutoService fotoProdutoService;
     private FotoProdutoMapper fotoProdutoMapper;
 
+    @ApiOperation("Atualização da foto do produto")
     @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public FotoProdutoModel atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                           @Valid FotoProdutoInput fotoProdutoInput) throws IOException {
@@ -55,6 +57,7 @@ public class RestauranteProdutoFotoController {
         return fotoProdutoMapper.toModel(fotoSalva);
     }
 
+    @ApiOperation("Exclusão da foto do produto")
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluir(@PathVariable Long restauranteId,
@@ -62,6 +65,7 @@ public class RestauranteProdutoFotoController {
         fotoProdutoService.excluir(restauranteId, produtoId);
     }
 
+    @ApiOperation("Bsuca foto do produto")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public FotoProdutoModel buscar(@PathVariable Long restauranteId,
                                    @PathVariable Long produtoId) {
@@ -69,6 +73,7 @@ public class RestauranteProdutoFotoController {
         return fotoProdutoMapper.toModel(fotoProduto);
     }
 
+    @ApiOperation("Disponibiliar a foto do produto para donwload")
     @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<?> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                         @RequestHeader(name = "accept") String acceptHeader) {

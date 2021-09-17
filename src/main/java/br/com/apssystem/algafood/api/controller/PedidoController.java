@@ -11,6 +11,7 @@ import br.com.apssystem.algafood.domain.service.PedidoService;
 import br.com.apssystem.algafood.infrastructure.repository.specification.PedidoSpecification;
 import com.google.common.collect.ImmutableMap;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,6 +35,7 @@ PedidoController {
     private PedidoMapper mapper;
     private PedidoResumoMapper pedidoResumoMapper;
 
+    @ApiOperation("Cadastrar um pedido")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PedidoModel salvar(@Valid @RequestBody PedidoInput input) {
@@ -41,6 +43,7 @@ PedidoController {
         return mapper.toModel(pedidoService.salvar(pedido));
     }
 
+    @ApiOperation("Atualizar um pedido")
     @PutMapping
     public ResponseEntity<PedidoModel> atualizar(@Valid @RequestBody PedidoInput input) {
         Pedido pedido = pedidoService.buscarPorCodigo(input.getCodigo());
@@ -48,18 +51,21 @@ PedidoController {
         return ResponseEntity.ok(mapper.toModel(pedidoService.atualizar(pedido)));
     }
 
+    @ApiOperation("Excluir um pedido por Codigo")
     @DeleteMapping("/{codigo}")
     public ResponseEntity<Void> excluir(@PathVariable String codigo) {
         pedidoService.excluir(codigo);
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation("Busca um pedido por Codigo")
     @GetMapping("/{codigo}")
     public ResponseEntity<PedidoModel> buscarPorCodigo(@PathVariable String codigo) {
         Pedido pedido = pedidoService.buscarPorCodigo(codigo);
         return ResponseEntity.ok(mapper.toModel(pedido));
     }
 
+    @ApiOperation("Busca um pedido por filtro")
     @GetMapping
     public Page<PedidoModel> pesquisar(PedidoFilter filtro, @PageableDefault(size = 2) Pageable pageable) {
         pageable = traduzirPageable(pageable);

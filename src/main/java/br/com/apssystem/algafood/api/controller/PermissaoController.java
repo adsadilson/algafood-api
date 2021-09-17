@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,14 +34,16 @@ public class PermissaoController {
 	private PermissaoService permissaoService;
 	private PermissaoMapper mapper;
 
+	@ApiOperation("Cadastrar permissões")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<PermissaoModel> adicionar(@Valid @RequestBody PermissaoInput input) {
+	public ResponseEntity<PermissaoModel> salvar(@Valid @RequestBody PermissaoInput input) {
 		Permissao obj = mapper.toDomainObject(input);
 		permissaoService.salvar(obj);
 		return ResponseEntity.ok(mapper.toModel(obj));
 	}
-	
+
+	@ApiOperation("Atualizar permissões")
 	@PutMapping
 	public ResponseEntity<PermissaoModel> atualizar(@Valid @RequestBody PermissaoInput input){
 		Permissao obj = permissaoService.buscarPorId(input.getId());
@@ -48,18 +51,21 @@ public class PermissaoController {
 		permissaoService.atualizar(obj);
 		return ResponseEntity.ok(mapper.toModel(obj));
 	}
-	
+
+	@ApiOperation("Excluir permissões")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		permissaoService.excluir(id);
 		return ResponseEntity.noContent().build();
 	}
 
+	@ApiOperation("Buscar permissões")
 	@GetMapping
 	public ResponseEntity<List<PermissaoModel>> listarTodas() {
 		return ResponseEntity.ok(mapper.toCollectionModel(permissaoService.listarTodos()));
 	}
 
+	@ApiOperation("Busca permissões por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<PermissaoModel> buscarPorId(@PathVariable Long id) {
 		Permissao obj = permissaoService.buscarPorId(id);

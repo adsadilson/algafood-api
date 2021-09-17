@@ -60,6 +60,7 @@ public class CidadeController {
 	@ApiOperation("Busca uma cidade por ID")
 	@GetMapping("/{id}")
 	public CidadeModel buscarPorId(@PathVariable Long id) {
+
 		return mapper.toModel(service.buscarPorId(id));
 	}
 

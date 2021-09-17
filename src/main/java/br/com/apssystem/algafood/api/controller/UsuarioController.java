@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,16 +41,7 @@ public class UsuarioController {
     private GrupoUsuarioRepository grupoUsuarioRepository;
     private UsuarioMapper mapper;
 
-    @GetMapping
-    public List<UsuarioModel> listarTodos() {
-        return mapper.toCollectionModel(service.listarTodos());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UsuarioModel> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(mapper.toModel(service.buscarPorId(id)));
-    }
-
+    @ApiOperation("Cadastrar um usuário")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UsuarioModel> salvar(@Valid @RequestBody UsuarioInput input) {
@@ -65,6 +57,7 @@ public class UsuarioController {
         return ResponseEntity.ok(mapper.toModel(service.save(usuario)));
     }
 
+    @ApiOperation("Atualizar um usuário")
     @PutMapping
     public ResponseEntity<UsuarioModel> atualizar(@Valid @RequestBody UsuarioAtulizarInput input) {
         Usuario usuario = service.buscarPorId(input.getId());
@@ -81,12 +74,26 @@ public class UsuarioController {
         return ResponseEntity.ok(mapper.toModel(service.atualizar(usuario)));
     }
 
+    @ApiOperation("Excluir um usuário")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         service.excluir(id);
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation("Busca todos os usuários")
+    @GetMapping
+    public List<UsuarioModel> listarTodos() {
+        return mapper.toCollectionModel(service.listarTodos());
+    }
+
+    @ApiOperation("Buscar usuário por ID")
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioModel> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(mapper.toModel(service.buscarPorId(id)));
+    }
+
+    @ApiOperation("Alterar a senha do usuário")
     @PutMapping("/{id}/senha")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void alterarSenha(@PathVariable Long id, @RequestBody @Valid SenhaInput senha) {

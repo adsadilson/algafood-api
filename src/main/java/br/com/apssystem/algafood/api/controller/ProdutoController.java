@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import br.com.apssystem.algafood.domain.model.Restaurante;
 import br.com.apssystem.algafood.domain.service.RestauranteService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,6 +37,7 @@ public class ProdutoController {
 	private ProdutoMapper mapper;
 	private RestauranteService restauranteService;
 
+	@ApiOperation("Cadastrar um produto")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProdutoModel salvar(@Valid @RequestBody ProdutoInput input) {
@@ -45,6 +47,7 @@ public class ProdutoController {
 		return mapper.toModel(produtoService.salvar(produto));
 	}
 
+	@ApiOperation("Atualizar um produto")
 	@PutMapping
 	public ResponseEntity<ProdutoModel> atualizar(@Valid @RequestBody ProdutoInput input) {
 		Produto produto = produtoService.buscarPorId(input.getId());
@@ -52,6 +55,7 @@ public class ProdutoController {
 		return ResponseEntity.ok(mapper.toModel(produtoService.atualizar(produto)));
 	}
 
+	@ApiOperation("Excluir um produto por ID")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		produtoService.excluir(id);
@@ -59,12 +63,14 @@ public class ProdutoController {
 	}
 
 
+	@ApiOperation("Bsuca um produto por ID")
 	@GetMapping("/{id}")
 	public ProdutoModel buscarPorId(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		Produto produto = produtoService.buscarPorIdAndRestaurante(restauranteId, produtoId);
 		return mapper.toModel(produto);
 	}
 
+	@ApiOperation("Busca todos os produtos")
 	@GetMapping
 	public List<ProdutoModel> listarTodos() {
 		return mapper.toColletionModel(produtoService.listarTodos());
