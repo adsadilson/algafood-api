@@ -32,11 +32,6 @@ public class Endereco	 {
 	@Column(name = "end_complemento")
 	private String complemento;
 
-	@Transient
-	private String localidade;
-	@Transient
-	private String uf;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "end_cidade_id")
 	private Cidade cidade;

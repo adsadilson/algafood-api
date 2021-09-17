@@ -1,5 +1,6 @@
 package br.com.apssystem.algafood.api.controller;
 
+import br.com.apssystem.algafood.api.controller.openapi.controller.GrupoUsuarioControllerOpenApi;
 import br.com.apssystem.algafood.api.mapper.GrupoUsuarioMapper;
 import br.com.apssystem.algafood.api.model.GrupoUsuarioModel;
 import br.com.apssystem.algafood.api.model.input.GrupoUsuarioInput;
@@ -8,10 +9,9 @@ import br.com.apssystem.algafood.domain.model.GrupoUsuario;
 import br.com.apssystem.algafood.domain.model.Permissao;
 import br.com.apssystem.algafood.domain.repository.PermissaoRepository;
 import br.com.apssystem.algafood.domain.service.GrupoUsuarioService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,17 +19,15 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(tags = "Grupos de Usuários")
 @RestController
-@RequestMapping("/grupo-usuarios")
+@RequestMapping(path = "/grupo-usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class GrupoUsuarioController {
+public class GrupoUsuarioController implements GrupoUsuarioControllerOpenApi {
 
 	private GrupoUsuarioService service;
 	private PermissaoRepository permissaoRepository;
 	private GrupoUsuarioMapper mapper;
 
-	@ApiOperation("Cadastrar um grupo de usuário")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public GrupoUsuarioModel salvar(@Valid @RequestBody GrupoUsuarioInput input) {
@@ -45,7 +43,6 @@ public class GrupoUsuarioController {
 		return mapper.toModel(service.adicionar(grupo));
 	}
 
-	@ApiOperation("Atualizar um grupo de usuário")
 	@PutMapping
 	public ResponseEntity<GrupoUsuarioModel> atualizar(@Valid @RequestBody GrupoUsuarioInput input) {
 		GrupoUsuario grupo = service.buscarPorId(input.getId());
@@ -61,20 +58,17 @@ public class GrupoUsuarioController {
 		return ResponseEntity.ok(mapper.toModel(service.atualizar(grupo)));
 	}
 
-	@ApiOperation("Excluir um grupo de usuário")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		service.excluir(id);
 		return ResponseEntity.noContent().build();
 	}
 
-	@ApiOperation("Busca todos os grupos de usuários")
 	@GetMapping
 	public ResponseEntity<List<GrupoUsuarioModel>> listarTodos() {
 		return ResponseEntity.ok(mapper.toCollectionModel(service.listarTodos()));
 	}
 
-	@ApiOperation("Busca grupo de usuário por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<GrupoUsuarioModel> buscarPorId(@PathVariable Long id) {
 		GrupoUsuario grupo = service.buscarPorId(id);

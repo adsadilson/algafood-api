@@ -9,6 +9,7 @@ import br.com.apssystem.algafood.domain.service.RestauranteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ import lombok.AllArgsConstructor;
 
 @Api(tags = "Produtos")
 @RestController
-@RequestMapping("produtos")
+@RequestMapping(path = "produtos", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ProdutoController {
 
@@ -63,7 +64,7 @@ public class ProdutoController {
 	}
 
 
-	@ApiOperation("Bsuca um produto por ID")
+	@ApiOperation("Busca um produto por ID")
 	@GetMapping("/{id}")
 	public ProdutoModel buscarPorId(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		Produto produto = produtoService.buscarPorIdAndRestaurante(restauranteId, produtoId);

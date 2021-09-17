@@ -7,11 +7,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "Fluxo de Pedidos")
 @RestController
-@RequestMapping("/pedidos/{codigo}")
+@RequestMapping(path = "/pedidos/{codigo}", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class FluxoPedidoController {
 

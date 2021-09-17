@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -39,7 +40,7 @@ import lombok.AllArgsConstructor;
 
 @Api(tags = "Restaurantes")
 @RestController
-@RequestMapping("/restaurantes")
+@RequestMapping(path = "/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class RestauranteController {
 

@@ -6,9 +6,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.validation.Valid;
 
+import br.com.apssystem.algafood.api.controller.openapi.controller.FormaPagtoControllerOpenApi;
 import io.swagger.annotations.Api;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +33,9 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 @Api(tags = "Forma de Pagamentos")
 @RestController
-@RequestMapping("/formaPagtos")
+@RequestMapping(path = "/formaPagtos", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class FormaPagtoController {
+public class FormaPagtoController implements FormaPagtoControllerOpenApi {
 
 	private FormaPagtoService formaPagtoService;
 	private FormaPagtoMapper mapper;
@@ -45,7 +47,7 @@ public class FormaPagtoController {
 		return mapper.toModel(formaPagtoService.salvar(formaPagto));
 	}
 
-	@PutMapping("/{id}")
+		@PutMapping("/{id}")
 	public ResponseEntity<FormaPagtoModel> atualizar(@Valid @RequestBody FormaPagtoInput formaPagtoInput,
 			@PathVariable Long id) {
 		FormaPagto formaPagto = mapper.toDomainObject(formaPagtoInput);

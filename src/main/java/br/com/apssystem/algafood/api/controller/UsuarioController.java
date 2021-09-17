@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,7 @@ import lombok.AllArgsConstructor;
 
 @Api(tags = "Usuários")
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping(path = "/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class UsuarioController {
 

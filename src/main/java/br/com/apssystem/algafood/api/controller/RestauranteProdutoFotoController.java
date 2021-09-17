@@ -65,7 +65,7 @@ public class RestauranteProdutoFotoController {
         fotoProdutoService.excluir(restauranteId, produtoId);
     }
 
-    @ApiOperation("Bsuca foto do produto")
+    @ApiOperation("Busca foto do produto")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public FotoProdutoModel buscar(@PathVariable Long restauranteId,
                                    @PathVariable Long produtoId) {
