@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +24,7 @@ import br.com.apssystem.algafood.domain.model.Permissao;
 import br.com.apssystem.algafood.domain.service.PermissaoService;
 import lombok.AllArgsConstructor;
 
+@Api(tags = "Permissões")
 @RestController
 @RequestMapping("/permissoes")
 @AllArgsConstructor

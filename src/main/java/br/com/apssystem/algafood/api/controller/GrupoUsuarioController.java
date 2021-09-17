@@ -8,6 +8,7 @@ import br.com.apssystem.algafood.domain.model.GrupoUsuario;
 import br.com.apssystem.algafood.domain.model.Permissao;
 import br.com.apssystem.algafood.domain.repository.PermissaoRepository;
 import br.com.apssystem.algafood.domain.service.GrupoUsuarioService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Api(tags = "Grupos de Usuários")
 @RestController
 @RequestMapping("/grupo-usuarios")
 @AllArgsConstructor

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ReflectionUtils;
@@ -35,6 +36,7 @@ import br.com.apssystem.algafood.domain.service.CozinhaService;
 import br.com.apssystem.algafood.domain.service.RestauranteService;
 import lombok.AllArgsConstructor;
 
+@Api(tags = "Restaurantes")
 @RestController
 @RequestMapping("/restaurantes")
 @AllArgsConstructor

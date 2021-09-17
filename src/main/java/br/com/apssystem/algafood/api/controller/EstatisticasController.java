@@ -4,6 +4,8 @@ import br.com.apssystem.algafood.domain.model.dto.Venda;
 import br.com.apssystem.algafood.domain.model.filter.VendaFilter;
 import br.com.apssystem.algafood.infrastructure.report.ReportService;
 import br.com.apssystem.algafood.infrastructure.repository.repository.query.VendaQuery;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 
+@Api(tags = "Estatisticas")
 @RestController
 @RequestMapping("/estatisticas")
 @AllArgsConstructor
@@ -26,7 +29,7 @@ public class EstatisticasController {
     @Autowired
     private ReportService reportService;
 
-
+    @ApiOperation("Consulta as vendas diarias")
     @GetMapping("/vendas-diarias")
     public List<Venda> consultarVendasDiarias(VendaFilter filtro) {
         return vendaQuery.consultarVendasDiarias(filtro);
@@ -48,16 +51,19 @@ public class EstatisticasController {
                 .body(bytesPdf);
     }
 
+    @ApiOperation("Consulta as vendas mensais")
     @GetMapping("/vendas-mensais")
     public List<Venda> consultarVendasMensais(VendaFilter filtro) {
         return vendaQuery.consultarVendasMensais(filtro);
     }
 
+    @ApiOperation("Consulta as vendas anuais")
     @GetMapping("/vendas-anuais")
     public List<Venda> consultarVendasAnuais(VendaFilter filtro) {
         return vendaQuery.consultarVendasAnuais(filtro);
     }
 
+    @ApiOperation("Gerar relatório de vendas diarias")
     @GetMapping("/pdf")
     public String generateReport(VendaFilter filtro) {
         var list = vendaQuery.consultarVendasDiarias(filtro);

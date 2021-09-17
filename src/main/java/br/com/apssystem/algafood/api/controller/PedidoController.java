@@ -10,6 +10,7 @@ import br.com.apssystem.algafood.domain.model.filter.PedidoFilter;
 import br.com.apssystem.algafood.domain.service.PedidoService;
 import br.com.apssystem.algafood.infrastructure.repository.specification.PedidoSpecification;
 import com.google.common.collect.ImmutableMap;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@Api(tags = "Pedidos")
 @RestController
 @RequestMapping("/pedidos")
 @AllArgsConstructor

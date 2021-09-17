@@ -1,11 +1,5 @@
 
 @
 java:S1948 "*Make "response" transient or serializable.(ï²ÙÕ
-O
-java:S1948#"4Make "restauranteService" transient or serializable.(‰·ã‹ûÿÿÿÿ
 Z
 java:S2147Q"DCombine this catch with the one at line 79, which has the same body.(ï­£Ä
-V
-java:S1128":Remove this unused import 'java.io.ByteArrayOutputStream'.(Î‡È8õ´Ğ­»/
-M
-java:S1128"0Remove this unused import 'java.io.InputStream'.(¹»º8õ´Ğ­»/

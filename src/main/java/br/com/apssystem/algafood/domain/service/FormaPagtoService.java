@@ -1,5 +1,6 @@
 package br.com.apssystem.algafood.domain.service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -60,4 +61,8 @@ public class FormaPagtoService {
 					String.format("Já existe um cadastro de Forma Pagto com nome %s!", formaPagto.getDescricao()));
 		}
 	}
+
+    public OffsetDateTime getDataUltimaAtualizacao() {
+		return repository.getDataUltimaAtualizacao();
+    }
 }

@@ -1,6 +1,7 @@
 package br.com.apssystem.algafood.api.controller;
 
 import br.com.apssystem.algafood.api.model.input.FotoUsuarioInput;
+import io.swagger.annotations.Api;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.nio.file.Path;
 import java.util.UUID;
 
+@Api(tags = "Foto do Usuário")
 @RestController
 @RequestMapping("/usuarios/{usuarioId}/foto")
 public class UsuarioFotoController {

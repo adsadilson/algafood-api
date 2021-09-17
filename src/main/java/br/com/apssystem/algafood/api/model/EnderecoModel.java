@@ -6,7 +6,7 @@ import lombok.Data;
 public class EnderecoModel	 {
 
 	private String cep;
-	private String lougradouro;
+	private String logradouro;
 	private String numero;
 	private String bairro;
 	private String complemento;

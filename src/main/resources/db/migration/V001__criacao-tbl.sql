@@ -25,6 +25,7 @@ CREATE TABLE forma_pagto (
 	id serial NOT NULL,
 	nome varchar(20) NOT NULL UNIQUE,
 	descricao varchar(100) NOT NULL,
+	data_atualizacao timestamp,
 	CONSTRAINT forma_pagto_pk PRIMARY KEY (id)
 );
 

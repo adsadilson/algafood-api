@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +30,7 @@ import br.com.apssystem.algafood.domain.repository.GrupoUsuarioRepository;
 import br.com.apssystem.algafood.domain.service.UsuarioService;
 import lombok.AllArgsConstructor;
 
+@Api(tags = "Usuários")
 @RestController
 @RequestMapping("/usuarios")
 @AllArgsConstructor

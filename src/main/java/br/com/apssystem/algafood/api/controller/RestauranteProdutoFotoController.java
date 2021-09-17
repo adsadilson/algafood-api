@@ -9,6 +9,7 @@ import br.com.apssystem.algafood.domain.model.Produto;
 import br.com.apssystem.algafood.domain.service.FotoProdutoService;
 import br.com.apssystem.algafood.domain.service.ProdutoService;
 import br.com.apssystem.algafood.infrastructure.storage.FotoStorageService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+@Api(tags = "Produto do Restaurante")
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
 @AllArgsConstructor

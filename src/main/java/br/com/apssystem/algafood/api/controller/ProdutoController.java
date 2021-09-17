@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import br.com.apssystem.algafood.domain.model.Restaurante;
 import br.com.apssystem.algafood.domain.service.RestauranteService;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +26,7 @@ import br.com.apssystem.algafood.domain.model.Produto;
 import br.com.apssystem.algafood.domain.service.ProdutoService;
 import lombok.AllArgsConstructor;
 
+@Api(tags = "Produtos")
 @RestController
 @RequestMapping("produtos")
 @AllArgsConstructor

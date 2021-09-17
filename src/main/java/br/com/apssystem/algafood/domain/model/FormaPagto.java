@@ -10,6 +10,9 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "forma_pagto")
@@ -28,5 +31,8 @@ public class FormaPagto {
 
 	@Column(nullable = false)
 	private String descricao;
+
+	@UpdateTimestamp
+	private OffsetDateTime dataAtualizacao;
 
 }
