@@ -22,6 +22,10 @@ public class PedidoSpecification {
             }
             var predicates = new ArrayList<Predicate>();
 
+            if(filtro.getStatus() != null){
+                predicates.add(builder.equal(root.get("status"),filtro.getStatus()));
+            }
+
             if (filtro.getClienteId() != null) {
                 predicates.add(builder.equal(root.get("cliente"), filtro.getClienteId()));
             }

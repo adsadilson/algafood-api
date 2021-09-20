@@ -6,6 +6,7 @@ import br.com.apssystem.algafood.domain.service.ViaCepService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "Endereços")
 @RestController
-@RequestMapping("/enderecos")
+@RequestMapping(path = "/enderecos", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class EnderecoController {
 

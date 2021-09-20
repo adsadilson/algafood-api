@@ -1,5 +1,6 @@
 package br.com.apssystem.algafood.api.controller;
 
+import br.com.apssystem.algafood.api.controller.openapi.controller.PedidoControllerOpenApi;
 import br.com.apssystem.algafood.api.mapper.PedidoMapper;
 import br.com.apssystem.algafood.api.mapper.PedidoResumoMapper;
 import br.com.apssystem.algafood.api.model.PedidoModel;
@@ -11,6 +12,8 @@ import br.com.apssystem.algafood.domain.service.PedidoService;
 import br.com.apssystem.algafood.infrastructure.repository.specification.PedidoSpecification;
 import com.google.common.collect.ImmutableMap;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,18 +28,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(tags = "Pedidos")
 @RestController
 @RequestMapping(path = "/pedidos", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class
-PedidoController {
+public class PedidoController implements PedidoControllerOpenApi {
 
     private PedidoService pedidoService;
     private PedidoMapper mapper;
     private PedidoResumoMapper pedidoResumoMapper;
 
-    @ApiOperation("Cadastrar um pedido")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PedidoModel salvar(@Valid @RequestBody PedidoInput input) {
@@ -44,7 +44,6 @@ PedidoController {
         return mapper.toModel(pedidoService.salvar(pedido));
     }
 
-    @ApiOperation("Atualizar um pedido")
     @PutMapping
     public ResponseEntity<PedidoModel> atualizar(@Valid @RequestBody PedidoInput input) {
         Pedido pedido = pedidoService.buscarPorCodigo(input.getCodigo());
@@ -52,21 +51,18 @@ PedidoController {
         return ResponseEntity.ok(mapper.toModel(pedidoService.atualizar(pedido)));
     }
 
-    @ApiOperation("Excluir um pedido por Codigo")
     @DeleteMapping("/{codigo}")
     public ResponseEntity<Void> excluir(@PathVariable String codigo) {
         pedidoService.excluir(codigo);
         return ResponseEntity.noContent().build();
     }
 
-    @ApiOperation("Busca um pedido por Codigo")
     @GetMapping("/{codigo}")
     public ResponseEntity<PedidoModel> buscarPorCodigo(@PathVariable String codigo) {
         Pedido pedido = pedidoService.buscarPorCodigo(codigo);
         return ResponseEntity.ok(mapper.toModel(pedido));
     }
 
-    @ApiOperation("Busca um pedido por filtro")
     @GetMapping
     public Page<PedidoModel> pesquisar(PedidoFilter filtro, @PageableDefault(size = 2) Pageable pageable) {
         pageable = traduzirPageable(pageable);

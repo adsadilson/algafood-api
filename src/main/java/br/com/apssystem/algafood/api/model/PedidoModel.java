@@ -4,6 +4,7 @@ import br.com.apssystem.algafood.domain.enums.StatusPedido;
 import br.com.apssystem.algafood.domain.model.ItemPedido;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -14,9 +15,13 @@ import java.util.List;
 @Data
 public class PedidoModel {
 
+	@ApiModelProperty(example = "es5sabder1")
 	private String codigo;
+	@ApiModelProperty(example = "175.00")
 	private BigDecimal subtotal;
+	@ApiModelProperty(example = "5.75")
 	private BigDecimal taxaFrete;
+	@ApiModelProperty(example = "180.75")
 	private BigDecimal valorTotal;
 
 	private EnderecoModel enderecoEntrega;

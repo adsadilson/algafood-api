@@ -2,8 +2,10 @@ package br.com.apssystem.algafood.api.controller;
 
 import java.util.List;
 
+import br.com.apssystem.algafood.api.controller.openapi.controller.EstadoControllerOpenApi;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,19 +18,17 @@ import lombok.AllArgsConstructor;
 
 @Api(tags = "Estados")
 @RestController
-@RequestMapping("/estados")
+@RequestMapping(path = "/estados", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class EstadoController {
+public class EstadoController implements EstadoControllerOpenApi {
 
 	private EstadoService service;
 
-	@ApiOperation("Busca todas os estados")
 	@GetMapping
 	public List<Estado> listarTodos() {
 		return service.listarTodos();
 	}
 
-	@ApiOperation("Busca um estado por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<Estado> buscarPorId(@PathVariable Long id) {
 		Estado estado = service.buscarPorId(id);
