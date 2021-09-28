@@ -1,12 +1,10 @@
 package br.com.apssystem.algafood.core.openapi;
 
-import br.com.apssystem.algafood.api.controller.openapi.model.CozinhasModelOpenApi;
-import br.com.apssystem.algafood.api.controller.openapi.model.PageableModelOpenApi;
-import br.com.apssystem.algafood.api.controller.openapi.model.PagedModelOpenApi;
-import br.com.apssystem.algafood.api.exception.Problem;
-import br.com.apssystem.algafood.api.model.CozinhaModel;
-import br.com.apssystem.algafood.api.model.PedidoModel;
-import com.fasterxml.classmate.TypeResolver;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.Filter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -17,6 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.fasterxml.classmate.TypeResolver;
+
+import br.com.apssystem.algafood.api.controller.openapi.model.CozinhasModelOpenApi;
+import br.com.apssystem.algafood.api.controller.openapi.model.PageableModelOpenApi;
+import br.com.apssystem.algafood.api.exception.Problem;
+import br.com.apssystem.algafood.api.model.CozinhaModel;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -33,10 +38,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import javax.servlet.Filter;
-import java.util.Arrays;
-import java.util.List;
-
 @Configuration
 @EnableSwagger2
 @Import(BeanValidatorPluginsConfiguration.class)
@@ -45,7 +46,7 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 	 TypeResolver typeResolver = new TypeResolver();
 	// @formatter:off
 	@Bean
-	public Docket apiDocket() {
+	public Docket apiDocket() {	
 
 
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -167,6 +168,7 @@ public class SpringFoxConfig implements WebMvcConfigurer{
 	}
 
 
+	@SuppressWarnings("unused")
 	private <T> AlternateTypeRule buildPageTypeRole(Class<T> classModel, Class<T> classModelOpenApi) {
 		return AlternateTypeRules.newRule(
 				typeResolver.resolve(Page.class, classModel), classModelOpenApi);

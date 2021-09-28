@@ -8,6 +8,7 @@ import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
 import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.service.CidadeService;
 import lombok.AllArgsConstructor;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,18 @@ public class CidadeController implements CidadeControllerOpenApi {
 
 	@GetMapping("/{id}")
 	public CidadeModel buscarPorId(@PathVariable Long id) {
-		return mapper.toModel(service.buscarPorId(id));
+		var cidadeModel = mapper.toModel(service.buscarPorId(id));
+
+		cidadeModel.add(WebMvcLinkBuilder.linkTo(CidadeController.class)
+				.slash(cidadeModel.getId()).withSelfRel());
+
+		cidadeModel.add(WebMvcLinkBuilder.linkTo(CidadeController.class)
+				.withRel("cidades"));
+
+		cidadeModel.getEstado().add(WebMvcLinkBuilder.linkTo(EstadoController.class)
+				.slash(cidadeModel.getEstado().getId()).withSelfRel());
+
+		return cidadeModel;
 	}
 
 	@GetMapping

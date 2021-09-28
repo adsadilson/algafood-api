@@ -1,0 +1,16 @@
+
+k
+java:S1128"NRemove this unused import 'br.com.apssystem.algafood.api.mapper.CidadeMapper'.(ŠâìË8‡ýà”À/
+l
+java:S1128"JRemove this unused import 'br.com.apssystem.algafood.domain.model.Cidade'.(Ôð¡¯þÿÿÿÿ8‡ýà”À/
+u
+java:S1128"SRemove this unused import 'br.com.apssystem.algafood.domain.service.CidadeService'.(ö¬£üøÿÿÿÿ8ˆýà”À/
+X
+java:S1128
+"6Remove this unused import 'lombok.AllArgsConstructor'.(´œ¾öùÿÿÿÿ8ˆýà”À/
+b
+java:S1128"@Remove this unused import 'org.springframework.http.HttpStatus'.(íŸ¤Šúÿÿÿÿ8ˆýà”À/
+a
+java:S1128"DRemove this unused import 'org.springframework.web.bind.annotation'.(Ñ»ïÒ8‹Ùè”À/
+U
+java:S1128"3Remove this unused import 'javax.validation.Valid'.(æ¤ñ÷úÿÿÿÿ8Ô¡è”À/
