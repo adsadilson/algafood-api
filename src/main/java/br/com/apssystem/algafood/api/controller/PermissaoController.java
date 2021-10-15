@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,7 @@ public class PermissaoController {
 	public ResponseEntity<PermissaoModel> salvar(@Valid @RequestBody PermissaoInput input) {
 		Permissao obj = mapper.toDomainObject(input);
 		permissaoService.salvar(obj);
+		ResourceUriHelper.addUriInResponseHeader(obj.getId());
 		return ResponseEntity.ok(mapper.toModel(obj));
 	}
 

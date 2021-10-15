@@ -3,8 +3,15 @@ package br.com.apssystem.algafood.api.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.apssystem.algafood.api.controller.CidadeController;
+import br.com.apssystem.algafood.api.controller.EstadoController;
+import br.com.apssystem.algafood.api.controller.GrupoUsuarioController;
+import br.com.apssystem.algafood.api.controller.UsuarioController;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
 import br.com.apssystem.algafood.api.model.UsuarioModel;
@@ -13,17 +20,30 @@ import br.com.apssystem.algafood.api.model.input.UsuarioInput;
 import br.com.apssystem.algafood.domain.model.Usuario;
 
 @Component
-public class UsuarioMapper {
+public class UsuarioMapper extends RepresentationModelAssemblerSupport<Usuario, UsuarioModel> {
 
 	@Autowired
 	ModelMapper modelMapper;
 
-	public UsuarioModel toModel(Usuario usuario) {
-		return modelMapper.map(usuario, UsuarioModel.class);
+	public UsuarioMapper(){
+		super(UsuarioController.class, UsuarioModel.class);
 	}
 
-	public List<UsuarioModel> toCollectionModel(List<Usuario> usuarios) {
-		return usuarios.stream().map(this::toModel).collect(Collectors.toList());
+	public UsuarioModel toModel(Usuario usuario) {
+		UsuarioModel usuarioModel = modelMapper.map(usuario, UsuarioModel.class);
+		usuarioModel.add(WebMvcLinkBuilder.linkTo(UsuarioController.class).slash(usuarioModel.getId()).withSelfRel());
+		usuarioModel.add(WebMvcLinkBuilder.linkTo(UsuarioController.class)
+				.withRel("usuarios"));
+
+		/*usuarioModel.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UsuarioController.class)
+				.listarTodos(usuario.getId())).withRel("grupos-usuario"));*/
+
+		return usuarioModel;
+	}
+
+	@Override
+	public CollectionModel<UsuarioModel> toCollectionModel(Iterable<? extends Usuario> entities) {
+		return super.toCollectionModel(entities).add(WebMvcLinkBuilder.linkTo(UsuarioController.class).withSelfRel());
 	}
 
 	public Usuario toDomainObject(UsuarioInput input) {

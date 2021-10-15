@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
 import br.com.apssystem.algafood.domain.model.Restaurante;
 import br.com.apssystem.algafood.domain.service.RestauranteService;
 import io.swagger.annotations.Api;
@@ -45,6 +46,7 @@ public class ProdutoController {
 		Restaurante restaurante = restauranteService.buscarPorId(input.getRestaurante().getId());
 		Produto produto = mapper.toDomainObject(input);
 		produto.setRestaurante(restaurante);
+		ResourceUriHelper.addUriInResponseHeader(produto.getId());
 		return mapper.toModel(produtoService.salvar(produto));
 	}
 

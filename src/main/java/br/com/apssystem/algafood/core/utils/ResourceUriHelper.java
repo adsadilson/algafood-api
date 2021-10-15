@@ -8,12 +8,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 
+
 public class ResourceUriHelper {
 
-    public static void addUriInResponseHeader(Object resourceId){
+    public static void addUriInResponseHeader(Object objectId){
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{id}")
-                .buildAndExpand(resourceId).toUri();
+                .buildAndExpand(objectId).toUri();
 
         HttpServletResponse response =((ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes()).getResponse();

@@ -7,10 +7,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.apssystem.algafood.domain.model.GrupoUsuario;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
-@Data
-public class UsuarioModel {
+@Relation(collectionRelation = "Usuários")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UsuarioModel extends RepresentationModel<UsuarioModel> {
 
 	@ApiModelProperty(example = "1")
 	private Long id;

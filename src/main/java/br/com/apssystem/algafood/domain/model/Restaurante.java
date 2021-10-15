@@ -62,6 +62,12 @@ public class Restaurante {
 			inverseJoinColumns = @JoinColumn(name = "forma_pagto_id"))
 	private Set<FormaPagto> formasPagtos = new HashSet<>();
 
+	@ManyToMany
+	@JoinTable(name = "restaurante_usuario_responsavel",
+			joinColumns = @JoinColumn(name = "restaurante_id"),
+			inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+	private Set<Usuario> responsaveis = new HashSet<>();
+
 	@Embedded
 	private Endereco endereco;
 

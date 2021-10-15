@@ -5,17 +5,15 @@ import br.com.apssystem.algafood.api.mapper.CidadeMapper;
 import br.com.apssystem.algafood.api.model.CidadeModel;
 import br.com.apssystem.algafood.api.model.input.CidadeInput;
 import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
-import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.service.CidadeService;
 import lombok.AllArgsConstructor;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/cidades", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,22 +47,11 @@ public class CidadeController implements CidadeControllerOpenApi {
 
 	@GetMapping("/{id}")
 	public CidadeModel buscarPorId(@PathVariable Long id) {
-		var cidadeModel = mapper.toModel(service.buscarPorId(id));
-
-		cidadeModel.add(WebMvcLinkBuilder.linkTo(CidadeController.class)
-				.slash(cidadeModel.getId()).withSelfRel());
-
-		cidadeModel.add(WebMvcLinkBuilder.linkTo(CidadeController.class)
-				.withRel("cidades"));
-
-		cidadeModel.getEstado().add(WebMvcLinkBuilder.linkTo(EstadoController.class)
-				.slash(cidadeModel.getEstado().getId()).withSelfRel());
-
-		return cidadeModel;
+		return mapper.toModel(service.buscarPorId(id));
 	}
 
 	@GetMapping
-	public List<CidadeModel> listarTodos() {
+	public CollectionModel<CidadeModel> listarTodos() {
 		return mapper.toCollectionModel(service.listarTodos());
 	}
 }

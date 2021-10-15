@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import javax.validation.Valid;
 
 import br.com.apssystem.algafood.api.controller.openapi.controller.FormaPagtoControllerOpenApi;
+import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
 import io.swagger.annotations.Api;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,7 @@ public class FormaPagtoController implements FormaPagtoControllerOpenApi {
 	@ResponseStatus(HttpStatus.CREATED)
 	public FormaPagtoModel salvar(@Valid @RequestBody FormaPagtoInput formaPagtoInput) {
 		FormaPagto formaPagto = mapper.toDomainObject(formaPagtoInput);
+		ResourceUriHelper.addUriInResponseHeader(formaPagto.getId());
 		return mapper.toModel(formaPagtoService.salvar(formaPagto));
 	}
 

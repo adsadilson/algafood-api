@@ -3,8 +3,11 @@ package br.com.apssystem.algafood.api.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.apssystem.algafood.api.controller.CozinhaController;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
 import br.com.apssystem.algafood.api.model.CozinhaModel;
@@ -12,17 +15,20 @@ import br.com.apssystem.algafood.api.model.input.CozinhaInput;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 
 @Component
-public class CozinhaMapper {
+public class CozinhaMapper extends RepresentationModelAssemblerSupport<Cozinha,CozinhaModel> {
 
     @Autowired
     ModelMapper modelMapper;
 
-    public CozinhaModel toModel(Cozinha cozinha) {
-        return modelMapper.map(cozinha, CozinhaModel.class);
+    public CozinhaMapper(){
+        super(CozinhaController.class,CozinhaModel.class);
     }
 
-    public List<CozinhaModel> toCollectionModel(List<Cozinha> cozinhas) {
-        return cozinhas.stream().map(this::toModel).collect(Collectors.toList());
+    public CozinhaModel toModel(Cozinha cozinha) {
+        CozinhaModel cozinhaModel = createModelWithId(cozinha.getId(), cozinha);
+        modelMapper.map(cozinha, cozinhaModel);
+        cozinhaModel.add(WebMvcLinkBuilder.linkTo(CozinhaController.class).withRel("cozinhas"));
+        return cozinhaModel;
     }
 
     public Cozinha toDomainObject(CozinhaInput cozinhaInput) {

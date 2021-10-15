@@ -8,6 +8,7 @@ import io.swagger.annotations.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,6 @@ public interface PedidoControllerOpenApi {
             @ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separado por vírgula",
             name = "campos", paramType = "query", type = "string")
     })
-    Page<PedidoModel> pesquisar(PedidoFilter filtro, @PageableDefault(size = 2) Pageable pageable);
+    PagedModel<PedidoModel> pesquisar(PedidoFilter filtro, @PageableDefault(size = 2) Pageable pageable);
 
 }

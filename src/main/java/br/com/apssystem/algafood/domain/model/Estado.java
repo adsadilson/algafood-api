@@ -8,15 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.jfree.util.ResourceBundleSupport;
+import org.springframework.hateoas.RepresentationModel;
 
 @Entity
 @Table(name = "estado")
 @SequenceGenerator(name = "ESTADO_ID", sequenceName = "ESTADO_ID_SEQ")
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Estado {
+public class Estado extends RepresentationModel<Estado> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "ESTADO_ID_SEQ")

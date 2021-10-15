@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import br.com.apssystem.algafood.api.controller.openapi.controller.RestauranteControllerOpenApi;
+import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -42,23 +44,22 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping(path = "/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class RestauranteController {
+public class RestauranteController implements RestauranteControllerOpenApi {
 
 	private RestauranteService service;
 	private CozinhaService cozinhaService;
 	private RestauranteMapper mapper;
 	private SmartValidator validator;
 
-	@ApiOperation("Cadastrar um restaurante")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public RestauranteModel salvar(@Valid @RequestBody RestauranteInput restauranteInput) {
 		Restaurante restaurante = mapper.toDomainObject(restauranteInput);
 		restaurante = service.adicionar(restaurante);
+		ResourceUriHelper.addUriInResponseHeader(restaurante.getId());
 		return mapper.toModel(restaurante);
 	}
 
-	@ApiOperation("Atualiza um restaurante por ID")
 	@PutMapping("/{id}")
 	public ResponseEntity<RestauranteModel> atualizar(@Valid @RequestBody RestauranteInput restauranteInput,
 			@PathVariable Long id) {
@@ -68,7 +69,6 @@ public class RestauranteController {
 		return ResponseEntity.ok(mapper.toModel(restauranteAtual));
 	}
 
-	@ApiOperation("Excluir um restaurante por ID")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		service.buscarPorId(id);
@@ -76,27 +76,23 @@ public class RestauranteController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@ApiOperation("Busca todos os restaurantes")
 	@GetMapping()
 	public List<RestauranteModel> listarTodos() {
 		List<Restaurante> list = service.listarTodos();
 		return mapper.toCollectionModel(list);
 	}
 
-	@ApiOperation("Busca um restaurante por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<RestauranteModel> buscarPorId(@PathVariable Long id) {
 		Restaurante restaurante = service.buscarPorId(id);
 		return ResponseEntity.ok(mapper.toModel(restaurante));
 	}
 
-	@ApiOperation("Busca um restaurante por Nome")
 	@GetMapping("/por-nome")
 	public List<RestauranteModel> consultarPorNome(String nome, Long cozinhaId) {
 		return mapper.toCollectionModel(service.consultarPorNome(nome, cozinhaId));
 	}
 
-	@ApiOperation("Atualização parcial de um restaurante")
 	@PatchMapping("/{id}")
 	public ResponseEntity<Restaurante> atualizarParcial(@Valid @RequestBody Map<String, Object> campos,
 			@PathVariable Long id) {
@@ -107,7 +103,6 @@ public class RestauranteController {
 		return ResponseEntity.ok(restaurante);
 	}
 
-	@ApiOperation("Ativação de restaurante em massa")
 	@PutMapping("/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
@@ -118,7 +113,6 @@ public class RestauranteController {
 		}
 	}
 
-	@ApiOperation("Inativação de restaurante em massa")
 	@DeleteMapping("/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativarMultiplos(@RequestBody List<Long> restauranteIds) {
@@ -129,28 +123,24 @@ public class RestauranteController {
 		}
 	}
 
-	@ApiOperation("Ativa um restaurante por ID")
 	@PutMapping("{id}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void ativo(@PathVariable Long id) {
 		service.ativar(id);
 	}
 
-	@ApiOperation("Inativa um restaurante por ID")
 	@DeleteMapping("{id}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativo(@PathVariable Long id) {
 		service.inativar(id);
 	}
 
-	@ApiOperation("Abertura de um restaurante por ID")
 	@PutMapping("/{id}/abertura")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void abrir(@PathVariable Long id) {
 	    service.abrir(id);
 	}
 
-	@ApiOperation("Fechamento de um restaurante por ID")
 	@PutMapping("/{id}/fechamento")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void fechar(@PathVariable Long id) {

@@ -6,20 +6,22 @@ import br.com.apssystem.algafood.api.mapper.PedidoResumoMapper;
 import br.com.apssystem.algafood.api.model.PedidoModel;
 import br.com.apssystem.algafood.api.model.input.PedidoInput;
 import br.com.apssystem.algafood.core.pageableTranslator.PageableTranslator;
+import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
+import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.model.Pedido;
 import br.com.apssystem.algafood.domain.model.filter.PedidoFilter;
 import br.com.apssystem.algafood.domain.service.PedidoService;
 import br.com.apssystem.algafood.infrastructure.repository.specification.PedidoSpecification;
 import com.google.common.collect.ImmutableMap;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +38,13 @@ public class PedidoController implements PedidoControllerOpenApi {
     private PedidoService pedidoService;
     private PedidoMapper mapper;
     private PedidoResumoMapper pedidoResumoMapper;
+    private PagedResourcesAssembler<Pedido> pagedResourcesAssembler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PedidoModel salvar(@Valid @RequestBody PedidoInput input) {
         Pedido pedido = mapper.toDomainObject(input);
+        ResourceUriHelper.addUriInResponseHeader(pedido.getId());
         return mapper.toModel(pedidoService.salvar(pedido));
     }
 
@@ -60,17 +64,17 @@ public class PedidoController implements PedidoControllerOpenApi {
     @GetMapping("/{codigo}")
     public ResponseEntity<PedidoModel> buscarPorCodigo(@PathVariable String codigo) {
         Pedido pedido = pedidoService.buscarPorCodigo(codigo);
-        return ResponseEntity.ok(mapper.toModel(pedido));
+        var pedidoModel = mapper.toModel(pedido);
+        return ResponseEntity.ok(pedidoModel);
     }
 
     @GetMapping
-    public Page<PedidoModel> pesquisar(PedidoFilter filtro, @PageableDefault(size = 2) Pageable pageable) {
+    public PagedModel<PedidoModel> pesquisar(PedidoFilter filtro, @PageableDefault(size = 2) Pageable pageable) {
         pageable = traduzirPageable(pageable);
         Page<Pedido> pedidosPage = pedidoService.pesquisar(PedidoSpecification.filter(filtro), pageable);
-        List<PedidoModel> pedidoResumoModels = pedidoResumoMapper.toColletionModel(pedidosPage.getContent());
-        Page<PedidoModel> resumoModelPage = new PageImpl<>(pedidoResumoModels, pageable,
-                pedidosPage.getTotalElements());
-        return resumoModelPage;
+        PagedModel<PedidoModel> pedidoModelPagedModel = pagedResourcesAssembler
+                .toModel(pedidosPage,mapper);
+        return pedidoModelPagedModel;
     }
 
     private Pageable traduzirPageable(Pageable pageable){

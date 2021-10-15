@@ -3,8 +3,13 @@ package br.com.apssystem.algafood.api.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.apssystem.algafood.api.controller.CidadeController;
+import br.com.apssystem.algafood.api.controller.RestauranteController;
+import br.com.apssystem.algafood.api.model.CidadeModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
 import br.com.apssystem.algafood.api.model.RestauranteModel;
@@ -14,13 +19,25 @@ import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.model.Restaurante;
 
 @Component
-public class RestauranteMapper {
+public class RestauranteMapper extends RepresentationModelAssemblerSupport<Restaurante, RestauranteModel> {
 
 	@Autowired
-	private ModelMapper modelMapper;
+	ModelMapper modelMapper;
+
+	public RestauranteMapper(){
+		super(RestauranteController.class,RestauranteModel.class);
+	}
 
 	public RestauranteModel toModel(Restaurante restaurante) {
-		return modelMapper.map(restaurante, RestauranteModel.class);
+		RestauranteModel restauranteModel = modelMapper.map(restaurante, RestauranteModel.class);
+
+		restauranteModel.add(WebMvcLinkBuilder.linkTo(RestauranteController.class)
+				.slash(restauranteModel.getId()).withSelfRel());
+
+		restauranteModel.add(WebMvcLinkBuilder.linkTo(RestauranteController.class)
+				.withRel("restaurantes"));
+
+		return restauranteModel;
 	}
 
 	public List<RestauranteModel> toCollectionModel(List<Restaurante> restaurantes) {

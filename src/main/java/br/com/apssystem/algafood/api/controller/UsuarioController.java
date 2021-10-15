@@ -5,8 +5,13 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
+import br.com.apssystem.algafood.domain.model.Restaurante;
+import br.com.apssystem.algafood.domain.service.RestauranteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +45,7 @@ public class UsuarioController {
 
     private UsuarioService service;
     private GrupoUsuarioRepository grupoUsuarioRepository;
+    private RestauranteService restauranteService;
     private UsuarioMapper mapper;
 
     @ApiOperation("Cadastrar um usuário")
@@ -55,6 +61,7 @@ public class UsuarioController {
 
         List<GrupoUsuario> grupos = grupoUsuarioRepository.findAllById(idsGrupos);
         usuario.getGrupos().addAll(grupos);
+        ResourceUriHelper.addUriInResponseHeader(usuario.getId());
         return ResponseEntity.ok(mapper.toModel(service.save(usuario)));
     }
 
@@ -84,7 +91,7 @@ public class UsuarioController {
 
     @ApiOperation("Busca todos os usuários")
     @GetMapping
-    public List<UsuarioModel> listarTodos() {
+    public CollectionModel<UsuarioModel> listarTodos() {
         return mapper.toCollectionModel(service.listarTodos());
     }
 
@@ -99,5 +106,16 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void alterarSenha(@PathVariable Long id, @RequestBody @Valid SenhaInput senha) {
         service.trocarSenha(id, senha.getSenhaAtual(), senha.getNovaSenha());
+    }
+
+
+    @GetMapping("/{restauranteId}/responsaveis")
+    public CollectionModel<UsuarioModel> listar(@PathVariable Long restauranteId) {
+        Restaurante restaurante = restauranteService.buscarPorId(restauranteId);
+
+        return mapper.toCollectionModel(restaurante.getResponsaveis())
+                .removeLinks()
+                .add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UsuarioController.class)
+                        .listar(restauranteId)).withSelfRel());
     }
 }

@@ -4,6 +4,7 @@ import br.com.apssystem.algafood.api.controller.openapi.controller.CozinhaContro
 import br.com.apssystem.algafood.api.mapper.CozinhaMapper;
 import br.com.apssystem.algafood.api.model.CozinhaModel;
 import br.com.apssystem.algafood.api.model.input.CozinhaInput;
+import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.service.CozinhaService;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +29,13 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 
     private CozinhaService serivce;
     private CozinhaMapper mapper;
+    private PagedResourcesAssembler<Cozinha> pagedResourcesAssembler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CozinhaModel salvar(@Valid @RequestBody CozinhaInput cozinhaInput) {
         Cozinha cozinha = mapper.toDomainObject(cozinhaInput);
+        ResourceUriHelper.addUriInResponseHeader(cozinha.getId());
         return mapper.toModel(serivce.salvar(cozinha));
     }
 
@@ -52,22 +57,20 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     }
 
     @GetMapping("/porNome/{nome}")
-    public Page<CozinhaModel> buscarPorNome(@PageableDefault(size = 10) Pageable pageable,
-                                            @PathVariable String nome) {
+    public PagedModel<CozinhaModel> buscarPorNome(@PageableDefault(size = 10) Pageable pageable,
+                                                  @PathVariable String nome) {
         Page<Cozinha> cozinhasPage = serivce.buscarPorNome(pageable, nome.toUpperCase());
-        List<CozinhaModel> cozinhasModel = mapper.toCollectionModel(cozinhasPage.getContent());
-        Page<CozinhaModel> cozinhasModelPage = new PageImpl<>(cozinhasModel, pageable,
-                cozinhasPage.getTotalElements());
-        return cozinhasModelPage;
+        PagedModel<CozinhaModel>  cozinhaModelPageModel = pagedResourcesAssembler
+                .toModel(cozinhasPage,mapper);
+        return cozinhaModelPageModel;
     }
 
     @GetMapping
-    public Page<CozinhaModel> listarTodos(@PageableDefault(size = 10) Pageable pageable) {
+    public PagedModel<CozinhaModel> listarTodos(@PageableDefault(size = 10) Pageable pageable) {
         Page<Cozinha> cozinhasPage = serivce.listarTodos(pageable);
-        List<CozinhaModel> cozinhasModel = mapper.toCollectionModel(cozinhasPage.getContent());
-        Page<CozinhaModel> cozinhasModelPage = new PageImpl<>(cozinhasModel, pageable,
-                cozinhasPage.getTotalElements());
-        return cozinhasModelPage;
+        PagedModel<CozinhaModel> cozinhaModelPageModel= pagedResourcesAssembler
+                .toModel(cozinhasPage, mapper);
+        return cozinhaModelPageModel;
     }
 
 }

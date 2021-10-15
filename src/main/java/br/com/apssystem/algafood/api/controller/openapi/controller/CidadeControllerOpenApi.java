@@ -8,6 +8,7 @@ import br.com.apssystem.algafood.domain.model.Cidade;
 import br.com.apssystem.algafood.domain.service.CidadeService;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,6 @@ public interface CidadeControllerOpenApi {
 					Long id);
 
 	@ApiOperation("Busca todas as  cidades")
-	List<CidadeModel> listarTodos();
+	CollectionModel<CidadeModel> listarTodos();
 
 }

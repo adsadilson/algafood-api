@@ -3,9 +3,11 @@ package br.com.apssystem.algafood.api.controller.openapi.controller;
 import br.com.apssystem.algafood.api.exception.Problem;
 import br.com.apssystem.algafood.api.model.CozinhaModel;
 import br.com.apssystem.algafood.api.model.input.CozinhaInput;
+import br.com.apssystem.algafood.core.jackson.PageModel;
 import io.swagger.annotations.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 
 @Api(tags = "Cozinhas")
@@ -47,9 +49,9 @@ public interface CozinhaControllerOpenApi {
             Long id);
 
     @ApiOperation("Busca uma cozinha por Nome")
-    Page<CozinhaModel> buscarPorNome(Pageable pageable,String nome);
+    PagedModel<CozinhaModel> buscarPorNome(Pageable pageable, String nome);
 
     @ApiOperation("Busca todas as  cozinhas")
-    Page<CozinhaModel> listarTodos(Pageable pageable);
+    PagedModel<CozinhaModel> listarTodos(Pageable pageable);
 
 }

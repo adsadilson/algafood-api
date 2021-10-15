@@ -5,6 +5,7 @@ import br.com.apssystem.algafood.api.mapper.GrupoUsuarioMapper;
 import br.com.apssystem.algafood.api.model.GrupoUsuarioModel;
 import br.com.apssystem.algafood.api.model.input.GrupoUsuarioInput;
 import br.com.apssystem.algafood.api.model.input.PermissaoIdInput;
+import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
 import br.com.apssystem.algafood.domain.model.GrupoUsuario;
 import br.com.apssystem.algafood.domain.model.Permissao;
 import br.com.apssystem.algafood.domain.repository.PermissaoRepository;
@@ -40,6 +41,7 @@ public class GrupoUsuarioController implements GrupoUsuarioControllerOpenApi {
 
 		List<Permissao> permissoes = permissaoRepository.findAllById(idsPermissoes);
 		grupo.getPermissoes().addAll(permissoes);
+		ResourceUriHelper.addUriInResponseHeader(grupo.getId());
 		return mapper.toModel(service.adicionar(grupo));
 	}
 

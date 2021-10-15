@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.hateoas.server.core.Relation;
 
+@Relation(collectionRelation = "cidades")
 @Getter
 @Setter
 public class CidadeModel extends RepresentationModel<CidadeModel> {

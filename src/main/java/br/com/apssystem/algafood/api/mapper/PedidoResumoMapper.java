@@ -26,10 +26,6 @@ public class PedidoResumoMapper {
         return modelMapper.map(pedido, PedidoStatusResumoModel.class);
     }
 
-    public List<PedidoModel> toColletionModel(List<Pedido> pedidos) {
-        return pedidos.stream().map(this::toModel).collect(Collectors.toList());
-    }
-
     public Pedido toDomainObject(PedidoInput input) {
         return modelMapper.map(input, Pedido.class);
     }

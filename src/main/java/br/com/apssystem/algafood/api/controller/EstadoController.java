@@ -1,10 +1,13 @@
 package br.com.apssystem.algafood.api.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.apssystem.algafood.api.controller.openapi.controller.EstadoControllerOpenApi;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +29,16 @@ public class EstadoController implements EstadoControllerOpenApi {
 
 	@GetMapping
 	public List<Estado> listarTodos() {
-		return service.listarTodos();
+		List<Estado> uf = service.listarTodos();
+		uf.stream().map(e -> e.add(WebMvcLinkBuilder.linkTo(EstadoController.class)
+				.slash(e.getId()).withSelfRel().withSelfRel())).collect(Collectors.toList());
+		return uf;
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Estado> buscarPorId(@PathVariable Long id) {
 		Estado estado = service.buscarPorId(id);
+		estado.add(WebMvcLinkBuilder.linkTo(EstadoController.class).withSelfRel().withRel("Lista de estados"));
 		return ResponseEntity.ok(estado);
 	}
 }

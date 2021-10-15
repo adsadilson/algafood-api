@@ -11,10 +11,13 @@ import br.com.apssystem.algafood.domain.model.FormaPagto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
+@Relation(collectionRelation = "Restaurantes")
 @Getter
 @Setter
-public class RestauranteModel {
+public class RestauranteModel extends RepresentationModel<RestauranteModel> {
 
 	@ApiModelProperty(example = "1")
 	private Long id;
