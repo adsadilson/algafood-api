@@ -8,15 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.*;
-import org.jfree.util.ResourceBundleSupport;
 import org.springframework.hateoas.RepresentationModel;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "estado")
 @SequenceGenerator(name = "ESTADO_ID", sequenceName = "ESTADO_ID_SEQ")
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)

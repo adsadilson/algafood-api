@@ -3,10 +3,6 @@ package br.com.apssystem.algafood.api.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.com.apssystem.algafood.api.controller.openapi.controller.EstadoControllerOpenApi;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.apssystem.algafood.api.controller.openapi.controller.EstadoControllerOpenApi;
 import br.com.apssystem.algafood.domain.model.Estado;
 import br.com.apssystem.algafood.domain.service.EstadoService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 
 @Api(tags = "Estados")

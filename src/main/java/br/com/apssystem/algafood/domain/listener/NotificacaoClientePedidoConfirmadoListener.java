@@ -1,12 +1,12 @@
 package br.com.apssystem.algafood.domain.listener;
 
-import br.com.apssystem.algafood.domain.event.PedidoConfirmadoEvent;
-import br.com.apssystem.algafood.infrastructure.email.EnvioEmailService;
-import lombok.AllArgsConstructor;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
+
+import br.com.apssystem.algafood.domain.event.PedidoConfirmadoEvent;
+import br.com.apssystem.algafood.infrastructure.email.EnvioEmailService;
+import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor

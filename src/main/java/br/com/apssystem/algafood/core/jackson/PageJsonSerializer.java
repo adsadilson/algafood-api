@@ -1,12 +1,12 @@
 package br.com.apssystem.algafood.core.jackson;
 
+import java.io.IOException;
+
+import org.springframework.data.domain.Page;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import org.springframework.boot.jackson.JsonComponent;
-import org.springframework.data.domain.Page;
-
-import java.io.IOException;
 
 //@JsonComponent
 public class PageJsonSerializer extends JsonSerializer<Page<?>> {

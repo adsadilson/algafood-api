@@ -3,15 +3,13 @@ package br.com.apssystem.algafood.api.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.com.apssystem.algafood.api.controller.CidadeController;
-import br.com.apssystem.algafood.api.controller.RestauranteController;
-import br.com.apssystem.algafood.api.model.CidadeModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
+import br.com.apssystem.algafood.api.controller.RestauranteController;
 import br.com.apssystem.algafood.api.model.RestauranteModel;
 import br.com.apssystem.algafood.api.model.input.RestauranteInput;
 import br.com.apssystem.algafood.domain.model.Cidade;

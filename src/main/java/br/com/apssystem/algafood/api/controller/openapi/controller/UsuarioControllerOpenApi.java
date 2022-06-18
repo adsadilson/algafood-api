@@ -1,28 +1,18 @@
 package br.com.apssystem.algafood.api.controller.openapi.controller;
 
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.ResponseEntity;
+
 import br.com.apssystem.algafood.api.exception.Problem;
-import br.com.apssystem.algafood.api.mapper.UsuarioMapper;
 import br.com.apssystem.algafood.api.model.UsuarioModel;
-import br.com.apssystem.algafood.api.model.input.GrupoUsuarioIdInput;
 import br.com.apssystem.algafood.api.model.input.SenhaInput;
 import br.com.apssystem.algafood.api.model.input.UsuarioAtulizarInput;
 import br.com.apssystem.algafood.api.model.input.UsuarioInput;
-import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
-import br.com.apssystem.algafood.domain.model.GrupoUsuario;
-import br.com.apssystem.algafood.domain.model.Usuario;
-import br.com.apssystem.algafood.domain.repository.GrupoUsuarioRepository;
-import br.com.apssystem.algafood.domain.service.UsuarioService;
-import io.swagger.annotations.*;
-import lombok.AllArgsConstructor;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @Api(tags = "Usuários")
 public interface UsuarioControllerOpenApi {

@@ -12,6 +12,7 @@ public class GeradorCharRepository  {
 	@PersistenceContext
 	EntityManager entityManager;
 
+	@SuppressWarnings("rawtypes")
 	public Boolean gerarChar(Class clazz, String value) {
 		try {
 			long valor = (long) entityManager

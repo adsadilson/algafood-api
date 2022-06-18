@@ -6,10 +6,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import br.com.apssystem.algafood.api.controller.openapi.controller.RestauranteControllerOpenApi;
-import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +25,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.apssystem.algafood.api.controller.openapi.controller.RestauranteControllerOpenApi;
 import br.com.apssystem.algafood.api.exception.EntidadeNaoEncontradaException;
 import br.com.apssystem.algafood.api.exception.NegocioException;
 import br.com.apssystem.algafood.api.exception.ValidacaoException;
 import br.com.apssystem.algafood.api.mapper.RestauranteMapper;
 import br.com.apssystem.algafood.api.model.RestauranteModel;
 import br.com.apssystem.algafood.api.model.input.RestauranteInput;
+import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
 import br.com.apssystem.algafood.domain.model.Restaurante;
 import br.com.apssystem.algafood.domain.service.CozinhaService;
 import br.com.apssystem.algafood.domain.service.RestauranteService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 
 @Api(tags = "Restaurantes")

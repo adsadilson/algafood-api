@@ -1,10 +1,5 @@
 package br.com.apssystem.algafood.api.mapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import br.com.apssystem.algafood.api.controller.CidadeController;
-import br.com.apssystem.algafood.api.controller.EstadoController;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -12,6 +7,8 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
+import br.com.apssystem.algafood.api.controller.CidadeController;
+import br.com.apssystem.algafood.api.controller.EstadoController;
 import br.com.apssystem.algafood.api.model.CidadeModel;
 import br.com.apssystem.algafood.api.model.input.CidadeInput;
 import br.com.apssystem.algafood.domain.model.Cidade;

@@ -1,11 +1,7 @@
 package br.com.apssystem.algafood.api.controller.openapi.controller;
 
-import br.com.apssystem.algafood.api.exception.Problem;
-import br.com.apssystem.algafood.api.model.PedidoModel;
-import br.com.apssystem.algafood.api.model.input.PedidoInput;
-import br.com.apssystem.algafood.domain.model.filter.PedidoFilter;
-import io.swagger.annotations.*;
-import org.springframework.data.domain.Page;
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.PagedModel;
@@ -13,7 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
+import br.com.apssystem.algafood.api.exception.Problem;
+import br.com.apssystem.algafood.api.model.PedidoModel;
+import br.com.apssystem.algafood.api.model.input.PedidoInput;
+import br.com.apssystem.algafood.domain.model.filter.PedidoFilter;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @Api(tags = "Pedidos")
 public interface PedidoControllerOpenApi {

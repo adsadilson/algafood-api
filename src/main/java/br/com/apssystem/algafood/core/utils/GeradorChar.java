@@ -9,6 +9,7 @@ public class GeradorChar {
 	@Autowired
 	GeradorCharRepository repository;
 
+	@SuppressWarnings("rawtypes")
 	public String criar(Class clazz) {
 
 		StringBuilder codigo = new StringBuilder();

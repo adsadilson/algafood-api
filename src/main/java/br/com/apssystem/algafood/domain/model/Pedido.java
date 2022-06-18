@@ -1,21 +1,39 @@
 package br.com.apssystem.algafood.domain.model;
 
-import br.com.apssystem.algafood.api.exception.NegocioException;
-import br.com.apssystem.algafood.domain.enums.StatusPedido;
-import br.com.apssystem.algafood.domain.event.PedidoCanceladoEvent;
-import br.com.apssystem.algafood.domain.event.PedidoConfirmadoEvent;
-import lombok.*;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import br.com.apssystem.algafood.api.exception.NegocioException;
+import br.com.apssystem.algafood.domain.enums.StatusPedido;
+import br.com.apssystem.algafood.domain.event.PedidoCanceladoEvent;
+import br.com.apssystem.algafood.domain.event.PedidoConfirmadoEvent;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "pedido")

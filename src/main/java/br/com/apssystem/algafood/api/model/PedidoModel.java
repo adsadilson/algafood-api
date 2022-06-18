@@ -1,22 +1,25 @@
 package br.com.apssystem.algafood.api.model;
 
-import br.com.apssystem.algafood.domain.enums.StatusPedido;
-import br.com.apssystem.algafood.domain.model.ItemPedido;
-import br.com.apssystem.algafood.domain.model.Pedido;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.server.core.Relation;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
+import br.com.apssystem.algafood.domain.enums.StatusPedido;
+import br.com.apssystem.algafood.domain.model.ItemPedido;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+
 @Relation(collectionRelation = "Pedidos")
-@Data
+@Getter
+@Setter
 public class PedidoModel extends RepresentationModel<PedidoModel> {
 
 	@ApiModelProperty(example = "es5sabder1")

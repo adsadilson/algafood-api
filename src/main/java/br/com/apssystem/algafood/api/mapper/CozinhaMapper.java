@@ -1,15 +1,12 @@
 package br.com.apssystem.algafood.api.mapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import br.com.apssystem.algafood.api.controller.CozinhaController;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
+import br.com.apssystem.algafood.api.controller.CozinhaController;
 import br.com.apssystem.algafood.api.model.CozinhaModel;
 import br.com.apssystem.algafood.api.model.input.CozinhaInput;
 import br.com.apssystem.algafood.domain.model.Cozinha;

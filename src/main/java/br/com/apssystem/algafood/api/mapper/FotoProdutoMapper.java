@@ -1,17 +1,14 @@
 package br.com.apssystem.algafood.api.mapper;
 
-import br.com.apssystem.algafood.api.model.CidadeModel;
-import br.com.apssystem.algafood.api.model.FotoProdutoModel;
-import br.com.apssystem.algafood.api.model.input.CidadeInput;
-import br.com.apssystem.algafood.domain.model.Cidade;
-import br.com.apssystem.algafood.domain.model.Estado;
-import br.com.apssystem.algafood.domain.model.FotoProduto;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import br.com.apssystem.algafood.api.model.FotoProdutoModel;
+import br.com.apssystem.algafood.domain.model.FotoProduto;
 
 @Component
 public class FotoProdutoMapper {

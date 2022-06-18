@@ -31,7 +31,9 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @AllArgsConstructor
 @ControllerAdvice
 public class ExcepitonHandler extends ResponseEntityExceptionHandler {
@@ -260,7 +262,8 @@ public class ExcepitonHandler extends ResponseEntityExceptionHandler {
         // Se não fizer isso, você não vai ver a stacktrace de exceptions que seriam
         // importantes
         // para você durante, especialmente na fase de desenvolvimento
-        ex.printStackTrace();
+        log.error(ex.getMessage(), ex);
+        //ex.printStackTrace();
 
         ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
 

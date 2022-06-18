@@ -1,11 +1,23 @@
 package br.com.apssystem.algafood.domain.model;
 
-import lombok.*;
+import java.time.LocalDate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "empresa")
@@ -64,7 +76,7 @@ public class Empresa {
     private Endereco endereco;
 
     @Column(name = "status", length = 1)
-    private Boolean status = true;
+    private boolean status;
 
     @Column(name = "obs", columnDefinition = "text")
     private String obs;

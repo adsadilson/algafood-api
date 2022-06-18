@@ -1,5 +1,25 @@
 package br.com.apssystem.algafood.api.controller;
 
+import javax.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.apssystem.algafood.api.controller.openapi.controller.CozinhaControllerOpenApi;
 import br.com.apssystem.algafood.api.mapper.CozinhaMapper;
 import br.com.apssystem.algafood.api.model.CozinhaModel;
@@ -8,20 +28,9 @@ import br.com.apssystem.algafood.core.utils.ResourceUriHelper;
 import br.com.apssystem.algafood.domain.model.Cozinha;
 import br.com.apssystem.algafood.domain.service.CozinhaService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedModel;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.validation.Valid;
-import java.util.List;
-
+@Slf4j
 @RestController
 @RequestMapping(path = "/cozinhas", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
@@ -67,6 +76,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 
     @GetMapping
     public PagedModel<CozinhaModel> listarTodos(@PageableDefault(size = 10) Pageable pageable) {
+    	log.info("Consultando cozinhas com páginas de {} registros...", pageable.getPageSize());
         Page<Cozinha> cozinhasPage = serivce.listarTodos(pageable);
         PagedModel<CozinhaModel> cozinhaModelPageModel= pagedResourcesAssembler
                 .toModel(cozinhasPage, mapper);

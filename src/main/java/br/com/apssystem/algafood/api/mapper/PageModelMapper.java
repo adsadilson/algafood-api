@@ -1,16 +1,15 @@
 package br.com.apssystem.algafood.api.mapper;
 
 
-import br.com.apssystem.algafood.core.jackson.PageModel;
-import br.com.apssystem.algafood.domain.model.Pedido;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import br.com.apssystem.algafood.core.jackson.PageModel;
 
 @Component
 public class PageModelMapper<T, S> {
@@ -19,7 +18,8 @@ public class PageModelMapper<T, S> {
     ModelMapper modelMapper;
 
 
-    public PageModel<S> toCollectionModel(Page page, Class<S> type) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public PageModel<S> toCollectionModel(Page page, Class<S> type) {
         PageModel<S> pageModel = new PageModel<>();
         Collection<T> domainElementsList = (Collection<T>) page.getContent();
         pageModel.setContent(

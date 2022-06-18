@@ -1,15 +1,13 @@
 package br.com.apssystem.algafood.api.mapper;
 
-import br.com.apssystem.algafood.api.model.PedidoModel;
-import br.com.apssystem.algafood.api.model.PedidoStatusResumoModel;
-import br.com.apssystem.algafood.api.model.input.PedidoInput;
-import br.com.apssystem.algafood.domain.model.Pedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import br.com.apssystem.algafood.api.model.PedidoModel;
+import br.com.apssystem.algafood.api.model.PedidoStatusResumoModel;
+import br.com.apssystem.algafood.api.model.input.PedidoInput;
+import br.com.apssystem.algafood.domain.model.Pedido;
 
 @Component
 public class PedidoResumoMapper {
